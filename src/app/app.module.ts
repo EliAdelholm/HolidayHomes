@@ -11,6 +11,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { NewHouseFormComponent } from './pages/new-house-form/new-house-form.component';
 import { BookingComponent } from './pages/booking/booking.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { ProfileComponent } from './pages/profile/profile.component';
     RegisterComponent,
     NewHouseFormComponent,
     BookingComponent,
-    ProfileComponent
+    ProfileComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
