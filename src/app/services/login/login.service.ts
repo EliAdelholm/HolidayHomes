@@ -15,6 +15,10 @@ export class LoginService {
     });
   }
 
+  logout(): void {
+    this.isLoggedIn = false;
+  }
+
   constructor() { }
 
 }

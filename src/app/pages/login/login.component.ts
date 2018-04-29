@@ -21,10 +21,10 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  // onLogout() {
-  //   this.loginService.logout();
-  //   this.router.navigate(['portal']);
-  // }
+  onLogout() {
+    this.loginService.logout();
+    this.router.navigate(['login']);
+  }
 
   onSubmit(loginForm) {
     this.loginService.login(loginForm.value.userMail).subscribe(x => {
