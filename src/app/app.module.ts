@@ -12,7 +12,7 @@ import { NewHouseFormComponent } from './pages/new-house-form/new-house-form.com
 import { BookingComponent } from './pages/booking/booking.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
-
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -28,7 +28,8 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

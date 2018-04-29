@@ -1,3 +1,13 @@
-<p>
-  login works!
+<form [formGroup]="loginForm">
+  <input placeholder="userMail" formControlName="userMail">
+  <input placeholder="userPassword" formControlName="userPassword">
+  <button type="submit" [disabled]="loginForm.invalid">login</button>
+</form>
+<p
+  *ngIf="
+  loginForm.controls['userMail'].touched ||
+  loginForm.controls['userPassword'].touched
+  ">
+    please fill in all fields :)
 </p>
+
