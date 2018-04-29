@@ -1,4 +1,4 @@
-<form [formGroup]="loginForm">
+<form [formGroup]="loginForm" (submit)="onSubmit(loginForm)" >
   <input placeholder="userMail" formControlName="userMail">
   <input placeholder="userPassword" formControlName="userPassword">
   <button type="submit" [disabled]="loginForm.invalid">login</button>

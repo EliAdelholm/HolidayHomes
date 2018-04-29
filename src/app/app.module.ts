@@ -13,6 +13,7 @@ import { BookingComponent } from './pages/booking/booking.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import {LoginService} from './services/login/login.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     AppRoutingModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [
+    LoginService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

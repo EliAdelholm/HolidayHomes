@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import {LoginService} from '../../services/login/login.service';
 
 @Component({
   selector: 'app-login',
@@ -9,10 +11,25 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
 
-  constructor( private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private loginService: LoginService) {
     this.loginForm = this.fb.group({
       userMail: ['', Validators.required],
       userPassword: ['', Validators.required]
+    });
+  }
+
+  // onLogout() {
+  //   this.loginService.logout();
+  //   this.router.navigate(['portal']);
+  // }
+
+  onSubmit(loginForm) {
+    this.loginService.login(loginForm.value.userMail).subscribe(x => {
+      console.log('loginForm' , this.loginForm);
+      this.router.navigate(['portal']);
     });
   }
 
@@ -20,3 +37,4 @@ export class LoginComponent implements OnInit {
   }
 
 }
+
