@@ -23,7 +23,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
   }
 
-  onSubmit(registerFrm){
+  onSubmit(registerFrm) {
     console.log('registerFrm' , this.registerFrm);
     this.router.navigate(['login']);
   }
