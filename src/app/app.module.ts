@@ -12,7 +12,7 @@ import { NewHouseFormComponent } from './pages/new-house-form/new-house-form.com
 import { BookingComponent } from './pages/booking/booking.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {LoginService} from './services/login/login.service';
 
 @NgModule({
@@ -31,6 +31,7 @@ import {LoginService} from './services/login/login.service';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    FormsModule
   ],
   providers: [
     LoginService

@@ -1,3 +1,17 @@
-<p>
-  new-house-form works!
-</p>
+<script src="new-house-form.component.ts"></script>
+<form [formGroup]="createHouseFrm" (submit)="onSubmit(createHouseFrm)">
+  <input placeholder="headline" formControlName="houseHeadline">
+  <input placeholder="description" formControlName="houseDescription">
+  <input placeholder="price" formControlName="housePrice">
+  <input placeholder="address" formControlName="houseAddress">
+  <input placeholder="space" formControlName="houseSpace">
+  houseType<select formControlName="houseType">
+    <option value="isApartment">apartment</option>
+    <option value="isHouse">house</option>
+  </select>
+  hasWifi<input type="checkbox" formControlName="hasWifi">
+  hasTv<input type="checkbox" formControlName="hasTv">
+  hasDryer<input type="checkbox" formControlName="hasDryer">
+  isFamilyFriendly<input type="checkbox" formControlName="isFamilyFriendly">
+  <button type="submit" [disabled]="createHouseFrm.invalid">submit</button>
+</form>
