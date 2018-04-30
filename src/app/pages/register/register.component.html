@@ -1,5 +1,12 @@
-<form>
+<script src="register.component.ts"></script>
+<form [formGroup]="registerFrm" (submit)="onSubmit(registerFrm)" >
   <input placeholder="email" formControlName="userEmail">
   <input placeholder="password" formControlName="userPassword">
-  <input placeholder="userName" formControlName="user">
+  <input placeholder="userName" formControlName="userName">
+  <button type="submit" [disabled]="registerFrm.invalid" >submit</button>
 </form>
+<p *ngIf="registerFrm.controls['userEmail'].touched ||
+          registerFrm.controls['userPassword'].touched ||
+          registerFrm.controls['userName'].touched">
+  please fill in all fields :)
+</p>
