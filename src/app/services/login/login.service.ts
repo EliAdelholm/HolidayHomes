@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/do';
+import {Router} from '@angular/router';
 
 @Injectable()
 export class LoginService {
@@ -17,8 +18,9 @@ export class LoginService {
 
   logout(): void {
     this.isLoggedIn = false;
+    this.router.navigate(['login']);
   }
 
-  constructor() { }
+  constructor(private router: Router) { }
 
 }

@@ -1,3 +1,9 @@
-<p>
-  profile works!
-</p>
+<script src="../register/register.component.ts"></script>
+<form [formGroup]="updateProfileFrm" (submit)="onSubmit(updateProfileFrm)" >
+  <input placeholder="email" formControlName="userEmail">
+  <input placeholder="password" formControlName="userPassword">
+  <input placeholder="userName" formControlName="userName">
+  <input type="file" formControlName="userImg">
+  <button type="submit">update</button>
+  <button>delete</button>
+</form>

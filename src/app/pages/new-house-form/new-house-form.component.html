@@ -4,8 +4,9 @@
   <input placeholder="description" formControlName="houseDescription">
   <input placeholder="price" formControlName="housePrice">
   <input placeholder="address" formControlName="houseAddress">
-  <input placeholder="space" formControlName="houseSpace">
-  houseType<select formControlName="houseType">
+  <input placeholder="space" type="number" formControlName="houseSpace">
+  houseType
+  <select formControlName="houseType">
     <option value="isApartment">apartment</option>
     <option value="isHouse">house</option>
   </select>
@@ -13,5 +14,12 @@
   hasTv<input type="checkbox" formControlName="hasTv">
   hasDryer<input type="checkbox" formControlName="hasDryer">
   isFamilyFriendly<input type="checkbox" formControlName="isFamilyFriendly">
+  houseThumbnail<input type="file" formControlName="houseThumbnail">
+  houseImg1<input type="file" formControlName="houseImg1">
+  houseImg2<input type="file" formControlName="houseImg2">
+  houseImg3<input type="file" formControlName="houseImg3">
+  houseImg4<input type="file" formControlName="houseImg4">
+  houseImg5<input type="file" formControlName="houseImg5">
+
   <button type="submit" [disabled]="createHouseFrm.invalid">submit</button>
 </form>

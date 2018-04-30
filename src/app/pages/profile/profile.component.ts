@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-profile',
@@ -6,8 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-
-  constructor() { }
+  updateProfileFrm: FormGroup;
+  constructor( private fb: FormBuilder) {
+    this.updateProfileFrm = this.fb.group({
+      userEmail: ['', Validators.required],
+      userPassword: ['', Validators.required],
+      userName: ['', Validators.required],
+      userImg: ['']
+    });
+  }
 
   ngOnInit() {
   }

@@ -9,6 +9,8 @@ import {Router} from '@angular/router';
 })
 export class NewHouseFormComponent implements OnInit {
   createHouseFrm: FormGroup;
+  searchForm: FormGroup;
+
   constructor( private fb: FormBuilder,
                private router: Router) {
     this.createHouseFrm = this.fb.group({
@@ -21,27 +23,40 @@ export class NewHouseFormComponent implements OnInit {
       hasWifi:[''],
       hasTv:[''],
       hasDryer:[''],
-      isFamilyFriendly:['']
+      isFamilyFriendly:[''],
+      houseThumbnail:[''],
+      houseImg:[''],
+      houseImg1:[''],
+      houseImg2:[''],
+      houseImg3:[''],
+      houseImg4:[''],
+      houseImg5:['']
     })
   }
 
   ngOnInit() {
   }
 
+
   onSubmit(createHouseFrm){
     if(this.createHouseFrm.value.hasWifi == ""){
       this.createHouseFrm.value.hasWifi = false
     }
+
     if(this.createHouseFrm.value.hasTv == ""){
       this.createHouseFrm.value.hasTv = false
     }
+
     if(this.createHouseFrm.value.hasDryer == ""){
       this.createHouseFrm.value.hasDryer = false
     }
+
     if(this.createHouseFrm.value.isFamilyFriendly == ""){
       this.createHouseFrm.value.isFamilyFriendly = false
     }
+
     console.log('createHouseFrm' , this.createHouseFrm.value);
+    this.router.navigate(['portal']);
   }
 
   checkValue(event: any){
