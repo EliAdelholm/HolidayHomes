@@ -89,13 +89,13 @@ app.post('/create-house' , async (req,res) => {
     const extName = path.extname(req.files.thumbnail.name)
     // Generate new path, using timestamp to avoid duplication errors
     const timestamp = + new Date()
-    const targetPath = "assets/img/" + timestamp + extName
+    const targetPath = "src/assets/img/" + timestamp + extName
 
     fs.move(tempPath, targetPath, function (err) {
       if (err) throw err;
       console.log("Upload completed!");
-      const image = sharp(tempPath).resize(200,200).toFile('output.jpg').then(() => {
-        console.log('test')
+      const image = sharp(targetPath).resize(200,200).toFile('src/assets/img' + timestamp +'small'+extName).then(() => {
+        console.log('Success!')
       }).catch((e) => { console.log(e) })
     });
 
