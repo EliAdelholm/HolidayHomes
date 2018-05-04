@@ -1,25 +1,25 @@
 <script src="new-house-form.component.ts"></script>
 <form [formGroup]="createHouseFrm" (submit)="onSubmit(createHouseFrm)">
-  <input placeholder="headline" formControlName="houseHeadline">
-  <input placeholder="description" formControlName="houseDescription">
-  <input placeholder="price" formControlName="housePrice">
-  <input placeholder="address" formControlName="houseAddress">
-  <input placeholder="space" type="number" formControlName="houseSpace">
+  <input placeholder="headline" formControlName="houseHeadline"><br>
+  <input placeholder="description" formControlName="houseDescription"><br>
+  <input placeholder="price" formControlName="housePrice"><br>
+  <input placeholder="address" formControlName="houseAddress"><br>
+  <input placeholder="space" type="number" formControlName="houseSpace"><br>
   houseType
   <select formControlName="houseType">
     <option value="isApartment">apartment</option>
     <option value="isHouse">house</option>
-  </select>
-  hasWifi<input type="checkbox" formControlName="hasWifi">
-  hasTv<input type="checkbox" formControlName="hasTv">
-  hasDryer<input type="checkbox" formControlName="hasDryer">
-  isFamilyFriendly<input type="checkbox" formControlName="isFamilyFriendly">
-  houseThumbnail<input type="file" formControlName="houseThumbnail">
-  houseImg1<input type="file" formControlName="houseImg1">
-  houseImg2<input type="file" formControlName="houseImg2">
-  houseImg3<input type="file" formControlName="houseImg3">
-  houseImg4<input type="file" formControlName="houseImg4">
-  houseImg5<input type="file" formControlName="houseImg5">
+  </select><br>
+  hasWifi<input type="checkbox" formControlName="hasWifi"><br>
+  hasTv<input type="checkbox" formControlName="hasTv"><br>
+  hasDryer<input type="checkbox" formControlName="hasDryer"><br>
+  isFamilyFriendly<input type="checkbox" formControlName="isFamilyFriendly"><br>
+  houseThumbnail<input type="file" formControlName="houseThumbnail"><br>
+  houseImg1<input type="file" formControlName="houseImg1"><br>
+  houseImg2<input type="file" formControlName="houseImg2"><br>
+  houseImg3<input type="file" formControlName="houseImg3"><br>
+  houseImg4<input type="file" formControlName="houseImg4"><br>
+  houseImg5<input type="file" formControlName="houseImg5"><br>
 
   <button type="submit" [disabled]="createHouseFrm.invalid">submit</button>
 </form>

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
+import {House} from '../../entities/house';
+import {HouseActions} from '../../redux/house/house.actions';
 
 @Component({
   selector: 'app-new-house-form',
@@ -9,10 +11,12 @@ import {Router} from '@angular/router';
 })
 export class NewHouseFormComponent implements OnInit {
   createHouseFrm: FormGroup;
-  searchForm: FormGroup;
+  // searchForm: FormGroup;
 
   constructor( private fb: FormBuilder,
-               private router: Router) {
+               private router: Router,
+               private houseActions: HouseActions) {
+
     this.createHouseFrm = this.fb.group({
       houseHeadline:['', Validators.required],
       houseDescription:['', Validators.required],
@@ -55,8 +59,10 @@ export class NewHouseFormComponent implements OnInit {
       this.createHouseFrm.value.isFamilyFriendly = false
     }
 
-    console.log('createHouseFrm' , this.createHouseFrm.value);
-    this.router.navigate(['portal']);
+    // console.log('createHouseFrm' , this.createHouseFrm.value);
+    const house: House = createHouseFrm.value as House;
+    this.houseActions.createHouse( house );
+    // this.router.navigate(['portal']);
   }
 
   checkValue(event: any){

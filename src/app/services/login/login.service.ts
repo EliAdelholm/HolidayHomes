@@ -12,7 +12,7 @@ export class LoginService {
   login(userMail: String): Observable<boolean> {
     return Observable.of(true).do(val => {
       this.isLoggedIn = true;
-      console.log('isLoggedIn = true');
+      // console.log('isLoggedIn = true');
     });
   }
 

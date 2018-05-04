@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {HouseActions} from '../../redux/house/house.actions';
 
 @Component({
   selector: 'app-portal',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PortalComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private houseActions: HouseActions
+  ) { }
 
   ngOnInit() {
+    console.log('houses', this.houseActions.getHouses());
   }
 
 }
