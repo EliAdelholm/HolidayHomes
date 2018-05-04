@@ -6,6 +6,7 @@ const mysql = require('mysql')
 const sharp = require('sharp')
 const fs = require('fs-extra')
 const path = require('path')
+const mime = require('mime-types')
 
 app.use(formidable());
 /** Imports  ************/
@@ -26,16 +27,12 @@ global.con.connect(function (err) {
 });
 
 /** Server side routing  ************/
-/* TESTING
-app.use(express.static(`${__dirname}/../public`))
-*/
 
 app.get('/', (req, res) => {
-    res.sendFile(`${__dirname}/test.html`)
+  res.sendFile(`${__dirname}/test.html`)
 })
 
 /** API  ************/
-// res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
 
 /** Get one user **/
 app.get('/get-user', async (req, res) => {
@@ -49,8 +46,8 @@ app.get('/login', async (req, res) => {
   const sUserEmail = req.query.email
   const sUserPassword = req.query.password
   try {
-  const ajUsers = await db.loginUser(sUserEmail, sUserPassword)
-  return res.send(ajUsers)
+    const ajUsers = await db.loginUser(sUserEmail, sUserPassword)
+    return res.send(ajUsers)
   } catch (e) {
     return res.send(e)
   }
@@ -78,44 +75,51 @@ app.get('/get-houses', async (req, res) => {
   }
 })
 
+/** Create house **/
+app.post('/create-house' , async (req,res) => {
+  const thumbnailMimeType = mime.contentType(req.files.thumbnail.name)
+  try{
 
-
-  /*
-app.post('/save-image', (req, res) => {
-  const extName = path.extname(req.files.file.name)
-
-  if (['.png', '.jpg', '.jpeg'].includes(extName)) {
-    console.log("Valid image was uploaded")
-
-    // Handle image upload
+    if (thumbnailMimeType.split('/')[0] !== 'image') {
+      return res.send('The upload is not a valid image')
+    }
     // Get temporary file path
-    const tempPath = req.files.file.path
-
+    // Handle image upload
+    const tempPath = req.files.thumbnail.path
+    const extName = path.extname(req.files.thumbnail.name)
     // Generate new path, using timestamp to avoid duplication errors
     const timestamp = + new Date()
-    const imagePath = "assets/img/" + timestamp + extName
-    const targetPath = path.resolve('../src/' + imagePath)
+    const targetPath = "assets/img/" + timestamp + extName
 
-    // Actually move the file to permanent storage
     fs.move(tempPath, targetPath, function (err) {
       if (err) throw err;
       console.log("Upload completed!");
+      const image = sharp(tempPath).resize(200,200).toFile('output.jpg').then(() => {
+        console.log('test')
+      }).catch((e) => { console.log(e) })
     });
 
-  } else {
-    console.log("No valid image")
-    // Set the path for default image
-    imagePath = "assets/img/default-event.jpg";
+    console.log(image)
+    const jHouse = {
+      users_id: req.fields.userid,
+      thumbnail_image: targetPath,
+      headline: req.fields.headline,
+      description: req.fields.description,
+      price: req.fields.price,
+      address: req.fields.address,
+      space: req.fields.space,
+      is_house: req.fields.house,
+      wifi: req.fields.wifi,
+      familyfriendly: req.fields.familyFriendly,
+      tv: req.fields.tv,
+      dryer: req.fields.dryer
+    }
+    const response = await db.createHouse(jHouse)
+    return res.send(response)
+  } catch (e) {
+    console.log('error saving house '+e)
   }
-
-/*
-  // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
-  image = sharp(__dirname+'/test.jpg').resize(200,200).toFile('output.jpg').then(() => {
-    console.log('test')
-  }).catch((e) => { return res.send(e)})
-  return res.send(Ok imaged saved)
 })
-  */
 
 /** Connection  ************/
 app.listen(3000, (err) => {
