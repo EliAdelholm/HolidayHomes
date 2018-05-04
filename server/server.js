@@ -1,22 +1,24 @@
 /** Dependencies ************/
 const express = require('express')
+const formidable = require('express-formidable');
 const app = express()
 const mysql = require('mysql')
-const sharp = require('sharp')
+//const sharp = require('sharp')
 const fs = require('fs-extra')
 const path = require('path')
 const mime = require('mime-types')
-const bodyParser = require('body-parser')
-const buffer = require('buffer')
 
-
-app.use(bodyParser.json())
+// app.use(formidable());
 /** Imports  ************/
 const dbClass = require('./controllers/database.js')
 const db = new dbClass
 
+// Angular DIST output folder
+app.use(express.static(path.join(__dirname, '../dist')));
+
 /** sql connection ************/
 global.con = mysql.createConnection({
+  // host: "localhost:8889",
   host: "localhost",
   user: "root",
   password: "root",
@@ -30,9 +32,7 @@ global.con.connect(function (err) {
 
 /** Server side routing  ************/
 
-app.get('/', (req, res) => {
-  res.sendFile(`${__dirname}/test.html`)
-})
+
 
 /** API  ************/
 
@@ -55,7 +55,7 @@ app.get('/login', async (req, res) => {
   }
 })
 
-/** Get details about one house **/
+/** Get details about one house house **/
 app.get('/get-house', async (req, res) => {
   const iHouseId = req.query.id
   try {
@@ -77,58 +77,56 @@ app.get('/get-houses', async (req, res) => {
   }
 })
 
-
-
 /** Create house **/
-/*
 app.post('/create-house' , async (req,res) => {
+  const thumbnailMimeType = mime.contentType(req.files.thumbnail.name)
+  try{
 
-    const thumbnailMimeType = mime.contentType(req.files.thumbnail.name)
-
-
-    try{
-      if (thumbnailMimeType.split('/')[0] !== 'image') {
-        return res.send('The upload is not a valid image')
-      }
-
-      // Get temporary file path
-      // Handle image upload
-      const tempPath = req.files.thumbnail.path
-      const extName = path.extname(req.files.thumbnail.name)
-      // Generate new path, using timestamp to avoid duplication errors
-      const timestamp = + new Date()
-      const targetPath = "src/assets/img/" + timestamp + req.body.userid + extName
-
-      fs.move(tempPath, targetPath, function (err) {
-        if (err) throw err;
-        console.log("Upload completed!");
-        const image = sharp(targetPath).resize(200,200).toFile('src/assets/img/' + timestamp + req.body.userid +'small'+extName).then(() => {
-          console.log('Success!')
-        }).catch((e) => { console.log(e) })
-      });
-
-      console.log(image)
-      const jHouse = {
-        users_id: req.body.userid,
-        thumbnail_image: targetPath,
-        headline: req.body.headline,
-        description: req.body.description,
-        price: req.body.price,
-        address: req.body.address,
-        space: req.body.space,
-        is_house: req.body.house,
-        wifi: req.body.wifi,
-        familyfriendly: req.body.familyFriendly,
-        tv: req.body.tv,
-        dryer: req.body.dryer
-      }
-      const response = await db.createHouse(jHouse)
-      return res.send(response)
-    } catch (e) {
-      console.log('error saving house '+e)
+    if (thumbnailMimeType.split('/')[0] !== 'image') {
+      return res.send('The upload is not a valid image')
     }
-  })
-  */
+    // Get temporary file path
+    // Handle image upload
+    const tempPath = req.files.thumbnail.path
+    const extName = path.extname(req.files.thumbnail.name)
+    // Generate new path, using timestamp to avoid duplication errors
+    const timestamp = + new Date()
+    const targetPath = "src/assets/img/" + timestamp + extName
+
+    fs.move(tempPath, targetPath, function (err) {
+      if (err) throw err;
+      console.log("Upload completed!");
+      // const image = sharp(targetPath).resize(200,200).toFile('src/assets/img' + timestamp +'small'+extName).then(() => {
+      //   console.log('Success!')
+      // }).catch((e) => { console.log(e) })
+    });
+
+    console.log(image)
+    const jHouse = {
+      users_id: req.fields.userid,
+      thumbnail_image: targetPath,
+      headline: req.fields.headline,
+      description: req.fields.description,
+      price: req.fields.price,
+      address: req.fields.address,
+      space: req.fields.space,
+      is_house: req.fields.house,
+      wifi: req.fields.wifi,
+      familyfriendly: req.fields.familyFriendly,
+      tv: req.fields.tv,
+      dryer: req.fields.dryer
+    }
+    const response = await db.createHouse(jHouse)
+    return res.send(response)
+  } catch (e) {
+    console.log('error saving house '+e)
+  }
+})
+
+// Send all other requests to the Angular app
+app.get('*', (req, res) => {
+  return res.sendFile(path.join(__dirname, '../dist/index.html'));
+});
 
 /** Connection  ************/
 app.listen(3000, (err) => {

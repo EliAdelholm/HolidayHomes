@@ -8,7 +8,7 @@ export class HouseService {
   constructor( private http: HttpClient){}
 
   getHouses(){
-    return this.http.get('./server/server.js');
+    return this.http.get('/get-houses');
   }
 
   static getInitialHouseState(): HouseState {

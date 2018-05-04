@@ -10,7 +10,7 @@ import {RegisterComponent} from './pages/register/register.component';
 import {PageNotFoundComponent} from './pages/page-not-found/page-not-found.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'portal', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'portal', component: PortalComponent },
   { path: 'house-preview', component: HousePreviewComponent },
   { path: 'booking', component: BookingComponent },
