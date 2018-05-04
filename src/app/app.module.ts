@@ -14,6 +14,10 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {LoginService} from './services/login/login.service';
+import { DevToolsExtension, NgReduxModule, NgRedux } from '@angular-redux/store';
+import { NgReduxRouter, NgReduxRouterModule } from '@angular-redux/router';
+import { IAppState, rootReducer } from './redux/store/store';
+import {HouseActions} from './redux/house/house.actions';
 
 @NgModule({
   declarations: [
@@ -31,11 +35,25 @@ import {LoginService} from './services/login/login.service';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    NgReduxModule, NgReduxRouterModule.forRoot()
   ],
   providers: [
-    LoginService
+    LoginService,
+    HouseActions
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+
+export class AppModule {
+  constructor(private ngRedux: NgRedux<IAppState>,
+              private devTool: DevToolsExtension,
+              private ngReduxRouter: NgReduxRouter) {
+
+    this.ngRedux.configureStore(
+      rootReducer, {});
+
+    ngReduxRouter.initialize(/* args */);
+  }
+}
+

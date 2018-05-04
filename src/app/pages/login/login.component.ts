@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
 
   onSubmit(loginForm) {
     this.loginService.login(loginForm.value.userMail).subscribe(x => {
-      console.log('loginForm' , this.loginForm);
+      // console.log('loginForm' , this.loginForm);
       this.router.navigate(['portal']);
     });
   }
