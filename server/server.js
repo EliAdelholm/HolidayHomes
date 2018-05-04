@@ -3,7 +3,7 @@ const express = require('express')
 const formidable = require('express-formidable');
 const app = express()
 const mysql = require('mysql')
-const sharp = require('sharp')
+//const sharp = require('sharp')
 const fs = require('fs-extra')
 const path = require('path')
 const mime = require('mime-types')
@@ -18,8 +18,10 @@ app.use(express.static(path.join(__dirname, '../dist')));
 
 /** sql connection ************/
 global.con = mysql.createConnection({
+  // host: "localhost:8889",
   host: "localhost",
   user: "root",
+  password: "root",
   database: 'holidayhouses'
 });
 
@@ -94,9 +96,9 @@ app.post('/create-house' , async (req,res) => {
     fs.move(tempPath, targetPath, function (err) {
       if (err) throw err;
       console.log("Upload completed!");
-      const image = sharp(targetPath).resize(200,200).toFile('src/assets/img' + timestamp +'small'+extName).then(() => {
-        console.log('Success!')
-      }).catch((e) => { console.log(e) })
+      // const image = sharp(targetPath).resize(200,200).toFile('src/assets/img' + timestamp +'small'+extName).then(() => {
+      //   console.log('Success!')
+      // }).catch((e) => { console.log(e) })
     });
 
     console.log(image)
