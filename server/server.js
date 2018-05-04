@@ -8,16 +8,18 @@ const fs = require('fs-extra')
 const path = require('path')
 const mime = require('mime-types')
 
-app.use(formidable());
+// app.use(formidable());
 /** Imports  ************/
 const dbClass = require('./controllers/database.js')
 const db = new dbClass
+
+// Angular DIST output folder
+app.use(express.static(path.join(__dirname, '../dist')));
 
 /** sql connection ************/
 global.con = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "root",
   database: 'holidayhouses'
 });
 
@@ -28,9 +30,7 @@ global.con.connect(function (err) {
 
 /** Server side routing  ************/
 
-app.get('/', (req, res) => {
-  res.sendFile(`${__dirname}/test.html`)
-})
+
 
 /** API  ************/
 
@@ -120,6 +120,11 @@ app.post('/create-house' , async (req,res) => {
     console.log('error saving house '+e)
   }
 })
+
+// Send all other requests to the Angular app
+app.get('*', (req, res) => {
+  return res.sendFile(path.join(__dirname, '../dist/index.html'));
+});
 
 /** Connection  ************/
 app.listen(3000, (err) => {
