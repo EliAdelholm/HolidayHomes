@@ -13,7 +13,7 @@ export class PortalComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log('houses', this.houseActions.getHouses());
+    // console.log('houses', this.houseActions.getHouses());
   }
 
 }
