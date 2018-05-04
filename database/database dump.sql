@@ -56,7 +56,7 @@ CREATE TABLE `houses` (
   `thumbnail_image` varchar(60) NOT NULL,
   `headline` varchar(100) NOT NULL,
   `description` varchar(500) DEFAULT NULL,
-  `prize` int(10) unsigned NOT NULL,
+  `price` int(10) unsigned NOT NULL,
   `address` varchar(45) NOT NULL,
   `space` int(10) unsigned NOT NULL,
   `is_house` tinyint(4) NOT NULL,
