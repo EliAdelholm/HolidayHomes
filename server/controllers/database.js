@@ -51,6 +51,19 @@ class Database {
         })
     })
   }
+
+  createHouse(jHouse) {
+
+    return new Promise((resolve, reject) => {
+      global.con.query('INSERT INTO `houses` SET ?',
+        [jHouse],
+        (error, result) => {
+          if (error) return reject(error)
+          resolve(result)
+        })
+    })
+  }
+
 }
 
 module.exports = Database
