@@ -1,0 +1,11 @@
+/get-user?id=
+Enter the id to get the matching user from the api
+
+/Login?email=&password=
+Searches for user in the database with matching email & password. Returns the user if found
+
+/get-house?id=
+Get the house with the matching id
+
+/get-houses?number=
+Get houses from the database. The number sets the maximum amount of houses returned
