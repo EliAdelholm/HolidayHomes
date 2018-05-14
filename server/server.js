@@ -21,7 +21,7 @@ global.con = mysql.createConnection({
   // host: "localhost:8889",
   host: "localhost",
   user: "root",
-  password: "root",
+  // password: "root",
   database: 'holidayhouses'
 });
 
@@ -37,14 +37,14 @@ global.con.connect(function (err) {
 /** API  ************/
 
 /** Get one user **/
-app.get('/get-user', async (req, res) => {
+app.get('/api/get-user', async (req, res) => {
   const iUserId = req.query.id
   const ajUsers = await db.getUser(iUserId)
   return res.send(ajUsers)
 })
 
 /** Login **/
-app.get('/login', async (req, res) => {
+app.get('/api/login', async (req, res) => {
   const sUserEmail = req.query.email
   const sUserPassword = req.query.password
   try {
@@ -56,7 +56,7 @@ app.get('/login', async (req, res) => {
 })
 
 /** Get details about one house house **/
-app.get('/get-house', async (req, res) => {
+app.get('/api/get-house', async (req, res) => {
   const iHouseId = req.query.id
   try {
     const jHouse = await db.getHouse(iHouseId);
@@ -67,7 +67,7 @@ app.get('/get-house', async (req, res) => {
 })
 
 /** Get houses **/
-app.get('/get-houses', async (req, res) => {
+app.get('/api/get-houses', async (req, res) => {
   const iNumberOfHouses = parseInt(req.query.number)
   try {
     const ajHouses = await db.getHouses(iNumberOfHouses)
@@ -78,7 +78,7 @@ app.get('/get-houses', async (req, res) => {
 })
 
 /** Create house **/
-app.post('/create-house' , async (req,res) => {
+app.post('/api/create-house' , async (req,res) => {
   const thumbnailMimeType = mime.contentType(req.files.thumbnail.name)
   try{
 
@@ -129,7 +129,7 @@ app.get('*', (req, res) => {
 });
 
 /** Connection  ************/
-app.listen(3000, (err) => {
+app.listen(4000, (err) => {
   if (err) {
     console.log(err)
     return false

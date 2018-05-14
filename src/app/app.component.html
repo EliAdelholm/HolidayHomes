@@ -1,11 +1,34 @@
 <script src="services/login/login.service.ts"></script>
 <script src="app.module.ts"></script>
-<nav>
-  <a routerLink=portal routerLinkActive=”active” *ngIf="loginService.isLoggedIn">portal</a>
-  <a routerLink=new-house-form routerLinkActive=”active” *ngIf="loginService.isLoggedIn">new house</a>
-  <a routerLink=profile routerLinkActive=”active” *ngIf="loginService.isLoggedIn">profile</a>
-  <a routerLink=login routerLinkActive=”active” *ngIf="!loginService.isLoggedIn">login</a>
-  <a routerLink=register routerLinkActive=”active” *ngIf="!loginService.isLoggedIn">register</a>
-  <a routerLink=profile routerLinkActive=”active” *ngIf="loginService.isLoggedIn" (click)="loginService.logout()" >logout</a>
+
+<nav class="navbar navbar-expand-md navbar-light bg-light">
+  <a routerLink=portal routerLinkActive=”active” class="navbar-brand">HolidayHouses</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+          aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" routerLink=login routerLinkActive=”active” *ngIf="!loginService.isLoggedIn">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink=register routerLinkActive=”active” *ngIf="!loginService.isLoggedIn">Register</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink=new-house-form routerLinkActive=”active” *ngIf="loginService.isLoggedIn">Add
+          House</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink=profile routerLinkActive=”active” *ngIf="loginService.isLoggedIn">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink=profile routerLinkActive=”active” *ngIf="loginService.isLoggedIn"
+           (click)="loginService.logout()">Logout</a>
+      </li>
+    </ul>
+  </div>
 </nav>
-<router-outlet></router-outlet>
+<div class="container-fluid">
+  <router-outlet></router-outlet>
+</div>

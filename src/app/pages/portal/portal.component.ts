@@ -22,13 +22,7 @@ export class PortalComponent implements OnInit {
     this.houseActions.getHouses();
     this.subscription = this.ngRedux.select(store => store.house).subscribe( x => {
       this.houses = x.house;
-      // console.log("houses", x);
-    })
-
-  }
-
-  onGetHouses(){
-
+    });
   }
 
 }

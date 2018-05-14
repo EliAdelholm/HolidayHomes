@@ -9,7 +9,7 @@ export class HouseService {
 
   getHouses(){
     console.log('getting houses');
-    return this.http.get('/get-houses?number=5');
+    return this.http.get('/api/get-houses?number=5');
   }
 
   static getInitialHouseState(): HouseState {

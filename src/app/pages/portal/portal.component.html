@@ -1,3 +1,53 @@
+<div class="row">
+
+  <div class="col-12 col-md-3 col-lg-2">
+    <h2>Filters</h2>
+    <p>Location<br>Date</p>
+    <h5>Housing Type</h5>
+    <div class="custom-control custom-checkbox">
+      <input type="checkbox" class="custom-control-input" id="filterAppartments">
+      <label class="custom-control-label" for="filterAppartments">Appartment</label>
+    </div>
+    <div class="custom-control custom-checkbox">
+      <input type="checkbox" class="custom-control-input" id="filterHouses">
+      <label class="custom-control-label" for="filterHouses">House</label>
+    </div><br>
+
+    <h5>Facilities</h5>
+    <div class="custom-control custom-checkbox">
+      <input type="checkbox" class="custom-control-input" id="filterWiFi">
+      <label class="custom-control-label" for="filterWiFi">Wi-Fi</label>
+    </div>
+    <div class="custom-control custom-checkbox">
+      <input type="checkbox" class="custom-control-input" id="filterTV">
+      <label class="custom-control-label" for="filterTV">Television</label>
+    </div>
+    <div class="custom-control custom-checkbox">
+      <input type="checkbox" class="custom-control-input" id="filterDryer">
+      <label class="custom-control-label" for="filterDryer">Dryer</label>
+    </div><br>
+    <div class="custom-control custom-checkbox">
+      <input type="checkbox" class="custom-control-input" id="filterFamilyFriendly">
+      <label class="custom-control-label" for="filterFamilyFriendly">Family Friendly</label>
+    </div>
+
+  </div>
+  <div class="col-12 col-md-9 col-lg-10">
+    <h2>Housing</h2>
+    <p *ngIf="!houses">No houses found</p>
+    <div class="card-columns" *ngIf="houses">
+      <div class="card" *ngFor="let house of houses">
+        <img class="card-img-top"
+             src="../../../assets/img/{{house.thumbnail_image}}"
+             alt="Card image cap">
+        <div class="card-body">
+          <p class="card-title">{{ house.headline }}</p>
+          <p class="card-text">{{ house.description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <ul>
   <!--<li *ngFor="let house of onGetHouses()">{{house}}</li>-->
 </ul>

@@ -13,20 +13,16 @@ export class HouseEpic {
   constructor( private houseService: HouseService ) {}
 
   getHouses = (actions: ActionsObservable<any>) => {
-    return actions.ofType(HouseActions.GET_HOUSES) // Listen for this action
-      .mergeMap(({}) => { // payload: (subject: Subject, date: Date): When this action is activated, call ws through service class or directly like below
-        return this.houseService.getHouses() // runs async
-          .map((result: any[]) => ({ // when web service responds with success, call this action with payload that came back from webservice
-            type: HouseActions.RESPONSE_OK,
-            payload: result // Hack: Db contains all data, not just yours.
+    return actions.ofType(HouseActions.GET_HOUSES)
+      .mergeMap(({}) => {
+        return this.houseService.getHouses()
+          .map((result: any[]) => ({
+            type: HouseActions.RECEIVED_HOUSES,
+            payload: result
           }))
-          .map(x => {
-            console.log("asdasds", x);
-            return x;
-          })
           .catch(error => {
-            if (error.status >= 200 && error.status < 300) { // web service vracia 201 a angular je prijebany takze to oznaci ako error (akceptuje iba 200 ako spravne)
-              return Observable.of({ // when web service responds with failure, call this action with payload that came back from webservice
+            if (error.status >= 200 && error.status < 300) {
+              return Observable.of({
                 type: HouseActions.RESPONSE_OK,
                 payload: error.status
               });

@@ -1,25 +1,84 @@
 <script src="new-house-form.component.ts"></script>
-<form [formGroup]="createHouseFrm" (submit)="onSubmit(createHouseFrm)">
-  <input placeholder="headline" formControlName="houseHeadline"><br>
-  <input placeholder="description" formControlName="houseDescription"><br>
-  <input placeholder="price" formControlName="housePrice"><br>
-  <input placeholder="address" formControlName="houseAddress"><br>
-  <input placeholder="space" type="number" formControlName="houseSpace"><br>
-  houseType
-  <select formControlName="houseType">
-    <option value="isApartment">apartment</option>
-    <option value="isHouse">house</option>
-  </select><br>
-  hasWifi<input type="checkbox" formControlName="hasWifi"><br>
-  hasTv<input type="checkbox" formControlName="hasTv"><br>
-  hasDryer<input type="checkbox" formControlName="hasDryer"><br>
-  isFamilyFriendly<input type="checkbox" formControlName="isFamilyFriendly"><br>
-  houseThumbnail<input type="file" formControlName="houseThumbnail"><br>
-  houseImg1<input type="file" formControlName="houseImg1"><br>
-  houseImg2<input type="file" formControlName="houseImg2"><br>
-  houseImg3<input type="file" formControlName="houseImg3"><br>
-  houseImg4<input type="file" formControlName="houseImg4"><br>
-  houseImg5<input type="file" formControlName="houseImg5"><br>
 
-  <button type="submit" [disabled]="createHouseFrm.invalid">submit</button>
-</form>
+<div class="row">
+  <div class="col-12 offset-sm-1 col-sm-10 offset-md-2 col-md-8 offset-lg-3 col-lg-6">
+    <h2>Add a New House</h2>
+    <form [formGroup]="createHouseFrm" (submit)="onSubmit(createHouseFrm)">
+      <div class="form-group">
+        <label>Headline</label>
+        <input formControlName="houseHeadline" class="form-control">
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea formControlName="houseDescription" class="form-control" rows="2"></textarea>
+      </div>
+      <div class="form-group">
+
+      </div>
+      <div class="form-group">
+        <label>Address</label>
+        <input formControlName="houseAddress" class="form-control">
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-12 col-sm-6">
+            <label>Space</label>
+            <div class="input-group mb-3">
+              <input formControlName="houseSpace" class="form-control" aria-describedby="spaceunit-addon">
+              <div class="input-group-append">
+                <span class="input-group-text" id="spaceunit-addon">M<sup>2</sup></span>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6">
+            <label>Price per Night</label>
+            <div class="input-group mb-3">
+              <input formControlName="housePrice" class="form-control" aria-describedby="currency-addon">
+              <div class="input-group-append">
+                <span class="input-group-text" id="currency-addon">DKK</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Housing Type</label>
+        <select formControlName="houseType" class="form-control">
+          <option value="appartment">Appartment</option>
+          <option value="house">House</option>
+        </select>
+      </div>
+
+      <h5>Facilities</h5>
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="filterWiFi" formControlName="hasWifi">
+        <label class="custom-control-label" for="filterWiFi">Wi-Fi</label>
+      </div>
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="filterTV" formControlName="hasTv">
+        <label class="custom-control-label" for="filterTV">Television</label>
+      </div>
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="filterDryer" formControlName="hasDryer">
+        <label class="custom-control-label" for="filterDryer">Dryer</label>
+      </div>
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="filterFamilyFriendly"
+               formControlName="isFamilyFriendly">
+        <label class="custom-control-label" for="filterFamilyFriendly">Family Friendly</label>
+      </div>
+      <div class="form-group">
+        <label>Thumbnail Image</label>
+        <input type="file" formControlName="houseThumbnail" class="form-control">
+      </div>
+      <div class="form-group">
+        <label>Additional Images</label>
+        <input multiple type="file" formControlName="houseImg1" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary" [disabled]="createHouseFrm.invalid">Add House</button>
+      </div>
+    </form>
+  </div>
+</div>

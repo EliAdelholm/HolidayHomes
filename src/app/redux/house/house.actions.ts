@@ -9,6 +9,7 @@ export class HouseActions {
 
   static CREATE_HOUSE: String = 'CREATE_HOUSE';
   static GET_HOUSES: String = 'GET_HOUSES';
+  static RECEIVED_HOUSES: String = 'RECEIVED_HOUSES';
   static RESPONSE_ERROR: String = 'RESPONSE_ERROR';
   static RESPONSE_OK: String = 'RESPONSE_OK';
 

@@ -27,7 +27,7 @@ class Database {
 
   getHouses(iNumberOfHouses) {
     return new Promise((resolve, reject) => {
-      global.con.query('SELECT id, thumbnail_image, headline, price, space, address FROM houses LIMIT ?',
+      global.con.query('SELECT id, thumbnail_image, headline, description, price, space, address FROM houses LIMIT ?',
         [iNumberOfHouses], (error, ajResult) => {
           if (error) return reject(error);
           if (!ajResult[0]) {
