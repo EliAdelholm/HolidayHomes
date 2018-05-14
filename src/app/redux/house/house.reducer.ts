@@ -14,7 +14,7 @@ export function houseReducer ( state: HouseState = INITIAL_STATE, action: any ){
 
     case HouseActions.GET_HOUSES:
       newHouseArray = [ state.house ];
-      console.log( 'newHouseArray',newHouseArray );
+      console.log( 'get newHouseArray',newHouseArray );
       return tassign( state, { house: newHouseArray } )
 
     default:

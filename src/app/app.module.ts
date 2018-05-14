@@ -18,6 +18,12 @@ import { DevToolsExtension, NgReduxModule, NgRedux } from '@angular-redux/store'
 import { NgReduxRouter, NgReduxRouterModule } from '@angular-redux/router';
 import { IAppState, rootReducer } from './redux/store/store';
 import {HouseActions} from './redux/house/house.actions';
+import {HouseEpic} from './redux/house/house.epic';
+import { createEpicMiddleware, combineEpics } from 'redux-observable';
+import { createLogger } from 'redux-logger';
+import {HouseService} from './redux/house/house.service';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -36,24 +42,30 @@ import {HouseActions} from './redux/house/house.actions';
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
+    HttpClientModule,
     NgReduxModule, NgReduxRouterModule.forRoot()
   ],
   providers: [
     LoginService,
-    HouseActions
+    HouseActions,
+    HouseService,
+    HouseEpic
   ],
   bootstrap: [AppComponent]
 })
 
 export class AppModule {
-  constructor(private ngRedux: NgRedux<IAppState>,
-              private devTool: DevToolsExtension,
-              private ngReduxRouter: NgReduxRouter) {
-
-    this.ngRedux.configureStore(
-      rootReducer, {});
+  constructor( private ngRedux: NgRedux<IAppState>,
+               private devTool: DevToolsExtension,
+               private ngReduxRouter: NgReduxRouter, private houseEpic: HouseEpic ) {
+    const rootEpic = combineEpics(
+      this.houseEpic.getHouses
+    );
+    const middleware = [
+      createEpicMiddleware(rootEpic), createLogger({ level: 'info', collapsed: true })
+    ];
+    this.ngRedux.configureStore( rootReducer, {}, middleware,[ devTool.isEnabled() ? devTool.enhancer() : f => f ]);
 
     ngReduxRouter.initialize(/* args */);
   }
 }
-

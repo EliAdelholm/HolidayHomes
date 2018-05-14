@@ -8,7 +8,8 @@ export class HouseService {
   constructor( private http: HttpClient){}
 
   getHouses(){
-    return this.http.get('/get-houses');
+    console.log('getting houses');
+    return this.http.get('/get-houses?number=5');
   }
 
   static getInitialHouseState(): HouseState {

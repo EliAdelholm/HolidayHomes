@@ -21,6 +21,7 @@ export class HouseActions {
   }
 
   getHouses () {
+    // console.log('get houses ');
     this.ngRedux.dispatch({
       type: HouseActions.GET_HOUSES
     });

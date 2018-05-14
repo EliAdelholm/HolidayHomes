@@ -1,8 +1,11 @@
 <script src="services/login/login.service.ts"></script>
-<script src="app.module.ts"></script><a routerLink=portal routerLinkActive=”active” *ngIf="loginService.isLoggedIn">portal</a>
-<a routerLink=new-house-form routerLinkActive=”active” *ngIf="loginService.isLoggedIn">new house</a>
-<a routerLink=profile routerLinkActive=”active” *ngIf="loginService.isLoggedIn">profile</a>
-<a routerLink=login routerLinkActive=”active” *ngIf="!loginService.isLoggedIn">login</a>
-<a routerLink=register routerLinkActive=”active” *ngIf="!loginService.isLoggedIn">register</a>
-<a routerLink=profile routerLinkActive=”active” *ngIf="loginService.isLoggedIn" (click)="loginService.logout()" >logout</a>
+<script src="app.module.ts"></script>
+<nav>
+  <a routerLink=portal routerLinkActive=”active” *ngIf="loginService.isLoggedIn">portal</a>
+  <a routerLink=new-house-form routerLinkActive=”active” *ngIf="loginService.isLoggedIn">new house</a>
+  <a routerLink=profile routerLinkActive=”active” *ngIf="loginService.isLoggedIn">profile</a>
+  <a routerLink=login routerLinkActive=”active” *ngIf="!loginService.isLoggedIn">login</a>
+  <a routerLink=register routerLinkActive=”active” *ngIf="!loginService.isLoggedIn">register</a>
+  <a routerLink=profile routerLinkActive=”active” *ngIf="loginService.isLoggedIn" (click)="loginService.logout()" >logout</a>
+</nav>
 <router-outlet></router-outlet>

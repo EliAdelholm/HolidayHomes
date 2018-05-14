@@ -20,6 +20,10 @@ export class HouseEpic {
             type: HouseActions.RESPONSE_OK,
             payload: result // Hack: Db contains all data, not just yours.
           }))
+          .map(x => {
+            console.log("asdasds", x);
+            return x;
+          })
           .catch(error => {
             if (error.status >= 200 && error.status < 300) { // web service vracia 201 a angular je prijebany takze to oznaci ako error (akceptuje iba 200 ako spravne)
               return Observable.of({ // when web service responds with failure, call this action with payload that came back from webservice
