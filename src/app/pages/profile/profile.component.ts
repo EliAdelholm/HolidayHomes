@@ -8,7 +8,10 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 })
 export class ProfileComponent implements OnInit {
   updateProfileFrm: FormGroup;
-  constructor( private fb: FormBuilder) {
+  displayPopup = false;
+  constructor( private fb: FormBuilder) {}
+
+  ngOnInit() {
     this.updateProfileFrm = this.fb.group({
       userEmail: ['', Validators.required],
       userPassword: ['', Validators.required],
@@ -17,7 +20,9 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  togglePopup() {
+    console.log('test');
+    this.displayPopup = !this.displayPopup;
   }
 
 }
