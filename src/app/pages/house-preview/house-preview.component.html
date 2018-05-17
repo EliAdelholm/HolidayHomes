@@ -1,3 +1,65 @@
-<p>
-  house-preview works!
-</p>
+<div *ngIf="house">
+  <ngb-carousel>
+    <ng-template ngbSlide>
+      <div class="image-slider" style="background-image: url('../../../assets/img/test1.jpg')"></div>
+    </ng-template>
+    <ng-template ngbSlide>
+      <div class="image-slider" style="background-image: url('../../../assets/img/test2.jpg')"></div>
+      <!--<img src="../../../assets/img/test2.jpg" alt="Random second slide">-->
+    </ng-template>
+  </ngb-carousel>
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container-fluid">
+      <button type="button" class="btn btn-primary btn-lg float-right" style="margin-top: 5px;">Book</button>
+      <h5>{{ house.headline }}</h5>
+      <p>{{ house.address }}</p>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div class="col-12 col-md-4 order-md-2">
+      <div class="card border-light mb-3">
+        <div class="card-header">
+          <h2 class="mb-0"><i class="fas fa-info-circle"></i> Description</h2>
+        </div>
+        <div class="card-body">
+          <p>{{ house.description }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-4 oder-md-1">
+      <div class="card border-light mb-3">
+        <div class="card-header">
+          <h2 class="mb-0"><i class="fas fa-calculator"></i> Economy</h2>
+        </div>
+        <div class="card-body">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Pricing: {{ house.price }} DKK per Night</li>
+            <li class="list-group-item">Space: {{ house.space }} km<sup>2</sup></li>
+            <li class="list-group-item">Bedrooms: </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-4 order-3">
+      <div class="card border-light mb-3">
+        <div class="card-header">
+          <h2 class="mb-0"><i class="fas fa-tv"></i> Facilities</h2>
+        </div>
+        <div class="card-body">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Cras justo odio</li>
+            <li class="list-group-item">Dapibus ac facilisis in</li>
+            <li class="list-group-item">Morbi leo risus</li>
+            <li class="list-group-item">Porta ac consectetur ac</li>
+            <li class="list-group-item">Vestibulum at eros</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div>

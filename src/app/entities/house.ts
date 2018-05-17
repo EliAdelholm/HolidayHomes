@@ -10,7 +10,7 @@ export class House {
   public hasTV : boolean;
   public hasDryer : boolean;
   public isFamilyFriendly : boolean;
-  public houseThumbnail ?: String;
+  public thumbnail_image ?: String;
   public houseImg1 ?: String;
   public houseImg2 ?: String;
   public houseImg3 ?: String;

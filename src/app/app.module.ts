@@ -23,6 +23,7 @@ import { createEpicMiddleware, combineEpics } from 'redux-observable';
 import { createLogger } from 'redux-logger';
 import {HouseService} from './redux/house/house.service';
 import { HttpClientModule } from '@angular/common/http';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    NgReduxModule, NgReduxRouterModule.forRoot()
+    NgReduxModule, NgReduxRouterModule.forRoot(),
+    NgbModule.forRoot()
   ],
   providers: [
     LoginService,
