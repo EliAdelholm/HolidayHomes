@@ -3,12 +3,19 @@ const express = require('express')
 const formidable = require('express-formidable');
 const app = express()
 const mysql = require('mysql')
-//const sharp = require('sharp')
+const sharp = require('sharp')
 const fs = require('fs-extra')
 const path = require('path')
 const mime = require('mime-types')
+const bb = require('express-busboy');
 
-// app.use(formidable());
+// Options for busboy
+bb.extend(app, {
+  upload: true,
+  path: '/path/to/save/files',
+  allowedPath: /./,
+});
+
 /** Imports  ************/
 const dbClass = require('./controllers/database.js')
 const db = new dbClass
@@ -42,9 +49,9 @@ app.get('/api/get-user', async (req, res) => {
 })
 
 /** Login **/
-app.get('/api/login', async (req, res) => {
-  const sUserEmail = req.query.email
-  const sUserPassword = req.query.password
+app.post('/api/login', async (req, res) => {
+  const sUserEmail = req.body.email
+  const sUserPassword = req.body.password
   try {
     const ajUsers = await db.loginUser(sUserEmail, sUserPassword)
     return res.send(ajUsers)
@@ -76,8 +83,36 @@ app.get('/api/get-houses-belonging-to-user', async(req,res) => {
 });
 
 app.post('/api/update-user' , async(req,res) => {
-  const iUser = req.query.id
-})
+  const image = req.files.image
+  if (image.mimetype.split('/')[0] !== 'image') {
+    return res.send('The upload is not a valid image')
+  }
+  const jUser = {
+    name: req.body.username,
+    password: req.body.password,
+    email: req.body.email,
+    image: req.files.image
+  }
+  try {
+    const jResult = await db.updateUser(jUser, req.body.id)
+    // Generate new path, using timestamp to avoid duplication errors
+    const timestamp = + new Date()
+    const fileExtension = image.mimetype.split('/')[1]
+    const filename = req.body.id +'-'+timestamp+'.'+fileExtension
+    const targetPath = "src/assets/img/" + filename
+    try {
+      //image.file is the temp path
+      fs.move(image.file, targetPath, function (err) {
+        if (err) console.log(err);
+      });
+    } catch (e) {
+      console.log(e)
+    }
+    return res.send(jResult)
+  } catch (e) {
+    return res.send(e)
+  }
+});
 
 /** Get houses **/
 app.get('/api/get-houses', async (req, res) => {
@@ -92,44 +127,55 @@ app.get('/api/get-houses', async (req, res) => {
 
 /** Create house **/
 app.post('/api/create-house' , async (req,res) => {
-  const thumbnailMimeType = mime.contentType(req.files.thumbnail.name)
-  try{
+  const thumbnail = req.files.thumbnail
+  if (thumbnail.mimetype.split('/')[0] !== 'image') {
+    return res.send('The upload is not a valid image')
+  }
+  const fileExtension = thumbnail.mimetype.split('/')[1]
+  const filename = req.body.userid +'-'+thumbnail.uuid+'.'+fileExtension
+  const targetPath = "src/assets/img/" + filename
+  const thumbnailImagePath = 'src/assets/img/' + req.body.userid +'-thumbnail-'+thumbnail.uuid+'.'+fileExtension
 
-    if (thumbnailMimeType.split('/')[0] !== 'image') {
-      return res.send('The upload is not a valid image')
+  fs.move(thumbnail.file, targetPath, function (err) {
+    if (err) {
+      console.log (err);
+      return false;
     }
-    // Get temporary file path
-    // Handle image upload
-    const tempPath = req.files.thumbnail.path
-    const extName = path.extname(req.files.thumbnail.name)
-    // Generate new path, using timestamp to avoid duplication errors
-    const timestamp = + new Date()
-    const targetPath = "src/assets/img/" + timestamp + extName
+    sharp(targetPath).resize(400,400).toFile(thumbnailImagePath).then(() => {
+    }).catch((e) => { console.log(e) })
+  });
 
-    fs.move(tempPath, targetPath, function (err) {
-      if (err) throw err;
-      console.log("Upload completed!");
-      // const image = sharp(targetPath).resize(200,200).toFile('src/assets/img' + timestamp +'small'+extName).then(() => {
-      //   console.log('Success!')
-      // }).catch((e) => { console.log(e) })
-    });
+  const aHouseImages = req.files.houseImages
+  let aHouseImageNames = []
+  aHouseImages.forEach((image) => {
+    const fileExtension = image.mimetype.split('/')[1]
+    const filename = req.body.userid +'-'+image.uuid+'.'+fileExtension
+    const targetPath = "src/assets/img/" + filename
+    aHouseImageNames.push([filename])
+    fs.move(image.file, targetPath, function (err) {
+      if (err) {
+        console.log(err);
+        return false;
+      }
+    })
+  });
 
-    console.log(image)
-    const jHouse = {
-      users_id: req.fields.userid,
-      thumbnail_image: targetPath,
-      headline: req.fields.headline,
-      description: req.fields.description,
-      price: req.fields.price,
-      address: req.fields.address,
-      space: req.fields.space,
-      is_house: req.fields.house,
-      wifi: req.fields.wifi,
-      familyfriendly: req.fields.familyFriendly,
-      tv: req.fields.tv,
-      dryer: req.fields.dryer
-    }
-    const response = await db.createHouse(jHouse)
+  const jHouse = {
+    users_id: req.body.userid,
+    thumbnail_image: thumbnailImagePath,
+    headline: req.body.headline,
+    description: req.body.description,
+    price: req.body.price,
+    address: req.body.address,
+    space: req.body.space,
+    is_house: req.body.house,
+    wifi: req.body.wifi,
+    familyfriendly: req.body.familyFriendly,
+    tv: req.body.tv,
+    dryer: req.body.dryer
+  }
+  try {
+    const response = await db.createHouse(jHouse, aHouseImageNames)
     return res.send(response)
   } catch (e) {
     console.log('error saving house '+e)

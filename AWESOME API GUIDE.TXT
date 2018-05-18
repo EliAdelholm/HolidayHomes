@@ -1,11 +1,24 @@
-/get-user?id=
+/api/get-user?id=
 Enter the id to get the matching user from the api
 
-/Login?email=&password=
+POST
+/api/login
+FIELDS: email, password
 Searches for user in the database with matching email & password. Returns the user if found
 
-/get-house?id=
+GET
+/api/get-house?id=
 Get the house with the matching id
 
-/get-houses?number=
+GET
+/api/get-houses?number=
 Get houses from the database. The number sets the maximum amount of houses returned
+
+GET
+/api/get-houses-belonging-to-user?id=
+Gets the houses the user has put up. id is the user Id
+
+POST
+/api/update-user
+FIELDS: username, password, email, image
+Updates the user... what else did you think it would do?
