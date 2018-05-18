@@ -1,9 +1,9 @@
 class Database {
-  getUser(iUserId) {
+  getUser (iUserId) {
     return new Promise((resolve, reject) => {
       global.con.query('SELECT * FROM users WHERE id = ?',
         [iUserId], (error, ajResult) => {
-          if (error) return reject(error);
+          if (error) return reject(error)
           if (!ajResult[0]) {
             reject('User does not exist')
           }
@@ -12,11 +12,11 @@ class Database {
     })
   }
 
-  loginUser(sUserEmail, sUserPassword) {
+  loginUser (sUserEmail, sUserPassword) {
     return new Promise((resolve, reject) => {
       global.con.query('SELECT * FROM users WHERE email = ? AND password = ?',
         [sUserEmail, sUserPassword], (error, ajResult) => {
-          if (error) return reject(error);
+          if (error) return reject(error)
           if (!ajResult[0]) {
             reject('User does not exist')
           }
@@ -25,11 +25,11 @@ class Database {
     })
   }
 
-  getHouses(iNumberOfHouses) {
+  getHouses (iNumberOfHouses) {
     return new Promise((resolve, reject) => {
-      global.con.query('SELECT id, thumbnail_image, headline, description, price, space, address FROM houses LIMIT ?',
+      global.con.query('SELECT houses.*, GROUP_CONCAT(houses_images.image) AS images FROM houses RIGHT JOIN houses_images ON houses.id = houses_images.houses_id LIMIT ?',
         [iNumberOfHouses], (error, ajResult) => {
-          if (error) return reject(error);
+          if (error) return reject(error)
           if (!ajResult[0]) {
             reject('No houses to show')
           }
@@ -37,13 +37,14 @@ class Database {
         })
     })
   }
-  getHouse(iHouseId) {
+
+  getHouse (iHouseId) {
     return new Promise((resolve, reject) => {
-      global.con.query('SELECT houses.*, GROUP_CONCAT(houses_images.image)\n' +
+      global.con.query('SELECT *, GROUP_CONCAT(houses_images.image)\n' +
         'FROM houses\n' +
         'JOIN houses_images ON houses.id = houses_images.houses_id',
         [iHouseId], (error, ajResult) => {
-          if (error) return reject(error);
+          if (error) return reject(error)
           if (!ajResult[0]) {
             reject('User does not exist')
           }
@@ -52,7 +53,7 @@ class Database {
     })
   }
 
-  createHouse(jHouse) {
+  createHouse (jHouse) {
 
     return new Promise((resolve, reject) => {
       global.con.query('INSERT INTO `houses` SET ?',
