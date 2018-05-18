@@ -10,7 +10,8 @@
   </ngb-carousel>
   <div class="jumbotron jumbotron-fluid">
     <div class="container-fluid">
-      <button type="button" class="btn btn-primary btn-lg float-right" style="margin-top: 5px;" routerLink="/booking/{{ house.id}}"
+      <button type="button" class="btn btn-primary btn-lg float-right" style="margin-top: 5px;"
+              routerLink="/booking/{{ house.id}}"
               *ngIf="loginService.isLoggedIn">Book
       </button>
       <button type="button" class="btn btn-primary btn-lg float-right" style="margin-top: 5px;" routerLink="/register"
@@ -43,7 +44,7 @@
           <ul class="list-group list-group-flush">
             <li class="list-group-item">Pricing: {{ house.price }} DKK per Night</li>
             <li class="list-group-item">Space: {{ house.space }} km<sup>2</sup></li>
-            <li class="list-group-item">Bedrooms:</li>
+            <li class="list-group-item">Housing Type: {{ house.is_house ? 'House' : 'Apartment' }}</li>
           </ul>
         </div>
       </div>
@@ -56,11 +57,25 @@
         </div>
         <div class="card-body">
           <ul class="list-group list-group-flush">
-            <li class="list-group-item">Cras justo odio</li>
-            <li class="list-group-item">Dapibus ac facilisis in</li>
-            <li class="list-group-item">Morbi leo risus</li>
-            <li class="list-group-item">Porta ac consectetur ac</li>
-            <li class="list-group-item">Vestibulum at eros</li>
+            <li class="list-group-item"><h6>Family friendly:
+              <span class="badge badge-pill float-right" [ngClass]="(house.isFamilyFriendly)?'badge-success':'badge-danger'">
+                {{ house.isFamilyFriendly ? 'Yes' : 'No' }}
+              </span>
+            </h6></li>
+            <li class="list-group-item"><h6>Has WiFi:
+              <span class="badge badge-pill float-right" [ngClass]="(house.hasWifi)?'badge-success':'badge-danger'">
+                {{ house.hasWifi ? 'Yes' : 'No' }}
+              </span>
+            </h6></li>
+            <li class="list-group-item"><h6>Has TV:
+              <span class="badge badge-pill float-right" [ngClass]="(house.tv)?'badge-success':'badge-danger'">
+                {{ house.tv ? 'Yes' : 'No' }}
+              </span>
+            </h6></li>
+            <li class="list-group-item"><h6>Has Dryer:
+              <span class="badge badge-pill float-right" [ngClass]="(house.dryer)?'badge-success':'badge-danger'">
+                {{ house.dryer ? 'Yes' : 'No' }}</span>
+            </h6></li>
           </ul>
         </div>
       </div>
