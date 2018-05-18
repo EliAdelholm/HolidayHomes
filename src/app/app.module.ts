@@ -17,13 +17,14 @@ import {LoginService} from './services/login/login.service';
 import { DevToolsExtension, NgReduxModule, NgRedux } from '@angular-redux/store';
 import { NgReduxRouter, NgReduxRouterModule } from '@angular-redux/router';
 import { IAppState, rootReducer } from './redux/store/store';
-import {HouseActions} from './redux/house/house.actions';
-import {HouseEpic} from './redux/house/house.epic';
+import {AppActions} from './redux/app.actions';
+import {AppEpic} from './redux/app.epic';
 import { createEpicMiddleware, combineEpics } from 'redux-observable';
 import { createLogger } from 'redux-logger';
-import {HouseService} from './redux/house/house.service';
+import {AppService} from './redux/app.service';
 import { HttpClientModule } from '@angular/common/http';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { ValueArrayPipe } from './array.pipe';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     NewHouseFormComponent,
     BookingComponent,
     ProfileComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    ValueArrayPipe,
   ],
   imports: [
     BrowserModule,
@@ -49,9 +51,9 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
   ],
   providers: [
     LoginService,
-    HouseActions,
-    HouseService,
-    HouseEpic
+    AppActions,
+    AppService,
+    AppEpic
   ],
   bootstrap: [AppComponent]
 })
@@ -59,14 +61,14 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 export class AppModule {
   constructor( private ngRedux: NgRedux<IAppState>,
                private devTool: DevToolsExtension,
-               private ngReduxRouter: NgReduxRouter, private houseEpic: HouseEpic ) {
+               private ngReduxRouter: NgReduxRouter, private houseEpic: AppEpic ) {
     const rootEpic = combineEpics(
       this.houseEpic.getHouses
     );
     const middleware = [
       createEpicMiddleware(rootEpic), createLogger({ level: 'info', collapsed: true })
     ];
-    this.ngRedux.configureStore( rootReducer, {}, middleware,[ devTool.isEnabled() ? devTool.enhancer() : f => f ]);
+    this.ngRedux.configureStore( rootReducer, {houses: [], user: null}, middleware,[ devTool.isEnabled() ? devTool.enhancer() : f => f ]);
 
     ngReduxRouter.initialize(/* args */);
   }

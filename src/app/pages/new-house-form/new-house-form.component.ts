@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {House} from '../../entities/house';
-import {HouseActions} from '../../redux/house/house.actions';
+import {AppActions} from '../../redux/app.actions';
 
 @Component({
   selector: 'app-new-house-form',
@@ -15,7 +15,7 @@ export class NewHouseFormComponent implements OnInit {
 
   constructor( private fb: FormBuilder,
                private router: Router,
-               private houseActions: HouseActions) {
+               private houseActions: AppActions) {
 
     this.createHouseFrm = this.fb.group({
       houseHeadline:['', Validators.required],
@@ -29,12 +29,7 @@ export class NewHouseFormComponent implements OnInit {
       hasDryer:[''],
       isFamilyFriendly:[''],
       houseThumbnail:[''],
-      houseImg:[''],
-      houseImg1:[''],
-      houseImg2:[''],
-      houseImg3:[''],
-      houseImg4:[''],
-      houseImg5:['']
+      houseImages:[''],
     })
   }
 

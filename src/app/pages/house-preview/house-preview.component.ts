@@ -21,8 +21,8 @@ export class HousePreviewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.subscription = this.ngRedux.select(state => state.house).subscribe(houses => {
-      this.house = houses.house.find(x => x.id == this.houseId);
+    this.subscription = this.ngRedux.select(state => state.houses).subscribe(houses => {
+      this.house = houses && houses.find(x => x.id == this.houseId);
     });
   }
 
