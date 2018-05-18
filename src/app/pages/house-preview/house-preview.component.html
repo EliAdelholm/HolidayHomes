@@ -10,7 +10,12 @@
   </ngb-carousel>
   <div class="jumbotron jumbotron-fluid">
     <div class="container-fluid">
-      <button type="button" class="btn btn-primary btn-lg float-right" style="margin-top: 5px;">Book</button>
+      <button type="button" class="btn btn-primary btn-lg float-right" style="margin-top: 5px;" routerLink="/booking/{{ house.id}}"
+              *ngIf="loginService.isLoggedIn">Book
+      </button>
+      <button type="button" class="btn btn-primary btn-lg float-right" style="margin-top: 5px;" routerLink="/register"
+              *ngIf="!loginService.isLoggedIn">Register to Book
+      </button>
       <h5>{{ house.headline }}</h5>
       <p>{{ house.address }}</p>
     </div>
@@ -38,7 +43,7 @@
           <ul class="list-group list-group-flush">
             <li class="list-group-item">Pricing: {{ house.price }} DKK per Night</li>
             <li class="list-group-item">Space: {{ house.space }} km<sup>2</sup></li>
-            <li class="list-group-item">Bedrooms: </li>
+            <li class="list-group-item">Bedrooms:</li>
           </ul>
         </div>
       </div>

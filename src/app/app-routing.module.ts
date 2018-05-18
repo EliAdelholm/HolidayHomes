@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'portal', component: PortalComponent },
   { path: 'house-preview/:id', component: HousePreviewComponent },
-  { path: 'booking', component: BookingComponent },
+  { path: 'booking/:id', component: BookingComponent },
   { path: 'login', component: LoginComponent },
   { path: 'new-house-form', component: NewHouseFormComponent },
   { path: 'profile', component: ProfileComponent },

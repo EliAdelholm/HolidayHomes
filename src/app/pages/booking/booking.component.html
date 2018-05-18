@@ -1,3 +1,42 @@
-<p>
-  booking works!
-</p>
+<div class="row">
+  <div class="col-12 offset-sm-1 col-sm-10 offset-md-2 col-md-8 offset-lg-3 col-lg-6">
+    <h2>Booking</h2>
+    <form [formGroup]="bookingForm" (submit)="onSubmit(bookingForm)" *ngIf="house">
+      <p>You are now booking {{ house.headline }}. <br>You will receive an email when the owner has approved the
+        booking.</p>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-12 col-sm-6">
+            <label>Start Date</label>
+            <div class="input-group">
+              <input class="form-control" placeholder="Select a date" formControlName="startDate" ngbDatepicker
+                     #ds="ngbDatepicker">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" (click)="ds.toggle()" type="button">
+                  <i class="fas fa-calendar-alt"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6">
+            <label>End Date</label>
+            <div class="input-group">
+              <input class="form-control" placeholder="Select a date" formControlName="endDate" ngbDatepicker
+                     #de="ngbDatepicker">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary" (click)="de.toggle()" type="button">
+                  <i class="fas fa-calendar-alt"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Book</button>
+    </form>
+
+
+  </div>
+</div>
+

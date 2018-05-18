@@ -4,6 +4,7 @@ import {Subscription} from 'rxjs/Subscription';
 import {House} from '../../entities/house';
 import {NgRedux} from '@angular-redux/store';
 import {IAppState} from '../../redux/store/store';
+import {LoginService} from '../../services/login/login.service';
 
 @Component({
   selector: 'app-house-preview',
@@ -16,7 +17,7 @@ export class HousePreviewComponent implements OnInit {
   subscription: Subscription;
   house: House;
 
-  constructor(private route: ActivatedRoute, private ngRedux: NgRedux<IAppState>) {
+  constructor(private route: ActivatedRoute, private ngRedux: NgRedux<IAppState>, public loginService: LoginService) {
   }
 
   ngOnInit() {

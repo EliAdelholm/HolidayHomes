@@ -8,7 +8,6 @@ import {HouseActions} from './redux/house/house.actions';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'app';
 
   constructor(public loginService: LoginService, private houseActions: HouseActions) {
   }
