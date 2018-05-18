@@ -27,7 +27,7 @@ class Database {
 
   getHouses (iNumberOfHouses) {
     return new Promise((resolve, reject) => {
-      global.con.query('SELECT houses.*, GROUP_CONCAT(houses_images.image) AS images FROM houses RIGHT JOIN houses_images ON houses.id = houses_images.houses_id LIMIT ?',
+      global.con.query('SELECT houses.*, GROUP_CONCAT(houses_images.image) AS images FROM houses JOIN houses_images ON houses.id = houses_images.houses_id GROUP BY houses.id LIMIT ?',
         [iNumberOfHouses], (error, ajResult) => {
           if (error) return reject(error)
           if (!ajResult[0]) {
@@ -54,7 +54,6 @@ class Database {
   }
 
   createHouse (jHouse) {
-
     return new Promise((resolve, reject) => {
       global.con.query('INSERT INTO `houses` SET ?',
         [jHouse],
@@ -62,6 +61,20 @@ class Database {
           if (error) return reject(error)
           resolve(result)
         })
+    })
+  }
+
+  getHousesBelongingToUser (iUserId) {
+    return new Promise((resolve, reject) => {
+      global.con.query('SELECT houses.*, GROUP_CONCAT(houses_images.image) \n' +
+        'FROM houses\n' +
+        'JOIN houses_images ON houses.id = houses_images.houses_id\n' +
+        'WHERE houses.users_id = 2', [iUserId],
+        (error, jResult) => {
+          if (error) return reject(error)
+          resolve(jResult)
+        }
+        )
     })
   }
 

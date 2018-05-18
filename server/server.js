@@ -21,7 +21,7 @@ global.con = mysql.createConnection({
   // host: "localhost:8889",
   host: "localhost",
   user: "root",
-  // password: "root",
+  password: "root",
   database: 'holidayhouses'
 });
 
@@ -31,8 +31,6 @@ global.con.connect(function (err) {
 });
 
 /** Server side routing  ************/
-
-
 
 /** API  ************/
 
@@ -64,6 +62,21 @@ app.get('/api/get-house', async (req, res) => {
   } catch (e) {
     return res.send(e)
   }
+})
+
+/** Get houses belonging to user **/
+app.get('/api/get-houses-belonging-to-user', async(req,res) => {
+  const iHouse = req.query.id
+  try {
+    const jHouse = await db.getHousesBelongingToUser(iHouse);
+    return res.send(jHouse)
+  } catch (e) {
+    return res.send(e)
+  }
+});
+
+app.post('/api/update-user' , async(req,res) => {
+  const iUser = req.query.id
 })
 
 /** Get houses **/
@@ -134,5 +147,5 @@ app.listen(4000, (err) => {
     console.log(err)
     return false
   }
-  console.log('Server is listening to port 3000')
+  console.log('Server is listening to port 4000')
 })
