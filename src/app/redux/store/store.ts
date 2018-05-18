@@ -1,18 +1,18 @@
-import { combineReducers } from "redux";
-import { routerReducer } from "@angular-redux/router";
-import {houseReducer} from '../house/house.reducer';
+import {combineReducers} from 'redux';
+import {routerReducer} from '@angular-redux/router';
+import {houseReducer} from '../reducers/house.reducer';
+import {userReducer} from '../reducers/user.reducer';
 import {House} from '../../entities/house';
 
-export class HouseState {
-  house : House[];
-}
 
 export class IAppState {
-  house ?: HouseState;
+  houses?: House[];
+  user?: {};
 }
 
 export const rootReducer = combineReducers<IAppState>({
-  house: houseReducer,
+  houses: houseReducer,
+  user: userReducer,
   // when you add more reducers, add them here..
   router: routerReducer
 });

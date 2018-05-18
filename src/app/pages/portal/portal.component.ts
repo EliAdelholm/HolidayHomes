@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs/Subscription';
 import {NgRedux} from '@angular-redux/store';
 import {IAppState} from '../../redux/store/store';
@@ -12,13 +12,16 @@ import {House} from '../../entities/house';
 export class PortalComponent implements OnInit {
   subscription: Subscription;
   houses: House [];
+
   constructor(
     private ngRedux: NgRedux<IAppState>
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
-    this.subscription = this.ngRedux.select(store => store.house).subscribe( x => {
-      this.houses = x.house;
+    this.subscription = this.ngRedux.select(store => store.houses).subscribe(houses => {
+      this.houses = houses && houses;
+      console.log(this.houses);
     });
   }
 

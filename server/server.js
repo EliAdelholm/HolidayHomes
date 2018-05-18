@@ -21,7 +21,6 @@ global.con = mysql.createConnection({
   // host: "localhost:8889",
   host: "localhost",
   user: "root",
-  password: "root",
   database: 'holidayhouses'
 });
 

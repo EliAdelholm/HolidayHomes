@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {LoginService} from './services/login/login.service';
-import {HouseActions} from './redux/house/house.actions';
+import {AppActions} from './redux/app.actions';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +9,7 @@ import {HouseActions} from './redux/house/house.actions';
 })
 export class AppComponent implements OnInit {
 
-  constructor(public loginService: LoginService, private houseActions: HouseActions) {
+  constructor(public loginService: LoginService, private houseActions: AppActions) {
   }
 
   ngOnInit() {
