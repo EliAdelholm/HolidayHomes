@@ -68,7 +68,6 @@ class Database {
             [aHouseImages],
             (error, result) => {
               if (error) return reject(error)
-              console.log(result)
               resolve('Houses saved successfully')
             })
         })

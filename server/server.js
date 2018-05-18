@@ -28,6 +28,7 @@ global.con = mysql.createConnection({
   // host: "localhost:8889",
   host: "localhost",
   user: "root",
+  password: 'root',
   database: 'holidayhouses'
 });
 
@@ -131,9 +132,10 @@ app.post('/api/create-house' , async (req,res) => {
     return res.send('The upload is not a valid image')
   }
   const fileExtension = thumbnail.mimetype.split('/')[1]
-  const filename = req.body.userid +'-'+thumbnail.uuid+'.'+fileExtension
+  const filename = thumbnail.uuid+'.'+fileExtension
   const targetPath = "src/assets/img/" + filename
-  const thumbnailImagePath = 'src/assets/img/' + req.body.userid +'-thumbnail-'+thumbnail.uuid+'.'+fileExtension
+  const thumbnailName ='thumbnail-'+thumbnail.uuid+'.'+fileExtension
+  const thumbnailImagePath = 'src/assets/img/' + thumbnailName
 
   fs.move(thumbnail.file, targetPath, function (err) {
     if (err) {
@@ -161,7 +163,7 @@ app.post('/api/create-house' , async (req,res) => {
 
   const jHouse = {
     users_id: req.body.userid,
-    thumbnail_image: thumbnailImagePath,
+    thumbnail_image: thumbnailName,
     headline: req.body.headline,
     description: req.body.description,
     price: req.body.price,
