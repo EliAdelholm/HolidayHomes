@@ -10,12 +10,12 @@ import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class AppEpic {
-  constructor( private houseService: AppService ) {}
+  constructor( private appService: AppService ) {}
 
   getHouses = (actions: ActionsObservable<any>) => {
     return actions.ofType(AppActions.GET_HOUSES)
       .mergeMap(({}) => {
-        return this.houseService.getHouses()
+        return this.appService.getHouses()
           .map((result: any[]) => ({
             type: AppActions.RECEIVED_HOUSES,
             payload: result
@@ -33,6 +33,21 @@ export class AppEpic {
               });
             }
           });
+      });
+  };
+
+  getUser = (actions: ActionsObservable<any>) => {
+    return actions.ofType(AppActions.GET_USER)
+      .mergeMap(({ payload }) => {
+        return this.appService.getUser(payload)
+          .map((result: any[]) => ({
+            type: AppActions.RECEIVED_USER,
+            payload: result
+          }))
+          .catch(error => Observable.of({
+            type: AppActions.FAILED_TO_GET_USER,
+            payload: error.error
+          }));
       });
   }
 }

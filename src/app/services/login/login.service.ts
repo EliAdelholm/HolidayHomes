@@ -9,10 +9,9 @@ export class LoginService {
 
   isLoggedIn = false;
 
-  login(userMail: String): Observable<boolean> {
+  login(): Observable<boolean> {
     return Observable.of(true).do(val => {
       this.isLoggedIn = true;
-      // console.log('isLoggedIn = true');
     });
   }
 

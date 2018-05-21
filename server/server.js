@@ -55,7 +55,7 @@ app.post('/api/login', async (req, res) => {
     const ajUsers = await db.loginUser(sUserEmail, sUserPassword)
     return res.send(ajUsers)
   } catch (e) {
-    return res.send(e)
+    return res.status(500).send(e)
   }
 })
 

@@ -11,10 +11,12 @@ export class AppActions {
   static CREATE_HOUSE: String = 'CREATE_HOUSE';
   static GET_HOUSES: String = 'GET_HOUSES';
   static RECEIVED_HOUSES: String = 'RECEIVED_HOUSES';
-  static GET_USER: String = 'GET_USER';
-  static RECEIVED_USER: String = 'RECEIVED_USER';
   static RESPONSE_ERROR: String = 'RESPONSE_ERROR';
   static RESPONSE_OK: String = 'RESPONSE_OK';
+
+  static GET_USER: String = 'GET_USER';
+  static RECEIVED_USER: String = 'RECEIVED_USER';
+  static FAILED_TO_GET_USER: String = 'FAILED_TO_GET_USER';
 
   createHouse(house: House) {
     console.log('house ', house);

@@ -5,11 +5,15 @@ import {tassign} from 'tassign';
 
 // const INITIAL_STATE: IAppState = AppService.getInitialState();
 
-export function userReducer(state: IAppState = null, action: any) {
+export function userReducer(state = null, action: any) {
   switch (action.type) {
 
     case AppActions.RECEIVED_USER:
-      return tassign( state, action.payload );
+      return tassign( state, { status: 'OK', account: action.payload} );
+
+    case AppActions.FAILED_TO_GET_USER:
+      console.log(action.payload)
+      return tassign(state, { status: action.payload})
 
     default:
       return state;

@@ -6,8 +6,12 @@ import {House} from '../../entities/house';
 
 
 export class IAppState {
-  houses?: House[];
-  user?: {};
+  houses: House[];
+  user: {
+    status: string,
+    account: object,
+    houses: any[]
+  };
 }
 
 export const rootReducer = combineReducers<IAppState>({
