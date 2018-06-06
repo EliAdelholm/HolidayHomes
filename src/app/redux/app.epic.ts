@@ -36,6 +36,21 @@ export class AppEpic {
       });
   };
 
+  createHouse = (actions: ActionsObservable<any>) => {
+    return actions.ofType(AppActions.CREATE_HOUSE)
+      .mergeMap(({ payload }) => {
+        return this.appService.createHouse(payload)
+          .map((result: any[]) => ({
+            type: AppActions.CREATED_HOUSE,
+            payload: result
+          }))
+          .catch(error => Observable.of({
+            type: AppActions.FAILED_TO_CREATE_HOUSE,
+            payload: error.error
+          }));
+      });
+  }
+
   getUser = (actions: ActionsObservable<any>) => {
     return actions.ofType(AppActions.GET_USER)
       .mergeMap(({ payload }) => {

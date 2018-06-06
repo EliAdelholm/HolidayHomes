@@ -127,7 +127,7 @@ app.get('/api/get-houses', async (req, res) => {
 
 /** Create house **/
 app.post('/api/create-house' , async (req,res) => {
-  const thumbnail = req.files.thumbnail
+  /*const thumbnail = req.files.thumbnail
   if (thumbnail.mimetype.split('/')[0] !== 'image') {
     return res.send('The upload is not a valid image')
   }
@@ -159,24 +159,24 @@ app.post('/api/create-house' , async (req,res) => {
         return false;
       }
     })
-  });
+  });*/
 
   const jHouse = {
-    users_id: req.body.userid,
-    thumbnail_image: thumbnailName,
+    users_id: req.body.userId,
+    thumbnail_image: 'test1.jpg',
     headline: req.body.headline,
     description: req.body.description,
     price: req.body.price,
     address: req.body.address,
     space: req.body.space,
-    is_house: req.body.house,
-    wifi: req.body.wifi,
-    familyfriendly: req.body.familyFriendly,
-    tv: req.body.tv,
-    dryer: req.body.dryer
+    is_house: req.body.isHouse,
+    wifi: req.body.hasWifi,
+    familyfriendly: req.body.isFamilyFriendly,
+    tv: req.body.hasTv,
+    dryer: req.body.hasDryer
   }
   try {
-    const response = await db.createHouse(jHouse, aHouseImageNames)
+    const response = await db.createHouse(jHouse, [['test1.jpg'], ['test2.jpg']])
     return res.send(response)
   } catch (e) {
     console.log('error saving house '+e)
