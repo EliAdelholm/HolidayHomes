@@ -109,12 +109,18 @@ class Database {
     })
   }
   createUser(jUser) {
-    return new Promise((resolve,reject) => {
       return new Promise((resolve,reject) => {
         global.con.query('INSERT INTO users SET ?', [jUser], (error, jResult) => {
           if (error) return reject(error)
           resolve(jResult)
         })
+      })
+  }
+  getBookings(iHouseId) {
+    return new Promise((resolve, reject) => {
+      global.con.query('SELECT * FROM bookings WHERE houses_id = ?', [iHouseId], (error, jResult) => {
+        if (error) reject(error)
+        resolve(jResult)
       })
     })
   }
