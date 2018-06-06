@@ -24,13 +24,8 @@ const db = new dbClass
 app.use(express.static(path.join(__dirname, '../dist')));
 
 /** sql connection ************/
-global.con = mysql.createConnection({
-  // host: "localhost:8889",
-  host: "localhost",
-  user: "root",
-  password: 'root',
-  database: 'holidayhouses'
-});
+const sqlConnection = require('./serverConnection')
+global.con = mysql.createConnection(sqlConnection);
 
 global.con.connect(function (err) {
   if (err) throw err;
