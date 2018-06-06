@@ -19,6 +19,9 @@ export class AppActions {
   static RESPONSE_OK: String = 'RESPONSE_OK';
 
   static CREATE_USER: String = 'CREATE_USER';
+  static CREATED_USER: String = 'CREATED_USER';
+  static FAILED_TO_CREATE_USER: String = 'FAILED_TO_CREATE_USER';
+
   static GET_USER: String = 'GET_USER';
   static RECEIVED_USER: String = 'RECEIVED_USER';
   static FAILED_TO_GET_USER: String = 'FAILED_TO_GET_USER';
