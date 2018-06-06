@@ -5,6 +5,7 @@ import {IAppState} from '../../redux/store/store';
 import {Subscription} from 'rxjs/Subscription';
 import {ActivatedRoute} from '@angular/router';
 import {House} from '../../entities/house';
+import {DatePickerConfig, ECalendarType} from '@libusoftcicom/lc-datepicker';
 import * as moment from 'moment';
 
 @Component({
@@ -13,13 +14,44 @@ import * as moment from 'moment';
   styleUrls: ['./booking.component.scss']
 })
 export class BookingComponent implements OnInit {
+  private dateValue: string = null;
+  public config = new DatePickerConfig();
+  public sCalendarOpened: boolean = false;
+  public eCalendarOpened: boolean = false;
   bookingForm: FormGroup;
   houseId: number = this.route.snapshot.params.id;
   subscription: Subscription;
   house: House;
-  bookings = [];
+  bookings = [
+    '2018-06-07',
+    '2018-06-08',
+    '2018-06-09',
+    '2018-06-10'
+  ];
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private ngRedux: NgRedux<IAppState>) {
+    this.config.CalendarType = ECalendarType.Date;
+    this.config.Localization = 'en';
+    this.config.MinDate = {years: moment().year(), months: moment().month(), date: moment().date()};
+    this.config.setDisabledDates(this.bookings);
+    this.config.PrimaryColor = '#007bff';
+    this.config.Format = 'YYYY-MM-DD';
+  }
+
+  public get sDate() {
+    return this.bookingForm.value.startDate;
+  }
+
+  public get eDate() {
+    return this.bookingForm.value.endDate;
+  }
+
+  public set sDate(value: string) {
+    this.bookingForm.controls['startDate'].patchValue(value);
+  }
+
+  public set eDate(value: string) {
+    this.bookingForm.controls['endDate'].patchValue(value);
   }
 
   onSubmit(bookingForm) {
@@ -39,6 +71,8 @@ export class BookingComponent implements OnInit {
       houseId: [this.houseId, Validators.required],
       userId: [1]
     });
+
+
   }
 
 }
