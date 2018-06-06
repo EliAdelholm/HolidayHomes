@@ -22,6 +22,6 @@ describe('user reducer', () => {
     });
 
     expect(newState).toEqual(afterState);
-
   });
+
 });

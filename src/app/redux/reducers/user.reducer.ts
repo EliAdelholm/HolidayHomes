@@ -19,6 +19,12 @@ export function userReducer(state = null, action: any) {
       console.log(action.payload);
       return tassign( state, { account: action.payload } );
 
+    case AppActions.CREATED_USER:
+      return state;
+
+    case AppActions.FAILED_TO_CREATE_USER:
+      return state;
+
     default:
       return state;
   }

@@ -5,11 +5,11 @@ export class House {
   public price: number;
   public address: String;
   public space: number;
-  public is_house: boolean;
-  public hasWifi: boolean;
-  public tv: boolean;
-  public dryer: boolean;
-  public isFamilyFriendly: boolean;
+  public is_house: number;
+  public hasWifi: number;
+  public tv: number;
+  public dryer: number;
+  public isFamilyFriendly: number;
   public thumbnail_image ?: String;
   public images ?: String[];
 
