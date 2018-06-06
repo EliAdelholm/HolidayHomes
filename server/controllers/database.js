@@ -68,7 +68,7 @@ class Database {
             [aHouseImages],
             (error, result) => {
               if (error) return reject(error)
-              resolve('Houses saved successfully')
+              resolve('House saved successfully')
             })
         })
     })
@@ -97,7 +97,24 @@ class Database {
         })
     })
   }
-
+  createBooking(jBooking) {
+    return new Promise((resolve,reject) => {
+      global.con.query('INSERT INTO bookings SET ?', [jBooking], (error, jResult) => {
+        if (error) return reject(error)
+        resolve(jResult)
+      })
+    })
+  }
+  createUser(jUser) {
+    return new Promise((resolve,reject) => {
+      return new Promise((resolve,reject) => {
+        global.con.query('INSERT INTO users SET ?', [jUser], (error, jResult) => {
+          if (error) return reject(error)
+          resolve(jResult)
+        })
+      })
+    })
+  }
 }
 
 module.exports = Database
