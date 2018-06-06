@@ -1,6 +1,5 @@
 /** Dependencies ************/
 const express = require('express')
-const formidable = require('express-formidable');
 const app = express()
 const mysql = require('mysql')
 const sharp = require('sharp')
@@ -51,9 +50,9 @@ app.post('/api/create-user', async(req,res) => {
   }
   try {
     const response = await db.createUser(jUser)
-    res.send(response)
+    return res.send(response)
   } catch (e) {
-    res.send(`unable to create user`)
+    return res.send(`unable to create user`)
   }
 })
 
@@ -190,6 +189,16 @@ app.post('/api/create-house' , async (req,res) => {
     return res.send(response)
   } catch (e) {
     console.log('error saving house '+e)
+  }
+})
+
+app.get('/api/get-bookings', async (req,res) => {
+  const iHouseId = req.query.id
+  try {
+    const response = await db.getBookings(iHouseId)
+    return res.send(response)
+  } catch (e) {
+    return res.status(500)
   }
 })
 
