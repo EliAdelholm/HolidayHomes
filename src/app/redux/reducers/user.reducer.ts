@@ -16,8 +16,8 @@ export function userReducer(state = null, action: any) {
       return tassign(state, { status: action.payload});
 
     case AppActions.CREATE_USER:
-      const newUserArray = [ ...state.user.account, action.payload ];
-      return tassign( state, { account: newUserArray } );
+      console.log(action.payload);
+      return tassign( state, { account: action.payload } );
 
     default:
       return state;
