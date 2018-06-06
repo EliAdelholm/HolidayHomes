@@ -233,24 +233,8 @@ app.get('/api/get-bookings', async (req,res) => {
 
 app.post('/api/create-booking', async (req, res) => {
 
-  // const jStartDate = req.body.startDate
-  // const jEndDate = req.body.endDate
-
-  const jStartDate = {
-    year: 1992,
-    month: 12,
-    day: 4
-  }
-
-  const jEndDate = {
-    year: 1993,
-    month: 4,
-    day: 1
-  }
-
-  const sStartDate = `${jStartDate.year}-${jStartDate.month}-${jStartDate.day} 13:44:12`
-  const sEndDate = `${jEndDate.year}-${jEndDate.month}-${jEndDate.day} 12:00:00`
-
+  const sStartDate = `${req.body.startDate} 12:00:00`
+  const sEndDate = `${req.body.endDate} 12:00:00`
 
   const jBooking = {
     users_id: req.body.userId,
