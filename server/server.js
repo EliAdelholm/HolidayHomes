@@ -29,7 +29,8 @@ global.con = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: 'root',
-  database: 'holidayhouses'
+  database: 'holiday_house_v2' // for Klaudia :)
+  // database: 'holidayhouses'
 });
 
 global.con.connect(function (err) {

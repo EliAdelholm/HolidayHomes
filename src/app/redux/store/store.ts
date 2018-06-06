@@ -5,6 +5,7 @@ import {userReducer} from '../reducers/user.reducer';
 import {House} from '../../entities/house';
 
 
+
 export class IAppState {
   houses: House[];
   user: {
