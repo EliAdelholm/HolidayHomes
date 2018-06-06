@@ -49,6 +49,20 @@ app.get('/api/get-user', async (req, res) => {
   return res.send(ajUsers)
 })
 
+app.post('/api/create-user', async(req,res) => {
+  const jUser = {
+    name: req.body.name,
+    password: req.body.password,
+    email: req.body.email
+  }
+  try {
+    const response = await db.createUser(jUser)
+    res.send(response)
+  } catch (e) {
+    res.send(`unable to create user`)
+  }
+})
+
 /** Login **/
 app.post('/api/login', async (req, res) => {
   const sUserEmail = req.body.email
@@ -147,6 +161,7 @@ app.post('/api/create-house' , async (req,res) => {
     }).catch((e) => { console.log(e) })
   });
 
+
   const aHouseImages = req.files.houseImages
   let aHouseImageNames = []
   aHouseImages.forEach((image) => {
@@ -181,6 +196,29 @@ app.post('/api/create-house' , async (req,res) => {
     return res.send(response)
   } catch (e) {
     console.log('error saving house '+e)
+  }
+})
+
+app.post('/api/create-booking', async (req, res) => {
+
+  const jStartDate = req.body.startDate
+  const jEndDate = req.body.endDate
+
+  const sStartDate = `${jStartDate.year}-${jStartDate.month}-${jStartDate.day} 12-00-00`
+  const sEndDate = `${jEndDate.year}-${jEndDate.month}-${jEndDate.day} 12-00-00`
+
+  const jBooking = {
+    users_id: req.body.userId,
+    houses_id: req.body.houseId,
+    start_date: sStartDate,
+    end_date: sEndDate
+  }
+
+  try {
+    const response = await db.createBooking(jBooking)
+    return res.send(response)
+  } catch(e) {
+    console.log(`unable to save booking ${e}`)
   }
 })
 
