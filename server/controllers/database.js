@@ -68,7 +68,9 @@ class Database {
             [aHouseImages],
             (error, result) => {
               if (error) return reject(error)
-              resolve('House saved successfully')
+              jHouse.id = houseId
+              jHouse.images = aHouseImages
+              resolve(jHouse)
             })
         })
     })

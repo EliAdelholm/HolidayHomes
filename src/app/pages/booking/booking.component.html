@@ -9,26 +9,26 @@
           <div class="col-12 col-sm-6">
             <label>Start Date</label>
             <div class="input-group">
-              <input class="form-control" placeholder="Select a date" formControlName="startDate" ngbDatepicker
-                     #ds="ngbDatepicker">
+              <input class="form-control" placeholder="Select a date" formControlName="startDate" >
               <div class="input-group-append">
-                <button class="btn btn-outline-secondary" (click)="ds.toggle()" type="button">
+                <button class="btn btn-outline-secondary" (click)="sCalendarOpened = true" type="button">
                   <i class="fas fa-calendar-alt"></i>
                 </button>
               </div>
             </div>
+            <lc-datepicker [(opened)]="sCalendarOpened" [config]="config" [(date)]="sDate"></lc-datepicker>
           </div>
           <div class="col-12 col-sm-6">
             <label>End Date</label>
             <div class="input-group">
-              <input class="form-control" placeholder="Select a date" formControlName="endDate" ngbDatepicker
-                     #de="ngbDatepicker">
+              <input class="form-control" placeholder="Select a date" formControlName="endDate">
               <div class="input-group-append">
-                <button class="btn btn-outline-secondary" (click)="de.toggle()" type="button">
+                <button class="btn btn-outline-secondary" (click)="eCalendarOpened = true" type="button">
                   <i class="fas fa-calendar-alt"></i>
                 </button>
               </div>
             </div>
+            <lc-datepicker [(opened)]="eCalendarOpened" [config]="config" [(date)]="eDate"></lc-datepicker>
           </div>
         </div>
       </div>
