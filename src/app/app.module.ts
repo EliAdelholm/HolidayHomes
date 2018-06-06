@@ -26,6 +26,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ValueArrayPipe} from './array.pipe';
 import {LcDatePickerModule} from '@libusoftcicom/lc-datepicker';
+import {BookingService} from './pages/booking/booking.service';
 
 
 @NgModule({
@@ -53,6 +54,7 @@ import {LcDatePickerModule} from '@libusoftcicom/lc-datepicker';
   ],
   providers: [
     LoginService,
+    BookingService,
     AppActions,
     AppService,
     AppEpic

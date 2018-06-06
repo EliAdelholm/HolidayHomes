@@ -252,10 +252,10 @@ app.post('/api/create-booking', async (req, res) => {
 
   try {
     const response = await db.createBooking(jBooking)
-    return res.send(response)
+    return res.json({ status: 'OK'})
   } catch(e) {
     console.log(`unable to save booking ${e}`)
-    return res.send(e)
+    return res.json({ status: 'Unable to save booking'})
   }
 })
 
