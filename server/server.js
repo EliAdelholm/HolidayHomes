@@ -211,18 +211,25 @@ app.get('/api/get-bookings', async (req,res) => {
         aBookedDates.push(currentDate);
         currentDate = addDays.call(currentDate, 1);
       }
-      aBookedDates.shift() // So it doesnt start a day early
       return aBookedDates;
     }
 
+    const addLeadingZero = (iNumber) => {
+      if (iNumber < 10) {
+        return `0${iNumber}`
+      }
+      return iNumber
+    }
     // Add all the dates up
     let aTotalBookedDates = []
       response.forEach((booking) => {
         const startDate = booking.start_date
         const endDate = booking.end_date
         const aDatesBetween = getDatesBetweenDates(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()),
-          new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate()+1)) // +1 so it adds the end day as well
-        const asDatesBetween = aDatesBetween.map((date) => { return `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`})
+          new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate())) // +1 so it adds the end day as well
+        const asDatesBetween = aDatesBetween.map((date) => {
+          return `${date.getFullYear()}-${addLeadingZero(date.getMonth()+1)}-${addLeadingZero(date.getDate())}`
+        })
         aTotalBookedDates = aTotalBookedDates.concat(asDatesBetween)
       })
       return res.send(aTotalBookedDates)
