@@ -16,6 +16,10 @@ export class AppService {
     return this.http.get('/api/get-houses?number=5');
   }
 
+  createHouse(house: House) {
+    return this.http.post('/api/create-house', house);
+  }
+
   // users services
   getUser(formData: object) {
     return this.http.post('/api/login', formData);

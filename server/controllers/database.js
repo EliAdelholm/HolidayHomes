@@ -53,18 +53,18 @@ class Database {
     })
   }
 
-  createHouse (jHouse , aHouseImages) {
+  createHouse (jHouse, aHouseImages) {
     return new Promise((resolve, reject) => {
       global.con.query('INSERT INTO `houses` SET ?',
         [jHouse],
         (error, result) => {
           if (error) return reject(error)
           const houseId = result.insertId
-          let sqlQuery = "INSERT INTO houses_images VALUES "
+          console.log(houseId)
           aHouseImages.forEach((aHouseImage) => {
             aHouseImage.unshift(houseId)
-        });
-          global.con.query("INSERT INTO houses_images VALUES ?",
+          })
+          global.con.query('INSERT INTO houses_images VALUES ?',
             [aHouseImages],
             (error, result) => {
               if (error) return reject(error)
@@ -87,7 +87,8 @@ class Database {
       )
     })
   }
-  updateUser(jUser, iUserId) {
+
+  updateUser (jUser, iUserId) {
     return new Promise((resolve, reject) => {
       global.con.query('UPDATE users SET ? WHERE id = ?',
         [jUser, iUserId],
