@@ -197,19 +197,59 @@ app.get('/api/get-bookings', async (req,res) => {
   const iHouseId = req.query.id
   try {
     const response = await db.getBookings(iHouseId)
-    return res.send(response)
-  } catch (e) {
-    return res.status(500)
-  }
-})
+    // Define the function that will let us get dates between two dates
+    const getDatesBetweenDates = function(startDate, endDate) {
+      const aBookedDates = []
+      let currentDate = startDate
+      const addDays = function (days) {
+        let date = new Date(this.valueOf());
+        date.setDate(date.getDate() + days);
+        return date;
+      };
+      while (currentDate <= endDate) {
+        aBookedDates.push(currentDate);
+        currentDate = addDays.call(currentDate, 1);
+      }
+      aBookedDates.shift() // So it doesnt start a day early
+      return aBookedDates;
+    }
+
+    // Add all the dates up
+    let aTotalBookedDates = []
+      response.forEach((booking) => {
+        const startDate = booking.start_date
+        const endDate = booking.end_date
+        const aDatesBetween = getDatesBetweenDates(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()),
+          new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate()+1)) // +1 so it adds the end day as well
+        const asDatesBetween = aDatesBetween.map((date) => { return `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`})
+        aTotalBookedDates = aTotalBookedDates.concat(asDatesBetween)
+      })
+      return res.send(aTotalBookedDates)
+    } catch (e) {
+      return res.status(500)
+    }
+  })
 
 app.post('/api/create-booking', async (req, res) => {
 
-  const jStartDate = req.body.startDate
-  const jEndDate = req.body.endDate
+  // const jStartDate = req.body.startDate
+  // const jEndDate = req.body.endDate
 
-  const sStartDate = `${jStartDate.year}-${jStartDate.month}-${jStartDate.day} 12-00-00`
-  const sEndDate = `${jEndDate.year}-${jEndDate.month}-${jEndDate.day} 12-00-00`
+  const jStartDate = {
+    year: 1992,
+    month: 12,
+    day: 4
+  }
+
+  const jEndDate = {
+    year: 1993,
+    month: 4,
+    day: 1
+  }
+
+  const sStartDate = `${jStartDate.year}-${jStartDate.month}-${jStartDate.day} 13:44:12`
+  const sEndDate = `${jEndDate.year}-${jEndDate.month}-${jEndDate.day} 12:00:00`
+
 
   const jBooking = {
     users_id: req.body.userId,
@@ -223,6 +263,7 @@ app.post('/api/create-booking', async (req, res) => {
     return res.send(response)
   } catch(e) {
     console.log(`unable to save booking ${e}`)
+    return res.send(e)
   }
 })
 
