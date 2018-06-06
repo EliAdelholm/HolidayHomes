@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {NgRedux} from '@angular-redux/store';
 import {House} from '../entities/house';
 import {IAppState} from './store/store';
+import {User} from '../entities/user';
 
 @Injectable()
 export class AppActions {
@@ -17,10 +18,12 @@ export class AppActions {
   static RESPONSE_ERROR: String = 'RESPONSE_ERROR';
   static RESPONSE_OK: String = 'RESPONSE_OK';
 
+  static CREATE_USER: String = 'CREATE_USER';
   static GET_USER: String = 'GET_USER';
   static RECEIVED_USER: String = 'RECEIVED_USER';
   static FAILED_TO_GET_USER: String = 'FAILED_TO_GET_USER';
 
+  // house actions
   createHouse(house: House) {
     console.log('house ', house);
     this.ngRedux.dispatch({
@@ -33,6 +36,14 @@ export class AppActions {
     // console.log('get houses ');
     this.ngRedux.dispatch({
       type: AppActions.GET_HOUSES
+    });
+  }
+
+  // user actions
+  createUser(user: User) {
+    this.ngRedux.dispatch({
+      type: AppActions.CREATE_USER,
+      payload: user
     });
   }
 

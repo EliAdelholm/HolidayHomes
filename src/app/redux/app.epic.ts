@@ -65,4 +65,19 @@ export class AppEpic {
           }));
       });
   }
+
+  createUser = ( actions: ActionsObservable<any> ) => {
+    return actions.ofType( AppActions.CREATE_USER )
+      .mergeMap(({ payload }) => {
+        return this.appService.createUser( payload )
+          .map(( result: any ) => ({
+            type: AppActions.RESPONSE_OK,
+            payload: result
+          }))
+          .catch( error => Observable.of({
+            type: AppActions.RESPONSE_ERROR,
+            payload: error.error
+          }));
+      });
+  }
 }

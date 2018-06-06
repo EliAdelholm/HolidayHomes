@@ -12,8 +12,12 @@ export function userReducer(state = null, action: any) {
       return tassign( state, { status: 'OK', account: action.payload} );
 
     case AppActions.FAILED_TO_GET_USER:
-      console.log(action.payload)
-      return tassign(state, { status: action.payload})
+      console.log(action.payload);
+      return tassign(state, { status: action.payload});
+
+    case AppActions.CREATE_USER:
+      const newUserArray = [ ...state.user, action.payload ];
+      return tassign( state, { user: newUserArray } );
 
     default:
       return state;
