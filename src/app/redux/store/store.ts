@@ -3,6 +3,7 @@ import {routerReducer} from '@angular-redux/router';
 import {houseReducer} from '../reducers/house.reducer';
 import {userReducer} from '../reducers/user.reducer';
 import {House} from '../../entities/house';
+import {User} from '../../entities/user';
 
 
 
@@ -10,7 +11,7 @@ export class IAppState {
   houses: House[];
   user: {
     status: string,
-    account: object,
+    account: User,
     houses: any[]
   };
 }

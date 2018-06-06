@@ -41,6 +41,7 @@ export class AppActions {
 
   // user actions
   createUser(user: User) {
+    console.log('action: create user');
     this.ngRedux.dispatch({
       type: AppActions.CREATE_USER,
       payload: user

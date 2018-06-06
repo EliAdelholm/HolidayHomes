@@ -26,12 +26,7 @@ export class AppService {
   }
 
   createUser( payload: User ): Observable<any> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json'
-      })
-    };
-    const result = this.http.post('', payload, httpOptions);
+    const result = this.http.post('/api/create-user', payload);
     return result;
   }
 
