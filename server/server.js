@@ -43,11 +43,12 @@ app.get('/api/get-user', async (req, res) => {
   return res.send(ajUsers)
 })
 
+/** Create user **/
 app.post('/api/create-user', async(req,res) => {
   const jUser = {
-    name: req.body.name,
-    password: req.body.password,
-    email: req.body.email
+    name: req.body.userName,
+    password: req.body.userPassword,
+    email: req.body.userEmail
   }
   try {
     const response = await db.createUser(jUser)

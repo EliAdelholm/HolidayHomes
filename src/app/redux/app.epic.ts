@@ -71,11 +71,11 @@ export class AppEpic {
       .mergeMap(({ payload }) => {
         return this.appService.createUser( payload )
           .map(( result: any ) => ({
-            type: AppActions.RESPONSE_OK,
+            type: AppActions.CREATED_USER,
             payload: result
           }))
           .catch( error => Observable.of({
-            type: AppActions.RESPONSE_ERROR,
+            type: AppActions.FAILED_TO_CREATE_USER,
             payload: error.error
           }));
       });
