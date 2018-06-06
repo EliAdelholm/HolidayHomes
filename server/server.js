@@ -187,9 +187,10 @@ app.post('/api/create-house' , async (req,res) => {
   }
   try {
     const response = await db.createHouse(jHouse, [['test1.jpg'], ['test2.jpg']])
-    return res.send(response)
+    return res.json(response)
   } catch (e) {
     console.log('error saving house '+e)
+    return res.status(500)
   }
 })
 

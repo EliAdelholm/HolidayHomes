@@ -9,10 +9,9 @@ export function houseReducer(state = [], action: any) {
       return state;
 
     case AppActions.CREATED_HOUSE:
-      return state;
-    // const newHouseArray = [...state, action.payload];
-    // console.log('newHouseArray', newHouseArray);
-    // return tassign({houses: newHouseArray});
+      const newHouseArray = [...state, action.payload];
+      console.log('newHouseArray', newHouseArray);
+      return tassign({houses: newHouseArray});
 
     case AppActions.FAILED_TO_CREATE_HOUSE:
       return state;

@@ -17,6 +17,7 @@ export class BookingComponent implements OnInit {
   houseId: number = this.route.snapshot.params.id;
   subscription: Subscription;
   house: House;
+  bookings = [];
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private ngRedux: NgRedux<IAppState>) {
   }
@@ -35,7 +36,8 @@ export class BookingComponent implements OnInit {
     this.bookingForm = this.fb.group({
       startDate: ['', Validators.required],
       endDate: ['', Validators.required],
-      houseId: [this.houseId, Validators.required]
+      houseId: [this.houseId, Validators.required],
+      userId: [1]
     });
   }
 
