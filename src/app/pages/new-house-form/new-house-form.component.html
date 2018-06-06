@@ -6,25 +6,25 @@
     <form [formGroup]="createHouseFrm" (submit)="onSubmit(createHouseFrm)">
       <div class="form-group">
         <label>Headline</label>
-        <input formControlName="houseHeadline" class="form-control">
+        <input formControlName="headline" class="form-control">
       </div>
       <div class="form-group">
         <label>Description</label>
-        <textarea formControlName="houseDescription" class="form-control" rows="2"></textarea>
+        <textarea formControlName="description" class="form-control" rows="2"></textarea>
       </div>
       <div class="form-group">
 
       </div>
       <div class="form-group">
         <label>Address</label>
-        <input formControlName="houseAddress" class="form-control">
+        <input formControlName="address" class="form-control">
       </div>
       <div class="form-group">
         <div class="row">
           <div class="col-12 col-sm-6">
             <label>Space</label>
             <div class="input-group mb-3">
-              <input formControlName="houseSpace" class="form-control" aria-describedby="spaceunit-addon">
+              <input formControlName="space" class="form-control" aria-describedby="spaceunit-addon">
               <div class="input-group-append">
                 <span class="input-group-text" id="spaceunit-addon">M<sup>2</sup></span>
               </div>
@@ -33,7 +33,7 @@
           <div class="col-12 col-sm-6">
             <label>Price per Night</label>
             <div class="input-group mb-3">
-              <input formControlName="housePrice" class="form-control" aria-describedby="currency-addon">
+              <input formControlName="price" class="form-control" aria-describedby="currency-addon">
               <div class="input-group-append">
                 <span class="input-group-text" id="currency-addon">DKK</span>
               </div>
@@ -43,7 +43,7 @@
       </div>
       <div class="form-group">
         <label>Housing Type</label>
-        <select formControlName="houseType" class="form-control">
+        <select formControlName="isHouse" class="form-control">
           <option value="appartment">Appartment</option>
           <option value="house">House</option>
         </select>
@@ -73,11 +73,11 @@
       </div>
       <div class="form-group">
         <label>Additional Images</label>
-        <input multiple type="file" formControlName="houseImg1" class="form-control">
+        <input multiple type="file" formControlName="houseImages" class="form-control">
       </div>
 
       <div class="form-group">
-        <button type="submit" class="btn btn-primary" [disabled]="createHouseFrm.invalid">Add House</button>
+        <button type="submit" class="btn btn-primary">Add House</button>
       </div>
     </form>
   </div>
