@@ -69,11 +69,11 @@
       </div>
       <div class="form-group">
         <label>Thumbnail Image</label>
-        <input type="file" formControlName="houseThumbnail" class="form-control">
+        <input type="file" (change)="uploadThumbnail($event)" class="form-control">
       </div>
       <div class="form-group">
         <label>Additional Images</label>
-        <input multiple type="file" formControlName="houseImages" class="form-control">
+        <input multiple type="file" (change)="uploadImages($event)" class="form-control">
       </div>
 
       <div class="form-group">
