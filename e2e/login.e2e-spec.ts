@@ -15,11 +15,11 @@ describe('login test', function() {
     // Find the first (and only) button on the page and click it
     element.all(by.tagName('button')).get(1).click();
 
-    // browser.wait(function() {
-    //   return browser.getCurrentUrl().then(function(url) {
-    //     console.log('Url', url);
-    //     return /portal/.test(url);
-    //   });
-    // }, 5000, 'URL hasn\'t changed');
+    browser.wait(function() {
+      return browser.getCurrentUrl().then(function(url) {
+        console.log('Url', url);
+        return /portal/.test(url);
+      });
+    }, 5000, 'URL hasn\'t changed');
   });
 });
