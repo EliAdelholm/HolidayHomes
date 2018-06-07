@@ -78,10 +78,11 @@ class Database {
 
   getHousesBelongingToUser (iUserId) {
     return new Promise((resolve, reject) => {
-      global.con.query('SELECT houses.*, GROUP_CONCAT(houses_images.image) \n' +
+      global.con.query('SELECT houses.*, GROUP_CONCAT(houses_images.image) AS additional_images \n' +
         'FROM houses\n' +
         'JOIN houses_images ON houses.id = houses_images.houses_id\n' +
-        'WHERE houses.users_id = 2', [iUserId],
+        'WHERE houses.users_id = ?' +
+        'GROUP BY houses_id', [iUserId],
         (error, jResult) => {
           if (error) return reject(error)
           resolve(jResult)
