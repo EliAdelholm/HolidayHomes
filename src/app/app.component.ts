@@ -15,7 +15,7 @@ export class AppComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   user;
 
-  constructor(public loginService: LoginService, private houseActions: AppActions, private ngRedux: NgRedux<IAppState>) {
+  constructor(public loginService: LoginService, private appActions: AppActions, private ngRedux: NgRedux<IAppState>) {
   }
 
   ngOnDestroy(): void {
@@ -23,7 +23,10 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.houseActions.getHouses();
+    if (this.loginService.isActiveSession()) {
+      this.appActions.getUser(localStorage.getItem('login'));
+    }
+    this.appActions.getHouses();
 
     this.subscription = this.ngRedux.select(store => store.user).subscribe(user => {
       this.user = user.account;

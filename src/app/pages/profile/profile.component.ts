@@ -14,6 +14,8 @@ import {AppActions} from '../../redux/app.actions';
 export class ProfileComponent implements OnInit, OnDestroy {
   updateProfileFrm: FormGroup;
   displayPopup = false;
+  popupContent;
+  houseId;
   subscription: Subscription;
   user;
   houses;
@@ -73,9 +75,18 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }
   }
 
-  togglePopup() {
-    console.log('test');
+  togglePopup(type, id) {
+    this.popupContent = type;
+    type === 'house' ? this.houseId = id : this.houseId = null;
     this.displayPopup = !this.displayPopup;
+  }
+
+  deleteHouse() {
+    console.log('Delete house with id: ' + this.houseId);
+  }
+
+  deleteAccount() {
+    console.log('Delete account with id: ' + this.user.id);
   }
 
 }

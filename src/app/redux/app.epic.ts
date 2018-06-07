@@ -82,6 +82,21 @@ export class AppEpic {
       });
   };
 
+  login = (actions: ActionsObservable<any>) => {
+    return actions.ofType(AppActions.LOGIN)
+      .mergeMap(({payload}) => {
+        return this.appService.login(payload)
+          .map((result: any[]) => ({
+            type: AppActions.RECEIVED_USER,
+            payload: result
+          }))
+          .catch(error => Observable.of({
+            type: AppActions.FAILED_TO_GET_USER,
+            payload: error.error
+          }));
+      });
+  };
+
   getUser = (actions: ActionsObservable<any>) => {
     return actions.ofType(AppActions.GET_USER)
       .mergeMap(({payload}) => {

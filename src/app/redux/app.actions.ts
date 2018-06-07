@@ -38,6 +38,7 @@ export class AppActions {
   static DELETED_USER: String = 'DELETED_USER';
   static FAILED_TO_DELETE_USER: String = 'FAILED_TO_DELETE_USER';
 
+  static LOGIN: String = 'LOGIN';
   static GET_USER: String = 'GET_USER';
   static RECEIVED_USER: String = 'RECEIVED_USER';
   static FAILED_TO_GET_USER: String = 'FAILED_TO_GET_USER';
@@ -85,10 +86,17 @@ export class AppActions {
     });
   }
 
-  getUser(formData) {
+  login(formData) {
+    this.ngRedux.dispatch({
+      type: AppActions.LOGIN,
+      payload: formData
+    });
+  }
+
+  getUser(userId) {
     this.ngRedux.dispatch({
       type: AppActions.GET_USER,
-      payload: formData
+      payload: userId
     });
   }
 

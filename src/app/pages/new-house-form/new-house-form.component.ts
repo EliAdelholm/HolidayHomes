@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {House} from '../../entities/house';
 import {AppActions} from '../../redux/app.actions';
-import {forEach} from '@angular/router/src/utils/collection';
+import {LoginService} from '../../services/login/login.service';
 
 @Component({
   selector: 'app-new-house-form',
@@ -14,12 +14,13 @@ import {forEach} from '@angular/router/src/utils/collection';
 export class NewHouseFormComponent implements OnInit {
   createHouseFrm: FormGroup;
 
-  constructor(private fb: FormBuilder, private router: Router, private houseActions: AppActions, private cd: ChangeDetectorRef) {
+  constructor(private fb: FormBuilder, private router: Router, private houseActions: AppActions, private cd: ChangeDetectorRef,
+              private loginService: LoginService) {
   }
 
   ngOnInit() {
     this.createHouseFrm = this.fb.group({
-      userId: [1],
+      userId: [this.loginService.getUserId()],
       headline: ['', Validators.required],
       description: ['', Validators.required],
       price: ['', Validators.required],
@@ -78,7 +79,7 @@ export class NewHouseFormComponent implements OnInit {
     if (event.target.files && event.target.files.length) {
       const uploadedFiles = event.target.files;
       const fileArray = [];
-      console.log(uploadedFiles)
+      console.log(uploadedFiles);
 
       for (let i = 0; i < uploadedFiles.length; i++) {
         const reader = new FileReader();

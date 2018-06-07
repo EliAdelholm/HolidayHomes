@@ -8,6 +8,7 @@ import {House} from '../../entities/house';
 import {DatePickerConfig, ECalendarType} from '@libusoftcicom/lc-datepicker';
 import * as moment from 'moment';
 import {BookingService} from './booking.service';
+import {LoginService} from '../../services/login/login.service';
 
 @Component({
   selector: 'app-booking',
@@ -26,7 +27,7 @@ export class BookingComponent implements OnInit {
   bookings: any = [];
   bookingStatus = null;
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private ngRedux: NgRedux<IAppState>, private bookingService: BookingService) {
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private ngRedux: NgRedux<IAppState>, private bookingService: BookingService, private loginService: LoginService) {
     this.config.CalendarType = ECalendarType.Date;
     this.config.Localization = 'en';
     this.config.MinDate = {years: moment().year(), months: moment().month(), date: moment().date()};
@@ -69,7 +70,7 @@ export class BookingComponent implements OnInit {
       startDate: ['', Validators.required],
       endDate: ['', Validators.required],
       houseId: [this.houseId, Validators.required],
-      userId: [1]
+      userId: [this.loginService.getUserId()]
     });
 
     this.bookingService.getBookings(this.houseId)
