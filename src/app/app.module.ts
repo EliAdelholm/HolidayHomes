@@ -25,6 +25,8 @@ import {AppService} from './redux/app.service';
 import {HttpClientModule} from '@angular/common/http';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ValueArrayPipe} from './array.pipe';
+import {LcDatePickerModule} from '@libusoftcicom/lc-datepicker';
+import {BookingService} from './pages/booking/booking.service';
 
 
 @NgModule({
@@ -47,10 +49,12 @@ import {ValueArrayPipe} from './array.pipe';
     FormsModule,
     HttpClientModule,
     NgReduxModule, NgReduxRouterModule.forRoot(),
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    LcDatePickerModule
   ],
   providers: [
     LoginService,
+    BookingService,
     AppActions,
     AppService,
     AppEpic
