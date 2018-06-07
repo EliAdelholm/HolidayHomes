@@ -48,7 +48,7 @@ export class NewHouseFormComponent implements OnInit {
 
       const house: House = createHouseFrm.value as House;
       console.log(house);
-      // this.houseActions.createHouse(house);
+      this.houseActions.createHouse(house);
       // this.router.navigate(['portal']);
     }
   }
