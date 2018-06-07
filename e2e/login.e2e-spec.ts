@@ -10,7 +10,7 @@ describe('login test', function() {
 
     const password =  element(by.css('input[formControlName=password]'));
     password.sendKeys('a');
-    expect(email.getAttribute('value')).toBe('a');
+    expect(password.getAttribute('value')).toBe('a');
 
     // Find the first (and only) button on the page and click it
     element.all(by.tagName('button')).get(1).click();

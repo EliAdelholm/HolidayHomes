@@ -27,6 +27,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ValueArrayPipe} from './array.pipe';
 import {LcDatePickerModule} from '@libusoftcicom/lc-datepicker';
 import {BookingService} from './pages/booking/booking.service';
+import {FilterHouseType} from './filters/filter.house-type';
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import {BookingService} from './pages/booking/booking.service';
     ProfileComponent,
     PageNotFoundComponent,
     ValueArrayPipe,
+    FilterHouseType,
   ],
   imports: [
     BrowserModule,

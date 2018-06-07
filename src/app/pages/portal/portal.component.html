@@ -4,14 +4,17 @@
     <h2>Filters</h2>
     <p>Location<br>Date</p>
     <h5>Housing Type</h5>
-    <div class="custom-control custom-checkbox">
-      <input type="checkbox" class="custom-control-input" id="filterAppartments">
-      <label class="custom-control-label" for="filterAppartments">Appartment</label>
+    <div>
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="filterAppartments" [(ngModel)]="is_apartment">
+        <label class="custom-control-label" for="filterAppartments">Appartment</label>
+      </div>
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="filterHouses" [(ngModel)]="is_house">
+        <label class="custom-control-label" for="filterHouses">House</label>
+      </div>
     </div>
-    <div class="custom-control custom-checkbox">
-      <input type="checkbox" class="custom-control-input" id="filterHouses">
-      <label class="custom-control-label" for="filterHouses">House</label>
-    </div><br>
+      <br>
 
     <h5>Facilities</h5>
     <div class="custom-control custom-checkbox">
@@ -30,13 +33,12 @@
       <input type="checkbox" class="custom-control-input" id="filterFamilyFriendly">
       <label class="custom-control-label" for="filterFamilyFriendly">Family Friendly</label>
     </div>
-
   </div>
   <div class="col-12 col-md-9 col-lg-10">
     <h2>Housing</h2>
     <p *ngIf="!houses">No houses found</p>
     <div class="card-columns" *ngIf="houses">
-      <div class="card" *ngFor="let house of houses" routerLink="/house-preview/{{house.id}}">
+      <div class="card" *ngFor= "let house of houses | filterHouseType: is_house : is_apartment" routerLink="/house-preview/{{house.id}}">
         <img class="card-img-top"
              src="../../../assets/img/{{house.thumbnail_image}}"
              alt="Card image cap">
@@ -48,6 +50,11 @@
     </div>
   </div>
 </div>
-<ul>
-  <!--<li *ngFor="let house of onGetHouses()">{{house}}</li>-->
-</ul>
+<!--<ul>-->
+  <!--&lt;!&ndash;<li *ngFor="let house of onGetHouses()">{{house}}</li>&ndash;&gt;-->
+<!--</ul>-->
+
+<!--<div *ngFor="let filterItem of checked()">{{ filterItem.value }}</div>-->
+<!--<ul>-->
+  <!--<li *ngFor= "let item of houses | filterHouseType: is_house"> {{ item.headline }}</li>-->
+<!--</ul>-->
