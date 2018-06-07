@@ -17,7 +17,10 @@ export class PortalComponent implements OnInit {
   house: House;
   is_house: boolean;
   is_apartment: boolean;
-  // filterItems: any[];
+  hasWifi: boolean;
+  hasTv: boolean;
+  hasDryer: boolean;
+  isFamilyFriendly: boolean;
 
   constructor(
     private ngRedux: NgRedux<IAppState>
@@ -30,10 +33,4 @@ export class PortalComponent implements OnInit {
       console.log('houses', this.houses);
     });
   }
-
-  checked() {
-    return this.houses.filter(item => { return item.hasWifi; });
-  }
-
-
 }

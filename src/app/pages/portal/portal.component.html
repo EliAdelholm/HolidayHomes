@@ -18,19 +18,19 @@
 
     <h5>Facilities</h5>
     <div class="custom-control custom-checkbox">
-      <input type="checkbox" class="custom-control-input" id="filterWiFi">
+      <input type="checkbox" class="custom-control-input" id="filterWiFi" [(ngModel)]="hasWifi">
       <label class="custom-control-label" for="filterWiFi">Wi-Fi</label>
     </div>
     <div class="custom-control custom-checkbox">
-      <input type="checkbox" class="custom-control-input" id="filterTV">
+      <input type="checkbox" class="custom-control-input" id="filterTV" [(ngModel)]="hasTv">
       <label class="custom-control-label" for="filterTV">Television</label>
     </div>
     <div class="custom-control custom-checkbox">
-      <input type="checkbox" class="custom-control-input" id="filterDryer">
+      <input type="checkbox" class="custom-control-input" id="filterDryer" [(ngModel)]="hasDryer">
       <label class="custom-control-label" for="filterDryer">Dryer</label>
     </div><br>
     <div class="custom-control custom-checkbox">
-      <input type="checkbox" class="custom-control-input" id="filterFamilyFriendly">
+      <input type="checkbox" class="custom-control-input" id="filterFamilyFriendly" [(ngModel)]="isFamilyFriendly">
       <label class="custom-control-label" for="filterFamilyFriendly">Family Friendly</label>
     </div>
   </div>
@@ -38,7 +38,7 @@
     <h2>Housing</h2>
     <p *ngIf="!houses">No houses found</p>
     <div class="card-columns" *ngIf="houses">
-      <div class="card" *ngFor= "let house of houses | filterHouseType: is_house : is_apartment" routerLink="/house-preview/{{house.id}}">
+      <div class="card" *ngFor= "let house of houses | filterHouseType: is_house : is_apartment : hasWifi : hasTv : hasDryer : isFamilyFriendly" routerLink="/house-preview/{{house.id}}">
         <img class="card-img-top"
              src="../../../assets/img/{{house.thumbnail_image}}"
              alt="Card image cap">
