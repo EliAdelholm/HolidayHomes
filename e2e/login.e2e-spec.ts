@@ -5,12 +5,12 @@ describe('login test', function() {
     browser.get('/login');
 
     const email = element(by.css('input[formControlName=email]'));
-    email.sendKeys('a');
-    expect(email.getAttribute('value')).toBe('a');
+    email.sendKeys('eli@eli.dk');
+    expect(email.getAttribute('value')).toBe('eli@eli.dk');
 
     const password =  element(by.css('input[formControlName=password]'));
-    password.sendKeys('a');
-    expect(email.getAttribute('value')).toBe('a');
+    password.sendKeys('secret');
+    expect(password.getAttribute('value')).toBe('secret');
 
     // Find the first (and only) button on the page and click it
     element.all(by.tagName('button')).get(1).click();
