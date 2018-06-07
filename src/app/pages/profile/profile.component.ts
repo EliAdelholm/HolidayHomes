@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs/Subscription';
 import {NgRedux} from '@angular-redux/store';
@@ -19,7 +19,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   houses;
   gotHouses = false;
 
-  constructor(private fb: FormBuilder, private ngRedux: NgRedux<IAppState>, private appActions: AppActions) {
+  constructor(private fb: FormBuilder, private ngRedux: NgRedux<IAppState>, private appActions: AppActions, private cd: ChangeDetectorRef) {
   }
 
   ngOnDestroy(): void {
@@ -44,6 +44,33 @@ export class ProfileComponent implements OnInit, OnDestroy {
         });
       }
     });
+  }
+
+  uploadImage(event) {
+    const reader = new FileReader();
+
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        this.updateProfileFrm.patchValue({
+          userImg: {
+            base64: reader.result.split(',')[1],
+            extension: file.name.split('.')[1]
+          }
+        });
+
+        // need to run CD since file load runs outside of zone
+        this.cd.markForCheck();
+      };
+    }
+  }
+
+  onSubmit(form) {
+    if (form.valid) {
+      console.log(form.value);
+    }
   }
 
   togglePopup() {

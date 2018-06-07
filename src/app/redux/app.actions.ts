@@ -6,11 +6,20 @@ import {User} from '../entities/user';
 
 @Injectable()
 export class AppActions {
-  constructor(private ngRedux: NgRedux<IAppState>) {}
+  constructor(private ngRedux: NgRedux<IAppState>) {
+  }
 
   static CREATE_HOUSE: String = 'CREATE_HOUSE';
   static CREATED_HOUSE: String = 'CREATED_HOUSE';
   static FAILED_TO_CREATE_HOUSE: String = 'FAILED_TO_CREATE_HOUSE';
+
+  static UPDATE_HOUSE: String = 'UPDATE_HOUSE';
+  static UPDATED_HOUSE: String = 'UPDATED_HOUSE';
+  static FAILED_TO_UPDATE_HOUSE: String = 'FAILED_TO_UPDATE_HOUSE';
+
+  static DELETE_HOUSE: String = 'DELETE_HOUSE';
+  static DELETED_HOUSE: String = 'DELETED_HOUSE';
+  static FAILED_TO_DELETE_HOUSE: String = 'FAILED_TO_DELETE_HOUSE';
 
   static GET_HOUSES: String = 'GET_HOUSES';
   static RECEIVED_HOUSES: String = 'RECEIVED_HOUSES';
@@ -21,6 +30,14 @@ export class AppActions {
   static CREATED_USER: String = 'CREATED_USER';
   static FAILED_TO_CREATE_USER: String = 'FAILED_TO_CREATE_USER';
 
+  static UPDATE_USER: String = 'UPDATE_USER';
+  static UPDATED_USER: String = 'UPDATED_USER';
+  static FAILED_TO_UPDATE_USER: String = 'FAILED_TO_UPDATE_USER';
+
+  static DELETE_USER: String = 'DELETE_USER';
+  static DELETED_USER: String = 'DELETED_USER';
+  static FAILED_TO_DELETE_USER: String = 'FAILED_TO_DELETE_USER';
+
   static GET_USER: String = 'GET_USER';
   static RECEIVED_USER: String = 'RECEIVED_USER';
   static FAILED_TO_GET_USER: String = 'FAILED_TO_GET_USER';
@@ -29,12 +46,26 @@ export class AppActions {
   static RECEIVED_USER_HOUSES: String = 'RECEIVED_USER_HOUSES';
   static FAILED_TO_GET_USER_HOUSES: String = 'FAILED_TO_GET_USER_HOUSES';
 
-  // house actions
+  // HOUSE ACTIONS
   createHouse(house: House) {
     console.log('house ', house);
     this.ngRedux.dispatch({
       type: AppActions.CREATE_HOUSE,
       payload: house
+    });
+  }
+
+  updateHouse(house: House) {
+    this.ngRedux.dispatch({
+      type: AppActions.UPDATE_HOUSE,
+      payload: house
+    });
+  }
+
+  deleteHouse(houseId: number) {
+    this.ngRedux.dispatch({
+      type: AppActions.DELETE_HOUSE,
+      payload: houseId
     });
   }
 
@@ -45,7 +76,7 @@ export class AppActions {
     });
   }
 
-  // user actions
+  // USER ACTIONS
   createUser(user: User) {
     console.log('action: create user');
     this.ngRedux.dispatch({
@@ -58,6 +89,20 @@ export class AppActions {
     this.ngRedux.dispatch({
       type: AppActions.GET_USER,
       payload: formData
+    });
+  }
+
+  updateUser(user: object) {
+    this.ngRedux.dispatch({
+      type: AppActions.UPDATE_USER,
+      payload: user
+    });
+  }
+
+  deleteUser(userId: object) {
+    this.ngRedux.dispatch({
+      type: AppActions.DELETE_USER,
+      payload: userId
     });
   }
 

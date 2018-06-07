@@ -63,19 +63,24 @@ import {BookingService} from './pages/booking/booking.service';
 })
 
 export class AppModule {
-  constructor(private ngRedux: NgRedux<IAppState>,
-              private devTool: DevToolsExtension,
-              private ngReduxRouter: NgReduxRouter, private appEpic: AppEpic) {
+  constructor(private ngRedux: NgRedux<IAppState>, private devTool: DevToolsExtension, private ngReduxRouter: NgReduxRouter, private appEpic: AppEpic) {
+
     const rootEpic = combineEpics(
       this.appEpic.getHouses,
-      this.appEpic.getUser,
       this.appEpic.createHouse,
+      this.appEpic.updateHouse,
+      this.appEpic.deleteHouse,
+      this.appEpic.getUser,
       this.appEpic.createUser,
+      this.appEpic.updateUser,
+      this.appEpic.deleteUser,
       this.appEpic.getUserHouses,
     );
+
     const middleware = [
       createEpicMiddleware(rootEpic), createLogger({level: 'info', collapsed: true})
     ];
+
     this.ngRedux.configureStore(rootReducer, {
       houses: [],
       user: {status: null, account: null, houses: []}
