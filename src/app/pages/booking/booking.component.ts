@@ -53,7 +53,7 @@ export class BookingComponent implements OnInit {
 
   onSubmit(bookingForm) {
     if (bookingForm.valid) {
-      console.log('Send booking');
+      console.log('Send booking', bookingForm.value);
       this.bookingService.addBooking(bookingForm.value).subscribe(response => {
         console.log(response);
         this.bookingStatus = response;
