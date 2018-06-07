@@ -71,6 +71,7 @@ export class AppModule {
       this.appEpic.getUser,
       this.appEpic.createHouse,
       this.appEpic.createUser,
+      this.appEpic.getUserHouses,
     );
     const middleware = [
       createEpicMiddleware(rootEpic), createLogger({level: 'info', collapsed: true})

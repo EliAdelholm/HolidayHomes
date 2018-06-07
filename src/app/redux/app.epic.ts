@@ -80,4 +80,19 @@ export class AppEpic {
           }));
       });
   }
+
+  getUserHouses = (actions: ActionsObservable<any>) => {
+    return actions.ofType(AppActions.GET_USER_HOUSES)
+      .mergeMap(({ payload }) => {
+        return this.appService.getUserHouses(payload)
+          .map((result: any[]) => ({
+            type: AppActions.RECEIVED_USER_HOUSES,
+            payload: result
+          }))
+          .catch(error => Observable.of({
+            type: AppActions.FAILED_TO_GET_USER_HOUSES,
+            payload: error.error
+          }));
+      });
+  }
 }

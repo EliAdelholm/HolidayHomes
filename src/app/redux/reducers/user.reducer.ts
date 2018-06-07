@@ -9,20 +9,29 @@ export function userReducer(state = null, action: any) {
   switch (action.type) {
 
     case AppActions.RECEIVED_USER:
-      return tassign( state, { status: 'OK', account: action.payload} );
+      return tassign(state, {status: 'OK', account: action.payload});
 
     case AppActions.FAILED_TO_GET_USER:
       console.log(action.payload);
-      return tassign(state, { status: action.payload});
+      return tassign(state, {status: action.payload});
 
     case AppActions.CREATE_USER:
       console.log(action.payload);
-      return tassign( state, { account: action.payload } );
+      return tassign(state, {account: action.payload});
 
     case AppActions.CREATED_USER:
       return state;
 
     case AppActions.FAILED_TO_CREATE_USER:
+      return state;
+
+    case AppActions.GET_USER_HOUSES:
+      return tassign(state, {status: null});
+
+    case AppActions.RECEIVED_USER_HOUSES:
+      return tassign(state, { houses: action.payload});
+
+    case AppActions.FAILED_TO_GET_USER_HOUSES:
       return state;
 
     default:

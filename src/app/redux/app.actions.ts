@@ -6,8 +6,7 @@ import {User} from '../entities/user';
 
 @Injectable()
 export class AppActions {
-  constructor(private ngRedux: NgRedux<IAppState>) {
-  }
+  constructor(private ngRedux: NgRedux<IAppState>) {}
 
   static CREATE_HOUSE: String = 'CREATE_HOUSE';
   static CREATED_HOUSE: String = 'CREATED_HOUSE';
@@ -25,6 +24,10 @@ export class AppActions {
   static GET_USER: String = 'GET_USER';
   static RECEIVED_USER: String = 'RECEIVED_USER';
   static FAILED_TO_GET_USER: String = 'FAILED_TO_GET_USER';
+
+  static GET_USER_HOUSES: String = 'GET_USER_HOUSES';
+  static RECEIVED_USER_HOUSES: String = 'RECEIVED_USER_HOUSES';
+  static FAILED_TO_GET_USER_HOUSES: String = 'FAILED_TO_GET_USER_HOUSES';
 
   // house actions
   createHouse(house: House) {
@@ -55,6 +58,13 @@ export class AppActions {
     this.ngRedux.dispatch({
       type: AppActions.GET_USER,
       payload: formData
+    });
+  }
+
+  getUserHouses(userId: number) {
+    this.ngRedux.dispatch({
+      type: AppActions.GET_USER_HOUSES,
+      payload: userId
     });
   }
 

@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {House} from '../entities/house';
 import {User} from '../entities/user';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class AppService {
@@ -25,9 +25,13 @@ export class AppService {
     return this.http.post('/api/login', formData);
   }
 
-  createUser( payload: User ): Observable<any> {
+  createUser(payload: User): Observable<any> {
     const result = this.http.post('/api/create-user', payload);
     return result;
+  }
+
+  getUserHouses(userId: number) {
+    return this.http.get('/api/get-houses-belonging-to-user?id=' + userId);
   }
 
 }
