@@ -56,6 +56,14 @@ app.post('/api/create-user', async(req,res) => {
     password: req.body.userPassword,
     email: req.body.userEmail
   }
+  if (req.body.userImg) {
+    try{
+    const response = await decodeAndSaveImage(req.body.userImg)
+    } catch(e) {
+      console.log('unable to upload user image')
+      return res.send('unable to upload user image')
+    }
+  }
   try {
     const response = await db.createUser(jUser)
     return res.send(response)
