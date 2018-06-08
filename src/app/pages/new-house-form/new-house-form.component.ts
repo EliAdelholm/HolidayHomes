@@ -26,7 +26,7 @@ export class NewHouseFormComponent implements OnInit {
       price: ['', Validators.required],
       address: ['', Validators.required],
       space: ['', Validators.required],
-      isHouse: ['', Validators.required],
+      isHouse: [1, Validators.required],
       wifi: [''],
       tv: [''],
       dryer: [''],
@@ -38,17 +38,18 @@ export class NewHouseFormComponent implements OnInit {
 
 
   onSubmit(createHouseFrm) {
+    console.log(createHouseFrm.value.isHouse)
     if (createHouseFrm.valid) {
       createHouseFrm.value.wifi ? createHouseFrm.value.wifi = 1 : createHouseFrm.value.wifi = 0;
       createHouseFrm.value.tv ? createHouseFrm.value.tv = 1 : createHouseFrm.value.tv = 0;
-      createHouseFrm.value.dryer ? createHouseFrm.value.dyer = 1 : createHouseFrm.value.dryer = 0;
+      createHouseFrm.value.dryer ? createHouseFrm.value.dryer = 1 : createHouseFrm.value.dryer = 0;
       createHouseFrm.value.familyfriendly ? createHouseFrm.value.familyfriendly = 1 : createHouseFrm.value.familyfriendly = 0;
 
       console.log(createHouseFrm.value);
 
       const house: House = createHouseFrm.value as House;
       console.log(house);
-      this.houseActions.createHouse(house);
+      // this.houseActions.createHouse(house);
       // this.router.navigate(['portal']);
     }
   }
@@ -61,10 +62,11 @@ export class NewHouseFormComponent implements OnInit {
       reader.readAsDataURL(file);
 
       reader.onload = () => {
+        const splitName = file.name.split('.');
         this.createHouseFrm.patchValue({
           houseThumbnail: {
             base64: reader.result.split(',')[1],
-            extension: file.name.split('.')[1]
+            extension: splitName[splitName.length - 1]
           }
         });
 
@@ -83,12 +85,13 @@ export class NewHouseFormComponent implements OnInit {
       for (let i = 0; i < uploadedFiles.length; i++) {
         const reader = new FileReader();
         let file = uploadedFiles[i];
+        const splitName = file.name.split('.');
         console.log('img: ', file);
         reader.readAsDataURL(file);
         reader.onload = () => {
           fileArray.push({
             base64: reader.result.split(',')[1],
-            extension: file.name.split('.')[1]
+            extension: splitName[splitName.length - 1]
           });
 
           // need to run CD since file load runs outside of zone

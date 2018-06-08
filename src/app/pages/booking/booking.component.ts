@@ -10,6 +10,7 @@ import * as moment from 'moment';
 import {BookingService} from './booking.service';
 import {LoginService} from '../../services/login/login.service';
 import {DateValidator} from '../../validators/date-validator';
+import {el} from '@angular/platform-browser/testing/src/browser_util';
 
 @Component({
   selector: 'app-booking',
@@ -19,14 +20,15 @@ import {DateValidator} from '../../validators/date-validator';
 export class BookingComponent implements OnInit {
   private dateValue: string = null;
   public config = new DatePickerConfig();
-  public sCalendarOpened: boolean = false;
-  public eCalendarOpened: boolean = false;
+  public sCalendarOpened = false;
+  public eCalendarOpened = false;
   bookingForm: FormGroup;
   houseId: number = this.route.snapshot.params.id;
   subscription: Subscription;
   house: House;
   bookings: any = [];
   bookingStatus = null;
+  dateTaken: boolean;
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private ngRedux: NgRedux<IAppState>, private bookingService: BookingService, private loginService: LoginService) {
     this.config.CalendarType = ECalendarType.Date;
@@ -54,13 +56,28 @@ export class BookingComponent implements OnInit {
 
   onSubmit(bookingForm) {
     if (bookingForm.valid) {
-      console.log('Send booking', bookingForm.value);
-      this.bookingService.addBooking(bookingForm.value).subscribe(response => {
-        console.log(response);
-        this.bookingStatus = response;
-      });
+      console.log('this.bookings', this.bookings);
+      for ( let i = 0; i < this.bookings.length; i++ ) {
+        console.log('checking', this.bookingForm.value.endDate,  this.bookings[i]);
+        if ( this.bookingForm.value.endDate === this.bookings[i] ) {
+          console.log('dateTaken', this.bookings[i]);
+          this.dateTaken = true;
+        }
+        if ( this.bookingForm.value.startDate === this.bookings[i] ) {
+          console.log('dateTaken', this.bookings[i]);
+          this.dateTaken = true;
+        }
+      }
+      if (!this.dateTaken) {
+        console.log('Send booking', bookingForm.value);
+        this.bookingService.addBooking(bookingForm.value).subscribe(response => {
+          console.log(response);
+          this.bookingStatus = response;
+        });
+      }
     }
   }
+
 
   ngOnInit() {
     this.subscription = this.ngRedux.select(state => state.houses).subscribe(houses => {
@@ -78,7 +95,6 @@ export class BookingComponent implements OnInit {
       .subscribe(data => {
         this.bookings = data;
         this.config.setDisabledDates(this.bookings);
-        console.log('this.bookings', this.bookings.length);
       });
 
   }
