@@ -58,13 +58,13 @@
         <div class="card-body">
           <ul class="list-group list-group-flush">
             <li class="list-group-item"><h6>Family friendly:
-              <span class="badge badge-pill float-right" [ngClass]="(house.isFamilyFriendly)?'badge-success':'badge-danger'">
-                {{ house.isFamilyFriendly ? 'Yes' : 'No' }}
+              <span class="badge badge-pill float-right" [ngClass]="(house.familyfriendly)?'badge-success':'badge-danger'">
+                {{ house.familyfriendly ? 'Yes' : 'No' }}
               </span>
             </h6></li>
             <li class="list-group-item"><h6>Has WiFi:
-              <span class="badge badge-pill float-right" [ngClass]="(house.hasWifi)?'badge-success':'badge-danger'">
-                {{ house.hasWifi ? 'Yes' : 'No' }}
+              <span class="badge badge-pill float-right" [ngClass]="(house.wifi)?'badge-success':'badge-danger'">
+                {{ house.wifi ? 'Yes' : 'No' }}
               </span>
             </h6></li>
             <li class="list-group-item"><h6>Has TV:

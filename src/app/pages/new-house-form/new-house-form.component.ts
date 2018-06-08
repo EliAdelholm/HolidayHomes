@@ -38,10 +38,10 @@ export class NewHouseFormComponent implements OnInit {
 
   onSubmit(createHouseFrm) {
     if (createHouseFrm.valid) {
-      createHouseFrm.value.hasWifi ? createHouseFrm.value.hasWifi = 1 : createHouseFrm.value.hasWifi = 0;
+      createHouseFrm.value.wifi ? createHouseFrm.value.wifi = 1 : createHouseFrm.value.wifi = 0;
       createHouseFrm.value.hasTv ? createHouseFrm.value.hasTv = 1 : createHouseFrm.value.hasTv = 0;
       createHouseFrm.value.hasDryer ? createHouseFrm.value.hasDryer = 1 : createHouseFrm.value.hasDryer = 0;
-      createHouseFrm.value.isFamilyFriendly ? createHouseFrm.value.isFamilyFriendly = 1 : createHouseFrm.value.isFamilyFriendly = 0;
+      createHouseFrm.value.familyfriendly ? createHouseFrm.value.familyfriendly = 1 : createHouseFrm.value.familyfriendly = 0;
       createHouseFrm.value.isHouse === 'house' ? createHouseFrm.value.isHouse = 1 : createHouseFrm.value.isHouse = 0;
 
       console.log(createHouseFrm.value);

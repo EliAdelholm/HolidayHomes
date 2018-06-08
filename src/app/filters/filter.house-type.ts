@@ -6,7 +6,6 @@ import {House} from '../entities/house';
 
 export class FilterHouseType implements PipeTransform {
   transform( items: House[], isHouse: boolean, isApartment: boolean, hasWifi: boolean, hasTv: boolean, hasDryer: boolean, isFamilyFriendly: boolean ): any {
-    console.log(hasWifi, hasTv, hasDryer, isFamilyFriendly);
     return items.filter(
       item => {
         if ( !isHouse && !isApartment ) { return false; }
@@ -21,11 +20,11 @@ export class FilterHouseType implements PipeTransform {
         if ( hasDryer && item.dryer === 0 ) { return false; }
         return true;
       }).filter(item => {
-        console.log('item', item.isFamilyFriendly);
-        if ( isFamilyFriendly && item.isFamilyFriendly === 0 ) { return false; }
+        console.log('item', item.familyfriendly);
+        if ( isFamilyFriendly && item.familyfriendly === 0 ) { return false; }
         return true;
       }).filter(item => {
-        if ( hasWifi && item.hasWifi === 0 ) { return false; }
+        if ( hasWifi && item.wifi === 0 ) { return false; }
         return true;
       });
   }
@@ -33,4 +32,4 @@ export class FilterHouseType implements PipeTransform {
 
 // if ( hasTv && item.tv === 1 ) { return true; }
 // if ( hasDryer && item.dryer === 1 ) { return true; }
-// if ( isFamilyFriendly && item.isFamilyFriendly === 1 ) { return true;}
+// if ( familyfriendly && item.familyfriendly === 1 ) { return true;}

@@ -15,8 +15,8 @@ export class PortalComponent implements OnInit {
   subscription: Subscription;
   houses: House [];
   house: House;
-  is_house: boolean;
-  is_apartment: boolean;
+  is_house: boolean = true;
+  is_apartment: boolean = true;
   hasWifi: boolean;
   hasTv: boolean;
   hasDryer: boolean;

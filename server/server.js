@@ -180,8 +180,8 @@ app.post('/api/create-house' , async (req,res) => {
     address: req.body.address,
     space: req.body.space,
     is_house: req.body.isHouse,
-    wifi: req.body.hasWifi,
-    familyfriendly: req.body.isFamilyFriendly,
+    wifi: req.body.wifi,
+    familyfriendly: req.body.familyfriendly,
     tv: req.body.hasTv,
     dryer: req.body.hasDryer
   }
