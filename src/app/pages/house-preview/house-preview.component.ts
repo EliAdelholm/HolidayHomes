@@ -16,6 +16,8 @@ export class HousePreviewComponent implements OnInit {
   houseId: number = this.route.snapshot.params.id;
   subscription: Subscription;
   house: House;
+  thumbNail: String;
+  houseImgs: String[];
 
   constructor(private route: ActivatedRoute, private ngRedux: NgRedux<IAppState>, public loginService: LoginService) {
   }
@@ -23,6 +25,13 @@ export class HousePreviewComponent implements OnInit {
   ngOnInit() {
     this.subscription = this.ngRedux.select(state => state.houses).subscribe(houses => {
       this.house = houses && houses.find(x => x.id == this.houseId);
+      console.log('this.house', this.house);
+      if (this.house !== undefined) {
+        this.thumbNail = this.house.thumbnail_image;
+        console.log('this.thumbNail', this.thumbNail);
+        this.houseImgs = this.house.images.split(',');
+        console.log('this.houseImgs', this.houseImgs);
+      }
     });
   }
 

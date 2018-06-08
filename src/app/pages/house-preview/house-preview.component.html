@@ -1,11 +1,8 @@
 <div *ngIf="house">
   <ngb-carousel>
-    <ng-template ngbSlide>
-      <div class="image-slider" style="background-image: url('../../../assets/img/test1.jpg')"></div>
-    </ng-template>
-    <ng-template ngbSlide>
-      <div class="image-slider" style="background-image: url('../../../assets/img/test2.jpg')"></div>
-      <!--<img src="../../../assets/img/test2.jpg" alt="Random second slide">-->
+    <ng-template ngbSlide *ngFor="let item of houseImgs">
+      <!--<div class="image-slider" style="background-image: url('{{imgPath}}{{item}}')"></div>-->
+      <img class="image-slider" src="../../../assets/img/{{item}}" style="width: 100%" alt="Random second slide">
     </ng-template>
   </ngb-carousel>
   <div class="jumbotron jumbotron-fluid">
