@@ -40,6 +40,7 @@ export class AppEpic {
   createHouse = (actions: ActionsObservable<any>) => {
     return actions.ofType(AppActions.CREATE_HOUSE)
       .mergeMap(({payload}) => {
+        console.log("action ", payload)
         return this.appService.createHouse(payload)
           .map((result: any[]) => ({
             type: AppActions.CREATED_HOUSE,
@@ -87,7 +88,7 @@ export class AppEpic {
       .mergeMap(({payload}) => {
         return this.appService.login(payload)
           .map((result: any[]) => ({
-            type: AppActions.RECEIVED_USER,
+            type: AppActions.LOGGED_IN_USER,
             payload: result
           }))
           .catch(error => Observable.of({
