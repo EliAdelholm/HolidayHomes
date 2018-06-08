@@ -1,6 +1,6 @@
 const path = require('path');
 const fs = require('fs');
-const uuid = require('uuid/v1');
+const uuid = require('uuid/v4');
 const sharp = require('sharp')
 
 function decodeAndSaveImage (image, resize = false) {
