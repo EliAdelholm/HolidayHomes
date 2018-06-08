@@ -27,6 +27,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ValueArrayPipe} from './array.pipe';
 import {LcDatePickerModule} from '@libusoftcicom/lc-datepicker';
 import {BookingService} from './pages/booking/booking.service';
+import {AuthGuardService} from './services/login/auth-guard.service';
+import {FilterHouseType} from './filters/filter.house-type';
 
 
 @NgModule({
@@ -41,6 +43,7 @@ import {BookingService} from './pages/booking/booking.service';
     ProfileComponent,
     PageNotFoundComponent,
     ValueArrayPipe,
+    FilterHouseType,
   ],
   imports: [
     BrowserModule,
@@ -57,24 +60,32 @@ import {BookingService} from './pages/booking/booking.service';
     BookingService,
     AppActions,
     AppService,
-    AppEpic
+    AppEpic,
+    AuthGuardService
   ],
   bootstrap: [AppComponent]
 })
 
 export class AppModule {
-  constructor(private ngRedux: NgRedux<IAppState>,
-              private devTool: DevToolsExtension,
-              private ngReduxRouter: NgReduxRouter, private appEpic: AppEpic) {
+  constructor(private ngRedux: NgRedux<IAppState>, private devTool: DevToolsExtension, private ngReduxRouter: NgReduxRouter, private appEpic: AppEpic) {
+
     const rootEpic = combineEpics(
       this.appEpic.getHouses,
-      this.appEpic.getUser,
       this.appEpic.createHouse,
+      this.appEpic.updateHouse,
+      this.appEpic.deleteHouse,
+      this.appEpic.login,
+      this.appEpic.getUser,
       this.appEpic.createUser,
+      this.appEpic.updateUser,
+      this.appEpic.deleteUser,
+      this.appEpic.getUserHouses,
     );
+
     const middleware = [
       createEpicMiddleware(rootEpic), createLogger({level: 'info', collapsed: true})
     ];
+
     this.ngRedux.configureStore(rootReducer, {
       houses: [],
       user: {status: null, account: null, houses: []}

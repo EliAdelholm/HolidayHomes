@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
 
   onSubmit(loginForm) {
     if (loginForm.valid) {
-      this.appActions.getUser(loginForm.value);
+      this.appActions.login(loginForm.value);
     }
   }
 
@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
       this.user = user;
 
       if (this.user && this.user.status === 'OK' ) {
-        this.loginService.login().subscribe(x => {
+        this.loginService.login(this.user.account.id).subscribe(x => {
           this.router.navigate(['portal']);
         });
       }

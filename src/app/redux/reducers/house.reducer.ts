@@ -5,15 +5,40 @@ import {House} from '../../entities/house';
 
 export function houseReducer(state = [], action: any) {
   switch (action.type) {
+    case AppActions.RECEIVED_USER:
+      console.log('house reducer');
+      return state;
+
     case AppActions.CREATE_HOUSE:
       return state;
 
     case AppActions.CREATED_HOUSE:
       const newHouseArray = [...state, action.payload];
       console.log('newHouseArray', newHouseArray);
-      return tassign({houses: newHouseArray});
+      return tassign({state: newHouseArray});
 
     case AppActions.FAILED_TO_CREATE_HOUSE:
+      return state;
+
+    case AppActions.UPDATE_HOUSE:
+      return state;
+
+    case AppActions.UPDATED_HOUSE:
+      const updateHouseIndex = state.findIndex(house => house.id === action.payload.id);
+      const updatedHouseArray = Object.assign(state[updateHouseIndex], action.payload);
+      return tassign({state: updatedHouseArray});
+
+    case AppActions.FAILED_TO_UPDATE_HOUSE:
+      return state;
+
+    case AppActions.DELETE_HOUSE:
+      return state;
+
+    case AppActions.DELETED_HOUSE:
+      const deletedHouseArray = state.filter( (item, index) => index !== action.payload);
+      return tassign({state: deletedHouseArray});
+
+    case AppActions.FAILED_TO_DELETE_HOUSE:
       return state;
 
     case AppActions.RECEIVED_HOUSES:

@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {House} from '../../entities/house';
 import {AppActions} from '../../redux/app.actions';
-import {forEach} from '@angular/router/src/utils/collection';
+import {LoginService} from '../../services/login/login.service';
 
 @Component({
   selector: 'app-new-house-form',
@@ -14,12 +14,13 @@ import {forEach} from '@angular/router/src/utils/collection';
 export class NewHouseFormComponent implements OnInit {
   createHouseFrm: FormGroup;
 
-  constructor(private fb: FormBuilder, private router: Router, private houseActions: AppActions, private cd: ChangeDetectorRef) {
+  constructor(private fb: FormBuilder, private router: Router, private houseActions: AppActions, private cd: ChangeDetectorRef,
+              private loginService: LoginService) {
   }
 
   ngOnInit() {
     this.createHouseFrm = this.fb.group({
-      userId: [1],
+      userId: [this.loginService.getUserId()],
       headline: ['', Validators.required],
       description: ['', Validators.required],
       price: ['', Validators.required],
@@ -38,10 +39,10 @@ export class NewHouseFormComponent implements OnInit {
 
   onSubmit(createHouseFrm) {
     if (createHouseFrm.valid) {
-      createHouseFrm.value.hasWifi ? createHouseFrm.value.hasWifi = 1 : createHouseFrm.value.hasWifi = 0;
+      createHouseFrm.value.wifi ? createHouseFrm.value.wifi = 1 : createHouseFrm.value.wifi = 0;
       createHouseFrm.value.hasTv ? createHouseFrm.value.hasTv = 1 : createHouseFrm.value.hasTv = 0;
       createHouseFrm.value.hasDryer ? createHouseFrm.value.hasDryer = 1 : createHouseFrm.value.hasDryer = 0;
-      createHouseFrm.value.isFamilyFriendly ? createHouseFrm.value.isFamilyFriendly = 1 : createHouseFrm.value.isFamilyFriendly = 0;
+      createHouseFrm.value.familyfriendly ? createHouseFrm.value.familyfriendly = 1 : createHouseFrm.value.familyfriendly = 0;
       createHouseFrm.value.isHouse === 'house' ? createHouseFrm.value.isHouse = 1 : createHouseFrm.value.isHouse = 0;
 
       console.log(createHouseFrm.value);
@@ -78,7 +79,7 @@ export class NewHouseFormComponent implements OnInit {
     if (event.target.files && event.target.files.length) {
       const uploadedFiles = event.target.files;
       const fileArray = [];
-      console.log(uploadedFiles)
+      console.log(uploadedFiles);
 
       for (let i = 0; i < uploadedFiles.length; i++) {
         const reader = new FileReader();
