@@ -6,10 +6,10 @@ export class House {
   public address: String;
   public space: number;
   public is_house: number;
-  public hasWifi: number;
+  public wifi: number;
   public tv: number;
   public dryer: number;
-  public isFamilyFriendly: number;
+  public familyfriendly: number;
   public thumbnail_image ?: String;
   public images ?: String[];
 

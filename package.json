@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "nodemon" : "nodemon server/server.js",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --prod",
@@ -38,6 +39,7 @@
     "rxjs": "^5.5.6",
     "sharp": "^0.20.2",
     "tassign": "^1.0.0",
+    "uuid": "^3.2.1",
     "zone.js": "^0.8.19"
   },
   "devDependencies": {

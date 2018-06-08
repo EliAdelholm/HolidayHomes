@@ -7,6 +7,7 @@ const fs = require('fs-extra')
 const path = require('path')
 const mime = require('mime-types')
 const bb = require('express-busboy');
+const decodeAndSaveImage = require('./controllers/decodeBase64')
 
 // Options for busboy
 bb.extend(app, {
@@ -35,6 +36,17 @@ global.con.connect(function (err) {
 
 /** API  ************/
 
+app.get('/api/test-image' , async (req,res) => {
+  const base64image = 'test'
+  try {
+    const imageName = await decodeAndSaveImage(base64image, true)
+    return res.send(`Success! Image saved with name: ${imageName}`)
+  } catch (e) {
+    return res.send(e)
+  }
+})
+
+
 /** Get one user **/
 app.get('/api/get-user', async (req, res) => {
   const iUserId = req.query.id
@@ -56,6 +68,28 @@ app.post('/api/create-user', async(req,res) => {
     return res.send(`unable to create user`)
   }
 })
+
+app.get('/api/delete-user' , async (req,res) => {
+  const iUserId = req.query.id
+  try {
+    const response = await db.deleteUser(iUserId)
+    return res.send('User deleted')
+  } catch (e) {
+    return res.send(`error deleting user ${e}`)
+  }
+})
+
+app.get('/api/delete-house' , async(req,res) => {
+  const iHouseId = req.query.id
+  try {
+    const response = await db.deleteHouse(iHouseId)
+    return res.send('house deleted')
+  } catch (e) {
+    return res.send(`error deleting house ${e}`)
+  }
+})
+
+
 
 /** Login **/
 app.post('/api/login', async (req, res) => {
@@ -136,57 +170,37 @@ app.get('/api/get-houses', async (req, res) => {
 
 /** Create house **/
 app.post('/api/create-house' , async (req,res) => {
-  /*const thumbnail = req.files.thumbnail
-  if (thumbnail.mimetype.split('/')[0] !== 'image') {
-    return res.send('The upload is not a valid image')
-  }
-  const fileExtension = thumbnail.mimetype.split('/')[1]
-  const filename = thumbnail.uuid+'.'+fileExtension
-  const targetPath = "src/assets/img/" + filename
-  const thumbnailName ='thumbnail-'+thumbnail.uuid+'.'+fileExtension
-  const thumbnailImagePath = 'src/assets/img/' + thumbnailName
+  const thumbnail = req.query.thumbnail
 
-  fs.move(thumbnail.file, targetPath, function (err) {
-    if (err) {
-      console.log (err);
-      return false;
-    }
-    sharp(targetPath).resize(400,400).toFile(thumbnailImagePath).then(() => {
-    }).catch((e) => { console.log(e) })
-  });
-
-
-  const aHouseImages = req.files.houseImages
-  let aHouseImageNames = []
-  aHouseImages.forEach((image) => {
-    const fileExtension = image.mimetype.split('/')[1]
-    const filename = req.body.userid +'-'+image.uuid+'.'+fileExtension
-    const targetPath = "src/assets/img/" + filename
-    aHouseImageNames.push([filename])
-    fs.move(image.file, targetPath, function (err) {
-      if (err) {
-        console.log(err);
-        return false;
-      }
+    const thumbnailName = await decodeAndSaveImage(thumbnail, true).catch((e) => {
+      console.log(e)
+      return res.send(e)
     })
-  });*/
+
+    let aImageNames = []
+    const aImages = req.body.images
+    aImages.forEach((image) => {
+      const imageName = decodeAndSaveImage(image)
+      aImageNames.push([imageName])
+    })
 
   const jHouse = {
     users_id: req.body.userId,
-    thumbnail_image: 'test1.jpg',
+    thumbnail_image: thumbnailName,
     headline: req.body.headline,
     description: req.body.description,
     price: req.body.price,
     address: req.body.address,
     space: req.body.space,
     is_house: req.body.isHouse,
-    wifi: req.body.hasWifi,
-    familyfriendly: req.body.isFamilyFriendly,
+    wifi: req.body.wifi,
+    familyfriendly: req.body.familyfriendly,
     tv: req.body.hasTv,
     dryer: req.body.hasDryer
   }
+
   try {
-    const response = await db.createHouse(jHouse, [['test1.jpg'], ['test2.jpg']])
+    const response = await db.createHouse(jHouse, aImageNames)
     return res.json(response)
   } catch (e) {
     console.log('error saving house '+e)
@@ -222,21 +236,21 @@ app.get('/api/get-bookings', async (req,res) => {
     }
     // Add all the dates up
     let aTotalBookedDates = []
-      response.forEach((booking) => {
-        const startDate = booking.start_date
-        const endDate = booking.end_date
-        const aDatesBetween = getDatesBetweenDates(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()),
-          new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate())) // +1 so it adds the end day as well
-        const asDatesBetween = aDatesBetween.map((date) => {
-          return `${date.getFullYear()}-${addLeadingZero(date.getMonth()+1)}-${addLeadingZero(date.getDate())}`
-        })
-        aTotalBookedDates = aTotalBookedDates.concat(asDatesBetween)
+    response.forEach((booking) => {
+      const startDate = booking.start_date
+      const endDate = booking.end_date
+      const aDatesBetween = getDatesBetweenDates(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()),
+        new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate())) // +1 so it adds the end day as well
+      const asDatesBetween = aDatesBetween.map((date) => {
+        return `${date.getFullYear()}-${addLeadingZero(date.getMonth()+1)}-${addLeadingZero(date.getDate())}`
       })
-      return res.send(aTotalBookedDates)
-    } catch (e) {
-      return res.status(500)
-    }
-  })
+      aTotalBookedDates = aTotalBookedDates.concat(asDatesBetween)
+    })
+    return res.send(aTotalBookedDates)
+  } catch (e) {
+    return res.status(500)
+  }
+})
 
 app.post('/api/create-booking', async (req, res) => {
 
