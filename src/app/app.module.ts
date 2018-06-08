@@ -27,6 +27,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {ValueArrayPipe} from './array.pipe';
 import {LcDatePickerModule} from '@libusoftcicom/lc-datepicker';
 import {BookingService} from './pages/booking/booking.service';
+import {AuthGuardService} from './services/login/auth-guard.service';
 import {FilterHouseType} from './filters/filter.house-type';
 
 
@@ -59,7 +60,8 @@ import {FilterHouseType} from './filters/filter.house-type';
     BookingService,
     AppActions,
     AppService,
-    AppEpic
+    AppEpic,
+    AuthGuardService
   ],
   bootstrap: [AppComponent]
 })
@@ -72,6 +74,7 @@ export class AppModule {
       this.appEpic.createHouse,
       this.appEpic.updateHouse,
       this.appEpic.deleteHouse,
+      this.appEpic.login,
       this.appEpic.getUser,
       this.appEpic.createUser,
       this.appEpic.updateUser,

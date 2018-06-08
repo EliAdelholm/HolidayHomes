@@ -29,8 +29,12 @@ export class AppService {
   }
 
   // USER SERVICES
-  getUser(formData: object) {
+  login(formData: object) {
     return this.http.post('/api/login', formData);
+  }
+
+  getUser(userId) {
+    return this.http.get('/api/get-user?id=' + userId);
   }
 
   createUser(payload: User): Observable<any> {

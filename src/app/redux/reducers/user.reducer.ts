@@ -5,7 +5,7 @@ export function userReducer(state = null, action: any) {
   switch (action.type) {
 
     case AppActions.RECEIVED_USER:
-      console.log('user reducer')
+      console.log('user reducer');
       return tassign(state, {status: 'OK', account: action.payload});
 
     case AppActions.FAILED_TO_GET_USER:
@@ -13,8 +13,8 @@ export function userReducer(state = null, action: any) {
       return tassign(state, {status: action.payload});
 
     case AppActions.CREATE_USER:
-    console.log(action.payload);
-    return tassign(state, {account: action.payload});
+      console.log(action.payload);
+      return tassign(state, {account: action.payload});
 
     case AppActions.CREATED_USER:
       return state;
@@ -45,9 +45,40 @@ export function userReducer(state = null, action: any) {
       return tassign(state, {status: null});
 
     case AppActions.RECEIVED_USER_HOUSES:
-      return tassign(state, { houses: action.payload});
+      return tassign(state, {houses: action.payload});
 
     case AppActions.FAILED_TO_GET_USER_HOUSES:
+      return state;
+
+    case AppActions.CREATE_HOUSE:
+      return state;
+
+    case AppActions.CREATED_HOUSE:
+      const newHouseArray = [...state.houses, action.payload];
+      return tassign(state, {houses: newHouseArray});
+
+    case AppActions.FAILED_TO_CREATE_HOUSE:
+      return state;
+
+    case AppActions.UPDATE_HOUSE:
+      return state;
+
+    case AppActions.UPDATED_HOUSE:
+      const updateHouseIndex = state.houses.findIndex(house => house.id === action.payload.id);
+      const updatedHouseArray = Object.assign(state.houses[updateHouseIndex], action.payload);
+      return tassign(state, {houses: updatedHouseArray});
+
+    case AppActions.FAILED_TO_UPDATE_HOUSE:
+      return state;
+
+    case AppActions.DELETE_HOUSE:
+      return state;
+
+    case AppActions.DELETED_HOUSE:
+      const deletedHouseArray = state.houses.filter((item, index) => index !== action.payload);
+      return tassign(state, {houses: deletedHouseArray});
+
+    case AppActions.FAILED_TO_DELETE_HOUSE:
       return state;
 
     default:
