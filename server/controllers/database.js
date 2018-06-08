@@ -60,7 +60,6 @@ class Database {
         (error, result) => {
           if (error) return reject(error)
           const houseId = result.insertId
-          console.log(houseId)
           aHouseImages.forEach((aHouseImage) => {
             aHouseImage.unshift(houseId)
           })

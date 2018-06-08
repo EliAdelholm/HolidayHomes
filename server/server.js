@@ -56,6 +56,14 @@ app.post('/api/create-user', async(req,res) => {
     password: req.body.userPassword,
     email: req.body.userEmail
   }
+  if (req.body.userImg) {
+    try{
+    const response = await decodeAndSaveImage(req.body.userImg)
+    } catch(e) {
+      console.log('unable to upload user image')
+      return res.send('unable to upload user image')
+    }
+  }
   try {
     const response = await db.createUser(jUser)
     return res.send(response)
@@ -157,7 +165,7 @@ app.post('/api/create-house' , async (req,res) => {
     console.log(`Exception in decodeBase64 ${e}`)
     return res.send(e)
   })
-  let aImageNames = []
+  let aImageNames = [[thumbnailName]]
   const aImages = req.body.houseImages
 
   let requests = aImages.reduce((promiseChain, item) => {
@@ -176,7 +184,7 @@ app.post('/api/create-house' , async (req,res) => {
 
   const jHouse = {
     users_id: req.body.userId,
-    thumbnail_image: thumbnailName,
+    thumbnail_image: `thumbnail-${thumbnailName}`,
     headline: req.body.headline,
     description: req.body.description,
     price: req.body.price,
@@ -193,10 +201,11 @@ app.post('/api/create-house' , async (req,res) => {
     const createdHouse = await db.createHouse(jHouse, aImageNames)
     let newImages = []
     // remove the ids from the createdHouse before returning it
-    for (let i =0; i < createdHouse.images.length; i++) {
+    for (let i=0; i < createdHouse.images.length; i++) {
       newImages.push(createdHouse.images[i][1])
     }
     createdHouse.is_house = JSON.parse(createdHouse.is_house)
+    createdHouse.images = newImages
     return res.json(createdHouse)
   } catch (e) {
     console.log('error saving house '+e)
