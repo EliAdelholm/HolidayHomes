@@ -32,7 +32,7 @@ export class NewHouseFormComponent implements OnInit {
       hasDryer: [''],
       isFamilyFriendly: [''],
       houseThumbnail: ['', Validators.required],
-      houseImages: ['', Validators.required],
+      houseImages: [''],
     });
   }
 
@@ -49,7 +49,7 @@ export class NewHouseFormComponent implements OnInit {
 
       const house: House = createHouseFrm.value as House;
       console.log(house);
-      this.houseActions.createHouse(house);
+      this.houseActions.createHouse(createHouseFrm.value);
       // this.router.navigate(['portal']);
     }
   }
