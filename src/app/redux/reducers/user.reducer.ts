@@ -6,6 +6,10 @@ export function userReducer(state = null, action: any) {
 
     case AppActions.RECEIVED_USER:
       console.log('user reducer');
+      return tassign(state, {account: action.payload});
+
+    case AppActions.LOGGED_IN_USER:
+      console.log('user reducer');
       return tassign(state, {status: 'OK', account: action.payload});
 
     case AppActions.FAILED_TO_GET_USER:

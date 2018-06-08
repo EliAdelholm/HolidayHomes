@@ -16,7 +16,8 @@ export class AppService {
     return this.http.get('/api/get-houses?number=50');
   }
 
-  createHouse(house: House) {
+  createHouse(house) {
+    console.log('service: ' + house)
     return this.http.post('/api/create-house', house);
   }
 

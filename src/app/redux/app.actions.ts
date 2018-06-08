@@ -39,6 +39,7 @@ export class AppActions {
   static FAILED_TO_DELETE_USER: String = 'FAILED_TO_DELETE_USER';
 
   static LOGIN: String = 'LOGIN';
+  static LOGGED_IN_USER = 'LOGGED_IN_USER';
   static GET_USER: String = 'GET_USER';
   static RECEIVED_USER: String = 'RECEIVED_USER';
   static FAILED_TO_GET_USER: String = 'FAILED_TO_GET_USER';
