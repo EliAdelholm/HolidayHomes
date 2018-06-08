@@ -56,22 +56,22 @@ export class BookingComponent implements OnInit {
 
   onSubmit(bookingForm) {
     if (bookingForm.valid) {
-      console.log('this.bookings', this.bookings);
+      // console.log('this.bookings', this.bookings);
       for ( let i = 0; i < this.bookings.length; i++ ) {
-        console.log('checking', this.bookingForm.value.endDate,  this.bookings[i]);
+        // console.log('checking', this.bookingForm.value.endDate,  this.bookings[i]);
         if ( this.bookingForm.value.endDate === this.bookings[i] ) {
-          console.log('dateTaken', this.bookings[i]);
+          // console.log('dateTaken', this.bookings[i]);
           this.dateTaken = true;
         }
         if ( this.bookingForm.value.startDate === this.bookings[i] ) {
-          console.log('dateTaken', this.bookings[i]);
+          // console.log('dateTaken', this.bookings[i]);
           this.dateTaken = true;
         }
       }
       if (!this.dateTaken) {
-        console.log('Send booking', bookingForm.value);
+        // console.log('Send booking', bookingForm.value);
         this.bookingService.addBooking(bookingForm.value).subscribe(response => {
-          console.log(response);
+          // console.log(response);
           this.bookingStatus = response;
         });
       }
