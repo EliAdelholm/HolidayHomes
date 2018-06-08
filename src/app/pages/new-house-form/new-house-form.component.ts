@@ -38,7 +38,7 @@ export class NewHouseFormComponent implements OnInit {
 
 
   onSubmit(createHouseFrm) {
-    console.log(createHouseFrm.value.isHouse)
+    console.log('this.createHouseFrm ', this.createHouseFrm.value );
     if (createHouseFrm.valid) {
       createHouseFrm.value.wifi ? createHouseFrm.value.wifi = 1 : createHouseFrm.value.wifi = 0;
       createHouseFrm.value.tv ? createHouseFrm.value.tv = 1 : createHouseFrm.value.tv = 0;
