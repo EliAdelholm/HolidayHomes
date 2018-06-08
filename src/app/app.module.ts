@@ -29,6 +29,7 @@ import {LcDatePickerModule} from '@libusoftcicom/lc-datepicker';
 import {BookingService} from './pages/booking/booking.service';
 import {AuthGuardService} from './services/login/auth-guard.service';
 import {FilterHouseType} from './filters/filter.house-type';
+import { UpdateHouseComponent } from './pages/update-house/update-house.component';
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import {FilterHouseType} from './filters/filter.house-type';
     PageNotFoundComponent,
     ValueArrayPipe,
     FilterHouseType,
+    UpdateHouseComponent,
   ],
   imports: [
     BrowserModule,

@@ -3,8 +3,7 @@ const serverConnection = {
   host: "localhost",
   user: "root",
   password: 'root',
-  database: 'holiday_house_v2' // for Klaudia :)
-  // database: 'holidayhouses'
+  database: 'holidayhouses'
 }
 
 module.exports = serverConnection

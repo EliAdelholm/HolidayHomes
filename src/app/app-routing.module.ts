@@ -9,6 +9,7 @@ import {ProfileComponent} from './pages/profile/profile.component';
 import {RegisterComponent} from './pages/register/register.component';
 import {PageNotFoundComponent} from './pages/page-not-found/page-not-found.component';
 import {AuthGuardService} from './services/login/auth-guard.service';
+import {UpdateHouseComponent} from './pages/update-house/update-house.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'portal', pathMatch: 'full'},
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path: 'booking/:id', component: BookingComponent, canActivate: [AuthGuardService]},
   {path: 'login', component: LoginComponent},
   {path: 'new-house-form', component: NewHouseFormComponent, canActivate: [AuthGuardService]},
+  {path: 'update-house/:id', component: UpdateHouseComponent, canActivate: [AuthGuardService]},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService]},
   {path: 'register', component: RegisterComponent},
   {path: '**', component: PageNotFoundComponent}

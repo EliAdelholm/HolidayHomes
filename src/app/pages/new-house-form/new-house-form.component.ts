@@ -32,25 +32,24 @@ export class NewHouseFormComponent implements OnInit {
       hasDryer: [''],
       isFamilyFriendly: [''],
       houseThumbnail: ['', Validators.required],
-      houseImages: ['']
+      houseImages: [''],
     });
   }
 
 
   onSubmit(createHouseFrm) {
-    console.log(createHouseFrm.value)
     if (createHouseFrm.valid) {
       createHouseFrm.value.wifi ? createHouseFrm.value.wifi = 1 : createHouseFrm.value.wifi = 0;
       createHouseFrm.value.hasTv ? createHouseFrm.value.hasTv = 1 : createHouseFrm.value.hasTv = 0;
       createHouseFrm.value.hasDryer ? createHouseFrm.value.hasDryer = 1 : createHouseFrm.value.hasDryer = 0;
       createHouseFrm.value.familyfriendly ? createHouseFrm.value.familyfriendly = 1 : createHouseFrm.value.familyfriendly = 0;
       createHouseFrm.value.isHouse === 'house' ? createHouseFrm.value.isHouse = 1 : createHouseFrm.value.isHouse = 0;
-      createHouseFrm.value.houseThumbnail = JSON.stringify(createHouseFrm.value.houseThumbnail)
+
       console.log(createHouseFrm.value);
 
       const house: House = createHouseFrm.value as House;
       console.log(house);
-      this.houseActions.createHouse(house);
+      this.houseActions.createHouse(createHouseFrm.value);
       // this.router.navigate(['portal']);
     }
   }
