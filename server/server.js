@@ -6,7 +6,7 @@ const sharp = require('sharp')
 const fs = require('fs-extra')
 const path = require('path')
 const mime = require('mime-types')
-const bb = require('express-busboy');
+const bb = require('express-busboy')
 const decodeAndSaveImage = require('./controllers/decodeBase64')
 
 // Options for busboy
@@ -46,7 +46,6 @@ app.get('/api/test-image' , async (req,res) => {
   }
 })
 
-
 /** Get one user **/
 app.get('/api/get-user', async (req, res) => {
   const iUserId = req.query.id
@@ -56,6 +55,7 @@ app.get('/api/get-user', async (req, res) => {
 
 /** Create user **/
 app.post('/api/create-user', async(req,res) => {
+  console.log(req.body)
   const jUser = {
     name: req.body.userName,
     password: req.body.userPassword,
@@ -88,7 +88,6 @@ app.get('/api/delete-house' , async(req,res) => {
     return res.send(`error deleting house ${e}`)
   }
 })
-
 
 
 /** Login **/
@@ -126,36 +125,26 @@ app.get('/api/get-houses-belonging-to-user', async(req,res) => {
 });
 
 app.post('/api/update-user' , async(req,res) => {
-  const image = req.files.image
-  if (image.mimetype.split('/')[0] !== 'image') {
-    return res.send('The upload is not a valid image')
-  }
+  const image = req.body.image
+  const imageName = await decodeAndSaveImage(image).catch((e) => {
+    console.log(`exception is decodeBase64 ${e}`)
+    return res.send(`unable to upload image ${e}`)
+  })
   const jUser = {
     name: req.body.username,
     password: req.body.password,
     email: req.body.email,
-    image: req.files.image
+    image: req.files.imageName
   }
   try {
     const jResult = await db.updateUser(jUser, req.body.id)
-    // Generate new path, using timestamp to avoid duplication errors
-    const timestamp = + new Date()
-    const fileExtension = image.mimetype.split('/')[1]
-    const filename = req.body.id +'-'+timestamp+'.'+fileExtension
-    const targetPath = "src/assets/img/" + filename
-    try {
-      //image.file is the temp path
-      fs.move(image.file, targetPath, function (err) {
-        if (err) console.log(err);
-      });
-    } catch (e) {
-      console.log(e)
-    }
-    return res.send(jResult)
+    return res.json({status: 'success', newUser: jUser})
   } catch (e) {
     return res.send(e)
   }
 });
+
+
 
 /** Get houses **/
 app.get('/api/get-houses', async (req, res) => {
@@ -170,19 +159,28 @@ app.get('/api/get-houses', async (req, res) => {
 
 /** Create house **/
 app.post('/api/create-house' , async (req,res) => {
-  const thumbnail = req.query.thumbnail
+  console.log(req.body)
+  const thumbnail = req.body.houseThumbnail
 
     const thumbnailName = await decodeAndSaveImage(thumbnail, true).catch((e) => {
-      console.log(e)
+      console.log(`Exception in decodeBase64 ${e}`)
       return res.send(e)
     })
 
     let aImageNames = []
-    const aImages = req.body.images
+    const aImages = req.body.houseImages
     aImages.forEach((image) => {
       const imageName = decodeAndSaveImage(image)
       aImageNames.push([imageName])
     })
+
+  let requests = aImages.reduce((promiseChain, item) => {
+    return promiseChain.then(() => new Promise((resolve) => {
+      decodeAndSaveImage(item).then(() => { resolve }).catch((e) => { console.log(e) } )
+    }));
+  }, Promise.resolve());
+
+  requests.then(() => { console.log('images uploaded') }).catch((e) => { console.log (e) })
 
   const jHouse = {
     users_id: req.body.userId,
@@ -201,6 +199,7 @@ app.post('/api/create-house' , async (req,res) => {
 
   try {
     const response = await db.createHouse(jHouse, aImageNames)
+    console.log(response)
     return res.json(response)
   } catch (e) {
     console.log('error saving house '+e)
@@ -253,7 +252,6 @@ app.get('/api/get-bookings', async (req,res) => {
 })
 
 app.post('/api/create-booking', async (req, res) => {
-
   const sStartDate = `${req.body.startDate} 12:00:00`
   const sEndDate = `${req.body.endDate} 12:00:00`
 

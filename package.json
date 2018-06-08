@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "nodemon" : "nodemon server/server.js",
+    "nodemon": "nodemon server/server.js",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --prod",

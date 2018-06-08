@@ -76,6 +76,17 @@ class Database {
     })
   }
 
+  updateHouse (jHouse, iHouseId) {
+    return new Promise((resolve, reject) => {
+      global.con.query('UPDATE houses SET ? WHERE id = ?',
+        [jHouse, iHouseId],
+        (error, jResult) => {
+          if (error) return reject(error)
+          return resolve(jResult)
+        })
+    })
+  }
+
   getHousesBelongingToUser (iUserId) {
     return new Promise((resolve, reject) => {
       global.con.query('SELECT houses.*, GROUP_CONCAT(houses_images.image) AS additional_images \n' +
