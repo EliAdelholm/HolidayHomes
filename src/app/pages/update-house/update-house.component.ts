@@ -7,6 +7,7 @@ import {House} from '../../entities/house';
 import {Subscription} from 'rxjs/Subscription';
 import {NgRedux} from '@angular-redux/store';
 import {IAppState} from '../../redux/store/store';
+import {User} from '../../entities/user';
 
 @Component({
   selector: 'app-update-house',
@@ -18,9 +19,11 @@ export class UpdateHouseComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   houseId: number = this.route.snapshot.params.id;
   house: House;
+  user: User;
+  houses: House [];
 
-  constructor(private fb: FormBuilder, private router: Router, private houseActions: AppActions, private cd: ChangeDetectorRef,
-              private loginService: LoginService, private ngRedux: NgRedux<IAppState>, private route: ActivatedRoute) {
+  constructor( private fb: FormBuilder, private router: Router, private houseActions: AppActions, private cd: ChangeDetectorRef,
+              private loginService: LoginService, private ngRedux: NgRedux<IAppState>, private route: ActivatedRoute ) {
   }
 
   ngOnDestroy() {
@@ -32,18 +35,18 @@ export class UpdateHouseComponent implements OnInit, OnDestroy {
       this.user = user.account;
       this.houses = user.houses;
 
-      if (this.user) {
-        if (!this.gotHouses) {
-          this.appActions.getUserHouses(this.user.id);
-          this.gotHouses = true;
-        }
-        this.updateProfileFrm = this.fb.group({
-          userName: [this.user.name, Validators.required],
-          userEmail: [this.user.email, Validators.required],
-          userPassword: [this.user.password, Validators.required],
-          userImg: ['']
-        });
-      }
+      // if (this.user) {
+      //   if (!this.gotHouses) {
+      //     this.houseActions.getUserHouses(this.user.id);
+      //     this.gotHouses = true;
+      //   }
+      //   this.updateProfileFrm = this.fb.group({
+      //     userName: [this.user.userName, Validators.required],
+      //     userEmail: [this.user.userEmail, Validators.required],
+      //     userPassword: [this.user.userPassword, Validators.required],
+      //     userImg: ['']
+      //   });
+      // }
     });
     this.updateHouseFrm = this.fb.group({
       userId: [this.loginService.getUserId()],
@@ -109,7 +112,7 @@ export class UpdateHouseComponent implements OnInit, OnDestroy {
 
       for (let i = 0; i < uploadedFiles.length; i++) {
         const reader = new FileReader();
-        let file = uploadedFiles[i];
+        const file = uploadedFiles[i];
         console.log('img: ', file);
         reader.readAsDataURL(file);
         reader.onload = () => {

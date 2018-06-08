@@ -9,6 +9,7 @@ import {DatePickerConfig, ECalendarType} from '@libusoftcicom/lc-datepicker';
 import * as moment from 'moment';
 import {BookingService} from './booking.service';
 import {LoginService} from '../../services/login/login.service';
+import {DateValidator} from '../../validators/date-validator';
 
 @Component({
   selector: 'app-booking',
@@ -65,10 +66,10 @@ export class BookingComponent implements OnInit {
     this.subscription = this.ngRedux.select(state => state.houses).subscribe(houses => {
       this.house = houses.find(x => x.id == this.houseId);
     });
-
+    const dateValidator = DateValidator.getDateValidator();
     this.bookingForm = this.fb.group({
       startDate: ['', Validators.required],
-      endDate: ['', Validators.required],
+      endDate: ['', Validators.compose([Validators.required, dateValidator])],
       houseId: [this.houseId, Validators.required],
       userId: [this.loginService.getUserId()]
     });
@@ -77,8 +78,8 @@ export class BookingComponent implements OnInit {
       .subscribe(data => {
         this.bookings = data;
         this.config.setDisabledDates(this.bookings);
+        console.log('this.bookings', this.bookings.length);
       });
-
 
   }
 
