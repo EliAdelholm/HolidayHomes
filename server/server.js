@@ -122,7 +122,7 @@ app.get('/api/get-houses-belonging-to-user', async(req,res) => {
 app.post('/api/update-user' , async(req,res) => {
   const image = req.body.image
   const imageName = await decodeAndSaveImage(image).catch((e) => {
-    console.log(`exception is decodeBase64 ${e}`)
+    console.log(`exception in decodeBase64 ${e}`)
     return res.send(`unable to upload image ${e}`)
   })
   const jUser = {
@@ -190,9 +190,14 @@ app.post('/api/create-house' , async (req,res) => {
   }
 
   try {
-    const response = await db.createHouse(jHouse, aImageNames)
-    console.log(response)
-    return res.json(response)
+    const createdHouse = await db.createHouse(jHouse, aImageNames)
+    let newImages = []
+    // remove the ids from the createdHouse before returning it
+    for (let i =0; i < createdHouse.images.length; i++) {
+      newImages.push(createdHouse.images[i][1])
+    }
+    createdHouse.is_house = JSON.parse(createdHouse.is_house)
+    return res.json(createdHouse)
   } catch (e) {
     console.log('error saving house '+e)
     return res.status(500)
