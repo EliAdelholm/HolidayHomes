@@ -4,6 +4,7 @@ import {houseReducer} from '../reducers/house.reducer';
 import {userReducer} from '../reducers/user.reducer';
 import {House} from '../../entities/house';
 import {User} from '../../entities/user';
+import {statusReducer} from '../reducers/status.reducer';
 
 
 
@@ -14,11 +15,15 @@ export class IAppState {
     account: User,
     houses: any[]
   };
+  requestStatus: {
+    code: string,
+    result: any,
+  };
 }
 
 export const rootReducer = combineReducers<IAppState>({
   houses: houseReducer,
   user: userReducer,
-  // when you add more reducers, add them here..
+  requestStatus: statusReducer,
   router: routerReducer
 });

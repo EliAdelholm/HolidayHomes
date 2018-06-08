@@ -90,7 +90,8 @@ export class AppModule {
 
     this.ngRedux.configureStore(rootReducer, {
       houses: [],
-      user: {status: null, account: null, houses: []}
+      user: {status: null, account: null, houses: []},
+      requestStatus: {code: null, result: null}
     }, middleware, [devTool.isEnabled() ? devTool.enhancer() : f => f]);
 
     ngReduxRouter.initialize(/* args */);

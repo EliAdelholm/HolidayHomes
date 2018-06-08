@@ -1,9 +1,12 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {House} from '../../entities/house';
 import {AppActions} from '../../redux/app.actions';
 import {LoginService} from '../../services/login/login.service';
+import {Subscription} from 'rxjs/Subscription';
+import {NgRedux} from '@angular-redux/store';
+import {IAppState} from '../../redux/store/store';
 
 @Component({
   selector: 'app-new-house-form',
@@ -11,14 +14,29 @@ import {LoginService} from '../../services/login/login.service';
   styleUrls: ['./new-house-form.component.scss']
 })
 
-export class NewHouseFormComponent implements OnInit {
+export class NewHouseFormComponent implements OnInit, OnDestroy {
   createHouseFrm: FormGroup;
+  subscription: Subscription;
+  status;
 
   constructor(private fb: FormBuilder, private router: Router, private houseActions: AppActions, private cd: ChangeDetectorRef,
-              private loginService: LoginService) {
+              private loginService: LoginService, private ngRedux: NgRedux<IAppState>) {
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   ngOnInit() {
+    this.subscription = this.ngRedux.select(state => state.requestStatus).subscribe(status => {
+      this.status = status;
+
+      if (this.status.code && this.status.code === 'OK') {
+        this.router.navigate(['house-preview/', this.status.result]);
+        this.houseActions.resetStatus();
+      }
+    });
+
     this.createHouseFrm = this.fb.group({
       userId: [this.loginService.getUserId()],
       headline: ['', Validators.required],
@@ -38,7 +56,7 @@ export class NewHouseFormComponent implements OnInit {
 
 
   onSubmit(createHouseFrm) {
-    console.log('this.createHouseFrm ', this.createHouseFrm.value );
+    console.log('this.createHouseFrm ', this.createHouseFrm.value);
     if (createHouseFrm.valid) {
       createHouseFrm.value.wifi ? createHouseFrm.value.wifi = 1 : createHouseFrm.value.wifi = 0;
       createHouseFrm.value.tv ? createHouseFrm.value.tv = 1 : createHouseFrm.value.tv = 0;
@@ -48,9 +66,7 @@ export class NewHouseFormComponent implements OnInit {
       console.log(createHouseFrm.value);
 
       const house: House = createHouseFrm.value as House;
-      console.log(house);
       this.houseActions.createHouse(house);
-      // this.router.navigate(['portal']);
     }
   }
 

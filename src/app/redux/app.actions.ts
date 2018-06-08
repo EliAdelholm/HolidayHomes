@@ -9,6 +9,8 @@ export class AppActions {
   constructor(private ngRedux: NgRedux<IAppState>) {
   }
 
+  static RESET_STATUS: String = 'RESET_STATUS';
+
   static CREATE_HOUSE: String = 'CREATE_HOUSE';
   static CREATED_HOUSE: String = 'CREATED_HOUSE';
   static FAILED_TO_CREATE_HOUSE: String = 'FAILED_TO_CREATE_HOUSE';
@@ -47,6 +49,13 @@ export class AppActions {
   static GET_USER_HOUSES: String = 'GET_USER_HOUSES';
   static RECEIVED_USER_HOUSES: String = 'RECEIVED_USER_HOUSES';
   static FAILED_TO_GET_USER_HOUSES: String = 'FAILED_TO_GET_USER_HOUSES';
+
+  // STATUS ACTIONS
+  resetStatus() {
+    this.ngRedux.dispatch({
+      type: AppActions.RESET_STATUS
+    });
+  }
 
   // HOUSE ACTIONS
   createHouse(house: House) {

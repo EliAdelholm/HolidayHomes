@@ -67,6 +67,7 @@ class Database {
             [aHouseImages],
             (error, result) => {
               if (error) return reject(error)
+              jHouse.users_id = parseInt(jHouse.users_id)
               jHouse.id = houseId
               jHouse.images = aHouseImages
               resolve(jHouse)
