@@ -6,15 +6,11 @@ const sharp = require('sharp')
 const fs = require('fs-extra')
 const path = require('path')
 const mime = require('mime-types')
-const bb = require('express-busboy')
+const bodyParser =  require('body-parser')
 const decodeAndSaveImage = require('./controllers/decodeBase64')
 
-// Options for busboy
-bb.extend(app, {
-  upload: true,
-  path: '/path/to/save/files',
-  allowedPath: /./,
-});
+// Use BodyParser
+app.use(bodyParser.json({limit: '50mb'}))
 
 /** Imports  ************/
 const dbClass = require('./controllers/database.js')
@@ -37,7 +33,7 @@ global.con.connect(function (err) {
 /** API  ************/
 
 app.get('/api/test-image' , async (req,res) => {
-  const base64image = 'test'
+  const base64image = req.body.image
   try {
     const imageName = await decodeAndSaveImage(base64image, true)
     return res.send(`Success! Image saved with name: ${imageName}`)
@@ -159,24 +155,20 @@ app.get('/api/get-houses', async (req, res) => {
 
 /** Create house **/
 app.post('/api/create-house' , async (req,res) => {
-  console.log(req.body)
   const thumbnail = req.body.houseThumbnail
-
-    const thumbnailName = await decodeAndSaveImage(thumbnail, true).catch((e) => {
-      console.log(`Exception in decodeBase64 ${e}`)
-      return res.send(e)
-    })
-
-    let aImageNames = []
-    const aImages = req.body.houseImages
-    aImages.forEach((image) => {
-      const imageName = decodeAndSaveImage(image)
-      aImageNames.push([imageName])
-    })
+  const thumbnailName = await decodeAndSaveImage(thumbnail, true).catch((e) => {
+    console.log(`Exception in decodeBase64 ${e}`)
+    return res.send(e)
+  })
+  let aImageNames = []
+  const aImages = req.body.houseImages
 
   let requests = aImages.reduce((promiseChain, item) => {
     return promiseChain.then(() => new Promise((resolve) => {
-      decodeAndSaveImage(item).then(() => { resolve }).catch((e) => { console.log(e) } )
+      decodeAndSaveImage(item).then(() => { resolve }).catch((e) => {
+        console.log(e)
+        reject()
+      })
     }));
   }, Promise.resolve());
 
