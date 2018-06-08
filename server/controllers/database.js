@@ -125,6 +125,23 @@ class Database {
       })
     })
   }
+  deleteHouse(iHouseId) {
+    return new Promise((resolve,reject) => {
+      global.con.query('DELETE * FROM houses WHERE id = ?', [iHouseId], (error, jResult) => {
+        if (error) reject(error)
+        resolve(jResult)
+      })
+    })
+  }
+
+  deleteUser(iUserId) {
+    return new Promise((resolve,reject) => {
+      global.con.query('DELETE * FROM users WHERE id = ?', [iUserId], (error, jResult) => {
+        if (error) reject(error)
+        resolve(jResult)
+      })
+    })
+  }
 }
 
 module.exports = Database
