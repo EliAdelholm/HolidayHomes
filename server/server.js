@@ -51,7 +51,6 @@ app.get('/api/get-user', async (req, res) => {
 
 /** Create user **/
 app.post('/api/create-user', async(req,res) => {
-  console.log(req.body)
   const jUser = {
     name: req.body.userName,
     password: req.body.userPassword,
@@ -140,8 +139,6 @@ app.post('/api/update-user' , async(req,res) => {
   }
 });
 
-
-
 /** Get houses **/
 app.get('/api/get-houses', async (req, res) => {
   const iNumberOfHouses = parseInt(req.query.number)
@@ -165,7 +162,10 @@ app.post('/api/create-house' , async (req,res) => {
 
   let requests = aImages.reduce((promiseChain, item) => {
     return promiseChain.then(() => new Promise((resolve) => {
-      decodeAndSaveImage(item).then(() => { resolve }).catch((e) => {
+      decodeAndSaveImage(item).then((filename) => {
+        aImageNames.push([filename])
+        resolve()
+      }).catch((e) => {
         console.log(e)
         reject()
       })
