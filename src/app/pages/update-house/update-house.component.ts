@@ -7,6 +7,7 @@ import {House} from '../../entities/house';
 import {Subscription} from 'rxjs/Subscription';
 import {NgRedux} from '@angular-redux/store';
 import {IAppState} from '../../redux/store/store';
+import {User} from '../../entities/user';
 
 @Component({
   selector: 'app-update-house',
@@ -18,9 +19,11 @@ export class UpdateHouseComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   houseId: number = this.route.snapshot.params.id;
   house: House;
+  user: User;
+  houses: House [];
 
-  constructor(private fb: FormBuilder, private router: Router, private houseActions: AppActions, private cd: ChangeDetectorRef,
-              private loginService: LoginService, private ngRedux: NgRedux<IAppState>, private route: ActivatedRoute) {
+  constructor( private fb: FormBuilder, private router: Router, private houseActions: AppActions, private cd: ChangeDetectorRef,
+              private loginService: LoginService, private ngRedux: NgRedux<IAppState>, private route: ActivatedRoute ) {
   }
 
   ngOnDestroy() {
@@ -99,7 +102,7 @@ export class UpdateHouseComponent implements OnInit, OnDestroy {
 
       for (let i = 0; i < uploadedFiles.length; i++) {
         const reader = new FileReader();
-        let file = uploadedFiles[i];
+        const file = uploadedFiles[i];
         console.log('img: ', file);
         reader.readAsDataURL(file);
         reader.onload = () => {

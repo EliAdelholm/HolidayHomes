@@ -33,7 +33,9 @@
         </div>
       </div>
 
-      <button type="submit" class="btn btn-primary">Book</button> <p *ngIf="bookingStatus"> {{ bookingStatus.status }}</p>
+      <button type="submit" class="btn btn-primary" [disabled]="bookingForm.invalid">Book</button>
+      <p *ngIf="bookingForm.invalid"> start date must be before end date :)</p>
+      <p *ngIf="bookingStatus"> {{ bookingStatus.status }}</p>
     </form>
 
 

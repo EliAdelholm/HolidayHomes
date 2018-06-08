@@ -27,10 +27,10 @@ export class NewHouseFormComponent implements OnInit {
       address: ['', Validators.required],
       space: ['', Validators.required],
       isHouse: ['', Validators.required],
-      hasWifi: [''],
-      hasTv: [''],
-      hasDryer: [''],
-      isFamilyFriendly: [''],
+      wifi: [''],
+      tv: [''],
+      dryer: [''],
+      familyFriendly: [''],
       houseThumbnail: ['', Validators.required],
       houseImages: [''],
     });
@@ -40,16 +40,15 @@ export class NewHouseFormComponent implements OnInit {
   onSubmit(createHouseFrm) {
     if (createHouseFrm.valid) {
       createHouseFrm.value.wifi ? createHouseFrm.value.wifi = 1 : createHouseFrm.value.wifi = 0;
-      createHouseFrm.value.hasTv ? createHouseFrm.value.hasTv = 1 : createHouseFrm.value.hasTv = 0;
-      createHouseFrm.value.hasDryer ? createHouseFrm.value.hasDryer = 1 : createHouseFrm.value.hasDryer = 0;
+      createHouseFrm.value.tv ? createHouseFrm.value.tv = 1 : createHouseFrm.value.tv = 0;
+      createHouseFrm.value.dryer ? createHouseFrm.value.dyer = 1 : createHouseFrm.value.dryer = 0;
       createHouseFrm.value.familyfriendly ? createHouseFrm.value.familyfriendly = 1 : createHouseFrm.value.familyfriendly = 0;
-      createHouseFrm.value.isHouse === 'house' ? createHouseFrm.value.isHouse = 1 : createHouseFrm.value.isHouse = 0;
 
       console.log(createHouseFrm.value);
 
       const house: House = createHouseFrm.value as House;
       console.log(house);
-      this.houseActions.createHouse(createHouseFrm.value);
+      this.houseActions.createHouse(house);
       // this.router.navigate(['portal']);
     }
   }

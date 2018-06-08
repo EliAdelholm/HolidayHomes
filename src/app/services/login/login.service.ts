@@ -7,17 +7,20 @@ import {Router} from '@angular/router';
 @Injectable()
 export class LoginService {
 
-  isLoggedIn = false;
+  isLoggedIn = this.isActiveSession();
 
   isActiveSession() {
-    if (localStorage.getItem('login')) {
+    console.log('check session')
+    console.log(localStorage.getItem(('login')))
+    if (localStorage.getItem('login') !== null) {
       this.isLoggedIn = true;
       return true;
     }
     return false;
   }
 
-  login(userId): Observable<boolean> {
+  login(userId) {
+    console.log('login');
     return Observable.of(true).do(val => {
       this.isLoggedIn = true;
       localStorage.setItem('login', userId);
@@ -28,7 +31,6 @@ export class LoginService {
     console.log('logout',);
     localStorage.removeItem('login');
     this.isLoggedIn = false;
-    // this.router.navigate(['login']);
   }
 
   getUserId() {
