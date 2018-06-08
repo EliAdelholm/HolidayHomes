@@ -28,38 +28,28 @@ export class UpdateHouseComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.subscription = this.ngRedux.select(store => store.user).subscribe(user => {
-      this.user = user.account;
-      this.houses = user.houses;
+    this.subscription = this.ngRedux.select(store => store.houses).subscribe(houses => {
+      this.house = houses && houses.find(x => x.id == this.houseId);
+      console.log(this.house)
 
-      if (this.user) {
-        if (!this.gotHouses) {
-          this.appActions.getUserHouses(this.user.id);
-          this.gotHouses = true;
-        }
-        this.updateProfileFrm = this.fb.group({
-          userName: [this.user.name, Validators.required],
-          userEmail: [this.user.email, Validators.required],
-          userPassword: [this.user.password, Validators.required],
-          userImg: ['']
+      if(this.house) {
+        this.updateHouseFrm = this.fb.group({
+          headline: [this.house.headline, Validators.required],
+          description: [this.house.description, Validators.required],
+          price: [this.house.price, Validators.required],
+          address: [this.house.address, Validators.required],
+          space: [this.house.space, Validators.required],
+          isHouse: [this.house.is_house, Validators.required],
+          hasWifi: [this.house.wifi],
+          hasTv: [this.house.tv],
+          hasDryer: [this.house.dryer],
+          isFamilyFriendly: [this.house.familyfriendly],
+          houseThumbnail: ['', Validators.required],
+          houseImages: ['', Validators.required],
         });
       }
     });
-    this.updateHouseFrm = this.fb.group({
-      userId: [this.loginService.getUserId()],
-      headline: ['', Validators.required],
-      description: ['', Validators.required],
-      price: ['', Validators.required],
-      address: ['', Validators.required],
-      space: ['', Validators.required],
-      isHouse: ['', Validators.required],
-      hasWifi: [''],
-      hasTv: [''],
-      hasDryer: [''],
-      isFamilyFriendly: [''],
-      houseThumbnail: ['', Validators.required],
-      houseImages: ['', Validators.required],
-    });
+
   }
 
 
