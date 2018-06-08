@@ -25,10 +25,5 @@ export class DateValidator {
         return { parentUndefined: true };
       }
     };
-
-    function getNum(str: String) {
-      const splits = str.split(':');
-      return 60 * Number(splits[0]) + Number(splits[1]);
-    }
   }
 }
