@@ -61,10 +61,11 @@ export class NewHouseFormComponent implements OnInit {
       reader.readAsDataURL(file);
 
       reader.onload = () => {
+        const splitName = file.name.split('.');
         this.createHouseFrm.patchValue({
           houseThumbnail: {
             base64: reader.result.split(',')[1],
-            extension: file.name.split('.')[1]
+            extension: splitName[splitName.length - 1]
           }
         });
 
@@ -83,12 +84,13 @@ export class NewHouseFormComponent implements OnInit {
       for (let i = 0; i < uploadedFiles.length; i++) {
         const reader = new FileReader();
         let file = uploadedFiles[i];
+        const splitName = file.name.split('.');
         console.log('img: ', file);
         reader.readAsDataURL(file);
         reader.onload = () => {
           fileArray.push({
             base64: reader.result.split(',')[1],
-            extension: file.name.split('.')[1]
+            extension: splitName[splitName.length - 1]
           });
 
           // need to run CD since file load runs outside of zone
