@@ -44,7 +44,7 @@
         <div class="card-body">
           <p class="card-title">{{ house.headline }}</p>
           <button class="btn btn-sm btn-dark" type="button" routerLink="/house-preview/{{house.id}}">View</button>
-          <button class="btn btn-sm btn-primary" type="button">Edit</button>
+          <button class="btn btn-sm btn-primary" type="button" routerLink="/update-house/{{house.id}}">Edit</button>
           <button class="btn btn-sm btn-danger" type="button" (click)="togglePopup('house', house.id)">Delete</button>
         </div>
       </div>
