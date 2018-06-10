@@ -5,6 +5,8 @@
     <h2>Update Profile</h2>
     <div class="profile-picture" *ngIf="user.image"
          [style.background]="'url(../../../assets/img/' + user.image + ')'"></div>
+    <div class="profile-picture" *ngIf="!user.image"
+         [style.background]="'url(../../../assets/default-img/avatar.png)'"></div>
     <form [formGroup]="updateProfileFrm" (submit)="onSubmit(updateProfileFrm)">
 
       <div class="form-group">

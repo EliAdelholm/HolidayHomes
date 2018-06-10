@@ -13,22 +13,23 @@
       <a class="nav-link" routerLink=register routerLinkActive=”active” *ngIf="!loginService.isLoggedIn">Register</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" routerLink=new-house-form routerLinkActive=”active” *ngIf="loginService.isLoggedIn">Add
-        House</a>
+      <a class="nav-link" routerLink=new-house-form routerLinkActive=”active” *ngIf="loginService.isLoggedIn">
+        <i class="fas fa-plus text-primary"></i> Add House</a>
     </li>
   </ul>
 
   <ul class="navbar-nav" *ngIf="loginService.isLoggedIn && user">
     <li class="nav-item">
       <a class="nav-link" routerLink=profile routerLinkActive=”active” *ngIf="loginService.isLoggedIn"
-         (click)="loginService.logout()">Logout
+         (click)="loginService.logout()"><i class="fas fa-power-off text-primary"></i> Logout
       </a>
     </li>
 
     <li class="nav-item">
       <a class="nav-link" routerLink=profile routerLinkActive=”active”>
         <span class="username">{{ user.name }}</span>
-        <div class="profile-img" [style.background]="'url(../assets/img/' + user.image + ')'"></div>
+        <div class="profile-img" *ngIf="user.image" [style.background]="'url(../assets/img/' + user.image + ')'"></div>
+        <div class="profile-img" *ngIf="!user.image" [style.background]="'url(../assets/default-img/avatar.png)'"></div>
       </a>
     </li>
   </ul>

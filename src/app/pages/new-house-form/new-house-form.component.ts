@@ -46,7 +46,7 @@ export class NewHouseFormComponent implements OnInit, OnDestroy {
       ])],
       description: ['', Validators.compose([
         Validators.required,
-        Validators.maxLength(500)
+        Validators.maxLength(1000)
       ])],
       price: ['', Validators.required],
       address: ['', Validators.required],
