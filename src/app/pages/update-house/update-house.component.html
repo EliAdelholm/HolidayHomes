@@ -2,13 +2,25 @@
   <div class="col-12 offset-sm-1 col-sm-10 offset-md-2 col-md-8 offset-lg-3 col-lg-6">
     <h2>Update House</h2>
     <form [formGroup]="updateHouseFrm" (submit)="onSubmit(updateHouseFrm)" *ngIf="house">
+
       <div class="form-group">
         <label>Headline</label>
         <input formControlName="headline" class="form-control">
+        <small class="form-text text-danger"
+               *ngIf="updateHouseFrm.controls.headline.errors && updateHouseFrm.controls.headline.touched">
+          <span *ngIf="updateHouseFrm.controls.headline.errors.required">*Required</span>
+          <span *ngIf="updateHouseFrm.controls.headline.errors.maxlength">*Max 100 characters allowed</span>
+        </small>
       </div>
+
       <div class="form-group">
         <label>Description</label>
         <textarea formControlName="description" class="form-control" rows="2"></textarea>
+        <small class="form-text text-danger"
+               *ngIf="updateHouseFrm.controls.description.errors && updateHouseFrm.controls.description.touched">
+          <span *ngIf="updateHouseFrm.controls.description.errors.required">*Required</span>
+          <span *ngIf="updateHouseFrm.controls.description.errors.maxlength">*Max 1000 characters allowed</span>
+        </small>
       </div>
       <div class="form-group">
 
@@ -16,29 +28,46 @@
       <div class="form-group">
         <label>Address</label>
         <input formControlName="address" class="form-control">
+        <small class="form-text text-danger"
+               *ngIf="updateHouseFrm.controls.address.errors && updateHouseFrm.controls.address.touched">
+          <span *ngIf="updateHouseFrm.controls.address.errors.required">*Required</span>
+        </small>
       </div>
+
       <div class="form-group">
         <div class="row">
+
           <div class="col-12 col-sm-6">
             <label>Space</label>
-            <div class="input-group mb-3">
+            <div class="input-group">
               <input formControlName="space" class="form-control" aria-describedby="spaceunit-addon">
               <div class="input-group-append">
                 <span class="input-group-text" id="spaceunit-addon">M<sup>2</sup></span>
               </div>
             </div>
+            <small class="form-text text-danger"
+                   *ngIf="updateHouseFrm.controls.space.errors && updateHouseFrm.controls.space.touched">
+              <span *ngIf="updateHouseFrm.controls.space.errors.required">*Required</span>
+            </small>
           </div>
+
           <div class="col-12 col-sm-6">
             <label>Price per Night</label>
-            <div class="input-group mb-3">
+            <div class="input-group">
               <input formControlName="price" class="form-control" aria-describedby="currency-addon">
               <div class="input-group-append">
                 <span class="input-group-text" id="currency-addon">DKK</span>
               </div>
             </div>
+            <small class="form-text text-danger"
+                   *ngIf="updateHouseFrm.controls.price.errors && updateHouseFrm.controls.price.touched">
+              <span *ngIf="updateHouseFrm.controls.price.errors.required">*Required</span>
+            </small>
           </div>
+
         </div>
       </div>
+
       <div class="form-group">
         <label>Housing Type</label>
         <select formControlName="isHouse" class="form-control">
@@ -47,7 +76,7 @@
         </select>
       </div>
 
-      <h5>Facilities</h5>
+      <h5 class="mt-4">Facilities</h5>
       <div class="custom-control custom-checkbox">
         <input type="checkbox" class="custom-control-input" id="filterWiFi" formControlName="hasWifi">
         <label class="custom-control-label" for="filterWiFi">Wi-Fi</label>
@@ -65,12 +94,23 @@
                formControlName="isFamilyFriendly">
         <label class="custom-control-label" for="filterFamilyFriendly">Family Friendly</label>
       </div>
+
+      <h5 class="mt-4">Images</h5>
       <div class="form-group">
-        <label>Thumbnail Image</label>
+        <label>Change Thumbnail Image</label>
         <input type="file" (change)="uploadThumbnail($event)" class="form-control">
       </div>
       <div class="form-group">
-        <label>Additional Images</label>
+        <label>Delete Existing Images</label>
+        <div >
+          <div *ngFor="let img of house.images" class="preview-image" [style.background]="'url(../../../assets/img/' + img + ')'"
+               (click)="toggleToBeDeleted(img)">
+            <i class="far fa-times-circle delete-image text-danger" *ngIf="toBeDeleted(img)"></i>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Upload More Images</label>
         <input multiple type="file" (change)="uploadImages($event)" class="form-control">
       </div>
 

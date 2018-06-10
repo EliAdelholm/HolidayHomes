@@ -17,28 +17,48 @@ import {User} from '../../entities/user';
 export class UpdateHouseComponent implements OnInit, OnDestroy {
   updateHouseFrm: FormGroup;
   subscription: Subscription;
+  statusSubscription: Subscription;
   houseId: number = this.route.snapshot.params.id;
   house: House;
   user: User;
   houses: House [];
+  toDeleteArray = [];
+  status;
 
-  constructor( private fb: FormBuilder, private router: Router, private houseActions: AppActions, private cd: ChangeDetectorRef,
-              private loginService: LoginService, private ngRedux: NgRedux<IAppState>, private route: ActivatedRoute ) {
+  constructor(private fb: FormBuilder, private router: Router, private houseActions: AppActions, private cd: ChangeDetectorRef,
+              private loginService: LoginService, private ngRedux: NgRedux<IAppState>, private route: ActivatedRoute) {
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.statusSubscription.unsubscribe();
   }
 
   ngOnInit() {
+    this.statusSubscription = this.ngRedux.select(state => state.requestStatus).subscribe(status => {
+      this.status = status;
+
+      if (this.status.code && this.status.code === 'OK') {
+        this.router.navigate(['profile']);
+        this.houseActions.resetStatus();
+      }
+    });
+
     this.subscription = this.ngRedux.select(store => store.houses).subscribe(houses => {
       this.house = houses && houses.find(x => x.id == this.houseId);
-      console.log(this.house)
+      console.log(this.house);
 
-      if(this.house) {
+      if (this.house) {
         this.updateHouseFrm = this.fb.group({
-          headline: [this.house.headline, Validators.required],
-          description: [this.house.description, Validators.required],
+          id: [this.house.id, Validators.required],
+          headline: [this.house.headline, Validators.compose([
+            Validators.required,
+            Validators.maxLength(100)
+          ])],
+          description: [this.house.description, Validators.compose([
+            Validators.required,
+            Validators.maxLength(1000)
+          ])],
           price: [this.house.price, Validators.required],
           address: [this.house.address, Validators.required],
           space: [this.house.space, Validators.required],
@@ -47,8 +67,9 @@ export class UpdateHouseComponent implements OnInit, OnDestroy {
           hasTv: [this.house.tv],
           hasDryer: [this.house.dryer],
           isFamilyFriendly: [this.house.familyfriendly],
-          houseThumbnail: ['', Validators.required],
-          houseImages: ['', Validators.required],
+          houseThumbnail: [''],
+          imagesToDelete: [this.toDeleteArray],
+          imagesToUpload: ['']
         });
       }
     });
@@ -68,7 +89,7 @@ export class UpdateHouseComponent implements OnInit, OnDestroy {
 
       const house: House = updateHouseFrm.value as House;
       console.log(house);
-      this.houseActions.updateHouse(house);
+      //this.houseActions.updateHouse(house);
       // this.router.navigate(['portal']);
     }
   }
@@ -116,8 +137,20 @@ export class UpdateHouseComponent implements OnInit, OnDestroy {
         };
       }
       this.updateHouseFrm.patchValue({
-        houseImages: fileArray
+        imagesToUpload: fileArray
       });
+    }
+  }
+
+  toBeDeleted(img) {
+    return this.toDeleteArray.includes(img);
+  }
+
+  toggleToBeDeleted(img) {
+    if (!this.toBeDeleted(img)) {
+      this.toDeleteArray.push(img);
+    } else {
+      this.toDeleteArray = this.toDeleteArray.filter(x => x !== img);
     }
   }
 
