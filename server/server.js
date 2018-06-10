@@ -198,7 +198,9 @@ app.post('/api/create-house' , async (req,res) => {
   }
 
   try {
+    console.log('xxxxxx');
     const createdHouse = await db.createHouse(jHouse, aImageNames)
+    console.log('jHouse, aImageNames', jHouse, aImageNames)
     let newImages = []
     // remove the ids from the createdHouse before returning it
     for (let i=0; i < createdHouse.images.length; i++) {
