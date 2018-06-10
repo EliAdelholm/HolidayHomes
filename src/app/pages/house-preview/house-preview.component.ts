@@ -30,7 +30,7 @@ export class HousePreviewComponent implements OnInit {
           this.thumbNail = this.house.thumbnail_image;
           console.log('this.thumbNail', this.thumbNail);
           console.log('this.house.images', this.house.images);
-          if (this.house.images instanceof String) {
+          if (this.house.images instanceof String || typeof this.house.images === 'string') {
             this.houseImgs = this.house.images.split(',');
           } else {
             this.houseImgs = this.house.images;
