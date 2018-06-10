@@ -131,16 +131,18 @@ app.get('/api/get-houses-belonging-to-user', async(req,res) => {
 });
 
 app.post('/api/update-user' , async(req,res) => {
-  const image = req.body.image
-  const imageName = await decodeAndSaveImage(image).catch((e) => {
-    console.log(`exception in decodeBase64 ${e}`)
-    return res.send(`unable to upload image ${e}`)
-  })
-  const jUser = {
+  let jUser = {
     name: req.body.username,
     password: req.body.password,
-    email: req.body.email,
-    image: req.files.imageName
+    email: req.body.email
+  }
+  if (req.body.image) {
+    const image = req.body.image
+    const imageName = await decodeAndSaveImage(image).catch((e) => {
+      console.log(`exception in decodeBase64 ${e}`)
+      return res.send(`unable to upload image ${e}`)
+    })
+    jUser.image = imageName
   }
   try {
     const jResult = await db.updateUser(jUser, req.body.id)

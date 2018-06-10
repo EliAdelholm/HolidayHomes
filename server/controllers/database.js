@@ -77,7 +77,7 @@ class Database {
     })
   }
 
-  updateHouse (iHouseId, jHouse, aHouseImages) {
+  updateHouse (iHouseId, jHouse, imagesToDelete, imagesToSave) {
     return new Promise((resolve, reject) => {
       global.con.query('UPDATE houses SET ? WHERE id = ?',
         [jHouse, iHouseId],
