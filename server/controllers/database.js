@@ -40,10 +40,11 @@ class Database {
 
   getHouse (iHouseId) {
     return new Promise((resolve, reject) => {
-      global.con.query('SELECT *, GROUP_CONCAT(houses_images.image)\n' +
+      global.con.query('SELECT *, GROUP_CONCAT(houses_images.image) AS images\n' +
         'FROM houses\n' +
         'JOIN houses_images ON houses.id = houses_images.houses_id',
         [iHouseId], (error, ajResult) => {
+        console.log(ajResult)
           if (error) return reject(error)
           if (!ajResult[0]) {
             reject('User does not exist')
@@ -76,12 +77,13 @@ class Database {
     })
   }
 
-  updateHouse (jHouse, iHouseId) {
+  updateHouse (iHouseId, jHouse, aHouseImages) {
     return new Promise((resolve, reject) => {
       global.con.query('UPDATE houses SET ? WHERE id = ?',
         [jHouse, iHouseId],
         (error, jResult) => {
           if (error) return reject(error)
+          const houseId = jResult.insertId
           return resolve(jResult)
         })
     })

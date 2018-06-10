@@ -120,8 +120,11 @@ app.get('/api/get-house', async (req, res) => {
 app.get('/api/get-houses-belonging-to-user', async(req,res) => {
   const iHouse = req.query.id
   try {
-    const jHouse = await db.getHousesBelongingToUser(iHouse);
-    return res.send(jHouse)
+    const ajHouses = await db.getHousesBelongingToUser(iHouse);
+    ajHouses.forEach((house) => {
+      house.additional_images = house.additional_images.split(",")
+    })
+    return res.send(ajHouses)
   } catch (e) {
     return res.send(e)
   }
@@ -152,6 +155,7 @@ app.get('/api/get-houses', async (req, res) => {
   const iNumberOfHouses = parseInt(req.query.number)
   try {
     const ajHouses = await db.getHouses(iNumberOfHouses)
+    ajHouses[0].images = ajHouses[0].images.split(",")
     return res.send(ajHouses)
   } catch (e) {
     return res.send(e)
