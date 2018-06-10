@@ -44,7 +44,7 @@ class Database {
         'FROM houses\n' +
         'JOIN houses_images ON houses.id = houses_images.houses_id',
         [iHouseId], (error, ajResult) => {
-        console.log(ajResult)
+          console.log(ajResult)
           if (error) return reject(error)
           if (!ajResult[0]) {
             reject('User does not exist')
@@ -83,7 +83,7 @@ class Database {
         [jHouse, iHouseId],
         (error, jResult) => {
           if (error) return reject(error)
-          const houseId = jResult.insertId
+
           return resolve(jResult)
         })
     })
@@ -123,12 +123,12 @@ class Database {
     })
   }
   createUser(jUser) {
-      return new Promise((resolve,reject) => {
-        global.con.query('INSERT INTO users SET ?', [jUser], (error, jResult) => {
-          if (error) return reject(error)
-          resolve(jResult)
-        })
+    return new Promise((resolve,reject) => {
+      global.con.query('INSERT INTO users SET ?', [jUser], (error, jResult) => {
+        if (error) return reject(error)
+        resolve(jResult)
       })
+    })
   }
   getBookings(iHouseId) {
     return new Promise((resolve, reject) => {
