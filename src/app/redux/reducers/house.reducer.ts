@@ -20,7 +20,7 @@ export function houseReducer(state = [], action: any) {
       return state;
 
     case AppActions.UPDATED_HOUSE:
-      const updateHouseIndex = state.findIndex(house => house.id === action.payload.id);
+      const updateHouseIndex = state.findIndex(house => house.id == action.payload.id);
       const updatedHouseArray = Object.assign(state[updateHouseIndex], action.payload);
       return tassign(updatedHouseArray);
 
