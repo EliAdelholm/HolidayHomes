@@ -1,7 +1,7 @@
 <script src="../register/register.component.ts"></script>
 
 <div class="row" *ngIf="user">
-  <div class="col-12 col-md-6 offset-md-1">
+  <div class="col-12 col-md-7 col-lg-6 col-xl-5 mb-5">
     <h2>Update Profile</h2>
     <div class="profile-picture" *ngIf="user.image"
          [style.background]="'url(../../../assets/img/' + user.image + ')'"></div>
@@ -33,11 +33,11 @@
 
 
   </div>
-  <div class="col-12 col-sm-6 col-md-4 col-lg-3 offset-lg-1 bg-light border border-secondary">
+  <div class="col-12 col-md-5 col-lg-6 col-xl-7">
     <h2>Manage Houses</h2>
     <p *ngIf="!houses.length">You have no houses</p>
-    <div *ngIf="houses.length">
-      <div class="card" *ngFor="let house of houses">
+    <div *ngIf="houses.length" class="row">
+      <div class="card house-card col-sm-6 col-md-12 col-lg-6 col-xl-4" *ngFor="let house of houses">
         <img class="card-img-top"
              src="../../../assets/img/{{house.thumbnail_image}}"
              alt="Card image cap">
