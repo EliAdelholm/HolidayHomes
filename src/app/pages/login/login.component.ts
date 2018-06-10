@@ -39,6 +39,7 @@ export class LoginComponent implements OnInit {
 
       if (this.user && this.user.status === 'OK' ) {
         this.loginService.login(this.user.account.id).subscribe(x => {
+          this.appActions.getUserHouses(this.user.account.id);
           this.router.navigate(['portal']);
         });
       }
