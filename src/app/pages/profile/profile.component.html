@@ -11,17 +11,17 @@
 
       <div class="form-group">
         <label>Username</label>
-        <input formControlName="userName" class="form-control">
+        <input formControlName="username" class="form-control">
       </div>
 
       <div class="form-group">
         <label>Email</label>
-        <input formControlName="userEmail" class="form-control">
+        <input formControlName="email" class="form-control">
       </div>
 
       <div class="form-group">
         <label>Password</label>
-        <input formControlName="userPassword" class="form-control" type="password">
+        <input formControlName="password" class="form-control" type="password">
       </div>
 
       <div class="form-group">
@@ -40,9 +40,7 @@
     <p *ngIf="!houses.length">You have no houses</p>
     <div *ngIf="houses.length" class="row">
       <div class="card house-card col-sm-6 col-md-12 col-lg-6 col-xl-4" *ngFor="let house of houses">
-        <img class="card-img-top"
-             src="../../../assets/img/{{house.thumbnail_image}}"
-             alt="Card image cap">
+        <div class="card-img-top" [style.background]="'url(../../../assets/img/' + house.thumbnail_image + ')'"></div>
         <div class="card-body">
           <p class="card-title">{{ house.headline }}</p>
           <button class="btn btn-sm btn-dark" type="button" routerLink="/house-preview/{{house.id}}">View</button>

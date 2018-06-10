@@ -12,12 +12,10 @@ export class AppService {
 
   // HOUSE SERVICES
   getHouses() {
-    console.log('getting houses');
     return this.http.get('/api/get-houses?number=50');
   }
 
   createHouse(house) {
-    console.log('service: ' + house)
     return this.http.post('/api/create-house', house);
   }
 

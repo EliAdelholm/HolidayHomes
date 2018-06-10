@@ -26,7 +26,7 @@ export function userReducer(state = null, action: any) {
       return state;
 
     case AppActions.UPDATED_USER:
-      const updatedUser = Object.assign(state.account, action.payload);
+      const updatedUser = Object.assign(state.account, action.payload.newUser);
       return tassign(state, {account: updatedUser});
 
     case AppActions.FAILED_TO_UPDATE_USER:

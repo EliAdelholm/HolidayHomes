@@ -42,10 +42,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
       if (this.user) {
         this.updateProfileFrm = this.fb.group({
-          userName: [this.user.name, Validators.required],
-          userEmail: [this.user.email, Validators.required],
-          userPassword: [this.user.password, Validators.required],
-          userImg: ['']
+          id: [this.user.id, Validators.required],
+          username: [this.user.name, Validators.required],
+          email: [this.user.email, Validators.required],
+          password: [this.user.password, Validators.required],
+          image: ['']
         });
       }
     });
@@ -60,7 +61,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
       reader.onload = () => {
         this.updateProfileFrm.patchValue({
-          userImg: {
+          image: {
             base64: reader.result.split(',')[1],
             extension: file.name.split('.')[1]
           }
@@ -75,6 +76,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   onSubmit(form) {
     if (form.valid) {
       console.log(form.value);
+      this.appActions.updateUser(form.value);
     }
   }
 
