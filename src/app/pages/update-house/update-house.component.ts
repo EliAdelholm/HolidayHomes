@@ -89,8 +89,7 @@ export class UpdateHouseComponent implements OnInit, OnDestroy {
 
       const house: House = updateHouseFrm.value as House;
       console.log(house);
-      //this.houseActions.updateHouse(house);
-      // this.router.navigate(['portal']);
+      this.houseActions.updateHouse(house);
     }
   }
 
