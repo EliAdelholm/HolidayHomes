@@ -4,6 +4,7 @@ import {Subscription} from 'rxjs/Subscription';
 import {NgRedux} from '@angular-redux/store';
 import {IAppState} from '../../redux/store/store';
 import {AppActions} from '../../redux/app.actions';
+import {LoginService} from '../../services/login/login.service';
 
 @Component({
   selector: 'app-profile',
@@ -19,8 +20,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   user;
   houses;
+  deleteUserStatus;
 
-  constructor(private fb: FormBuilder, private ngRedux: NgRedux<IAppState>, private appActions: AppActions, private cd: ChangeDetectorRef) {
+  constructor(private fb: FormBuilder, private ngRedux: NgRedux<IAppState>, private appActions: AppActions,
+              private cd: ChangeDetectorRef, private loginService: LoginService) {
   }
 
   ngOnDestroy(): void {
@@ -31,6 +34,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.subscription = this.ngRedux.select(store => store.user).subscribe(user => {
       this.user = user.account;
       this.houses = user.houses;
+      this.deleteUserStatus = user.status;
+
+      if (this.deleteUserStatus === 'User deleted') {
+        this.loginService.logout();
+      }
 
       if (this.user) {
         this.updateProfileFrm = this.fb.group({
@@ -84,7 +92,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   deleteAccount() {
     console.log('Delete account with id: ' + this.user.id);
-    this.displayPopup = false;
+    this.appActions.deleteUser(this.user.id);
   }
 
 }
