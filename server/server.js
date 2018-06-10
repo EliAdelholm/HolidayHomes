@@ -86,7 +86,7 @@ app.get('/api/delete-house' , async(req,res) => {
   const iHouseId = req.query.id
   try {
     const response = await db.deleteHouse(iHouseId)
-    return res.send('house deleted')
+    return res.json({id: iHouseId})
   } catch (e) {
     return res.send(`error deleting house ${e}`)
   }

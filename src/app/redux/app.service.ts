@@ -26,7 +26,7 @@ export class AppService {
   }
 
   deleteHouse(houseId: number) {
-    return this.http.delete('/api/delete-house?id=' + houseId);
+    return this.http.get('/api/delete-house?id=' + houseId);
   }
 
   // USER SERVICES
