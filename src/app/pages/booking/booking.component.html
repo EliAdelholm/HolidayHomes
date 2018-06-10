@@ -35,7 +35,7 @@
 
       <button type="submit" class="btn btn-primary" [disabled]="bookingForm.invalid">Book</button>
       <p *ngIf="bookingForm.invalid"> start date must be before end date :)</p>
-      <p *ngIf="bookingStatus"> status of your booking is: {{ bookingStatus.status }}</p>
+      <p id="booking-msg" *ngIf="bookingStatus"> status of your booking is: {{ bookingStatus.status }}</p>
       <p *ngIf="dateTaken">selected date is already taken</p>
     </form>
 

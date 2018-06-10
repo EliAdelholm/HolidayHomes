@@ -13,13 +13,13 @@ describe('login test', function() {
     expect(password.getAttribute('value')).toBe('a');
 
     // Find the first (and only) button on the page and click it
-    element.all(by.tagName('button')).get(1).click();
+    element.all(by.className('btn')).get(0).click();
 
     browser.wait(function() {
       return browser.getCurrentUrl().then(function(url) {
         console.log('Url', url);
         return /portal/.test(url);
       });
-    }, 5000, 'URL hasn\'t changed');
+    }, 1000, 'URL hasn\'t changed');
   });
 });
