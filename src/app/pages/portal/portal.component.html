@@ -39,9 +39,7 @@
     <p *ngIf="!houses">No houses found</p>
     <div class="card-columns" *ngIf="houses">
       <div class="card" *ngFor= "let house of houses | filterHouseType: is_house : is_apartment : hasWifi : hasTv : hasDryer : isFamilyFriendly" routerLink="/house-preview/{{house.id}}">
-        <img class="card-img-top"
-             src="../../../assets/img/{{house.thumbnail_image}}"
-             alt="Card image cap">
+        <div class="card-img-top" [style.background]="'url(../../../assets/img/' + house.thumbnail_image + ')'"></div>
         <div class="card-body">
           <p class="card-title">{{ house.headline }}</p>
           <p class="card-text">{{ house.address }}</p>
