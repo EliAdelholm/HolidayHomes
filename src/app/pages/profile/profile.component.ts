@@ -19,7 +19,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   user;
   houses;
-  gotHouses = false;
 
   constructor(private fb: FormBuilder, private ngRedux: NgRedux<IAppState>, private appActions: AppActions, private cd: ChangeDetectorRef) {
   }
@@ -34,10 +33,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.houses = user.houses;
 
       if (this.user) {
-        if (!this.gotHouses) {
-          this.appActions.getUserHouses(this.user.id);
-          this.gotHouses = true;
-        }
         this.updateProfileFrm = this.fb.group({
           userName: [this.user.name, Validators.required],
           userEmail: [this.user.email, Validators.required],
@@ -83,10 +78,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   deleteHouse() {
     console.log('Delete house with id: ' + this.houseId);
+    this.appActions.deleteHouse(this.houseId);
+    this.displayPopup = false;
   }
 
   deleteAccount() {
     console.log('Delete account with id: ' + this.user.id);
+    this.displayPopup = false;
   }
 
 }

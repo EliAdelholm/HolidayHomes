@@ -9,7 +9,7 @@ export function houseReducer(state = [], action: any) {
       return state;
 
     case AppActions.CREATED_HOUSE:
-      const newHouseArray = [...state, action.payload]
+      const newHouseArray = [...state, action.payload];
 
       return Object.assign(newHouseArray);
 
@@ -31,8 +31,8 @@ export function houseReducer(state = [], action: any) {
       return state;
 
     case AppActions.DELETED_HOUSE:
-      const deletedHouseArray = state.filter((item, index) => index !== action.payload);
-      return tassign({state: deletedHouseArray});
+      const deletedHouseArray = state.filter(house => house.id != action.payload.id);
+      return Object.assign(deletedHouseArray);
 
     case AppActions.FAILED_TO_DELETE_HOUSE:
       return state;

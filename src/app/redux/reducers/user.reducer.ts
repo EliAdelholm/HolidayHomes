@@ -49,7 +49,7 @@ export function userReducer(state = null, action: any) {
       return tassign(state, {status: null});
 
     case AppActions.RECEIVED_USER_HOUSES:
-      return tassign(state, {houses: action.payload});
+      return Object.assign(state, {houses: action.payload});
 
     case AppActions.FAILED_TO_GET_USER_HOUSES:
       return state;
@@ -68,7 +68,7 @@ export function userReducer(state = null, action: any) {
       return state;
 
     case AppActions.UPDATED_HOUSE:
-      const updateHouseIndex = state.houses.findIndex(house => house.id === action.payload.id);
+      const updateHouseIndex = state.houses.findIndex(house => house.id == action.payload.id);
       const updatedHouseArray = Object.assign(state.houses[updateHouseIndex], action.payload);
       return tassign(state, {houses: updatedHouseArray});
 
@@ -79,7 +79,8 @@ export function userReducer(state = null, action: any) {
       return state;
 
     case AppActions.DELETED_HOUSE:
-      const deletedHouseArray = state.houses.filter((item, index) => index !== action.payload);
+      console.log(action.payload.id, state.houses);
+      const deletedHouseArray = state.houses.filter(house => house.id != action.payload.id);
       return tassign(state, {houses: deletedHouseArray});
 
     case AppActions.FAILED_TO_DELETE_HOUSE:

@@ -23,14 +23,15 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
     this.appActions.getHouses();
+    if (this.loginService.isLoggedIn) {
+      this.appActions.getUserHouses(Number(localStorage.getItem('login')));
+    }
 
     this.subscription = this.ngRedux.select(store => store.user).subscribe(user => {
       this.user = user.account;
 
       if (this.loginService.isLoggedIn && !this.user) {
-        console.log('active session -- login')
         this.appActions.getUser(localStorage.getItem('login'));
       }
     });
