@@ -44,11 +44,12 @@ class Database {
         'FROM houses\n' +
         'JOIN houses_images ON houses.id = houses_images.houses_id',
         [iHouseId], (error, ajResult) => {
-          console.log(ajResult)
           if (error) return reject(error)
           if (!ajResult[0]) {
-            reject('User does not exist')
+            reject('House does not exist')
           }
+          delete ajResult[0].image
+          ajResult[0].images = ajResult[0].images.split(',')
           resolve(ajResult[0])
         })
     })
@@ -77,15 +78,43 @@ class Database {
     })
   }
 
-  updateHouse (iHouseId, jHouse, imagesToDelete, imagesToSave) {
-    return new Promise((resolve, reject) => {
-      global.con.query('UPDATE houses SET ? WHERE id = ?',
-        [jHouse, iHouseId],
-        (error, jResult) => {
-          if (error) return reject(error)
+  updateHouse (iHouseId, jHouse, imagesToDelete, imagesToUpload) {
 
-          return resolve(jResult)
+    return new Promise((resolve, reject) => {
+      const updateUserResult = new Promise((resolve, reject) => {
+        global.con.query('UPDATE houses SET ? WHERE id = ?',
+          [jHouse, iHouseId],
+          (error, jResult) => {
+            if (error) return reject(error)
+            resolve(`error updating house: ${error} |`)
+          })
+      })
+      let Promises = [updateUserResult]
+      if (imagesToUpload.length) {
+        const insertImagesResult = new Promise((resolve, reject) => {
+          global.con.query('INSERT INTO houses_images VALUES ?',
+            [imagesToUpload], (error, jResult) => {
+            if (error) return reject(`error inserting images: ${error} |`)
+            resolve()
+          })
         })
+        Promises.push(insertImagesResult)
+      }
+      if(imagesToDelete.length) {
+        const deleteHouseResult = new Promise((resolve, reject) => {
+          global.con.query('DELETE FROM houses_images WHERE image IN (?)',
+            [imagesToDelete], (error, jResult) => {
+              if (error) return reject(`error deleting images: ${error}`)
+              resolve()
+            })
+        })
+        Promises.push(deleteHouseResult)
+      }
+      Promise.all(Promises).then(() => {
+        resolve('House updated in db')
+      }).catch((e) => {
+        reject(e)
+      })
     })
   }
 

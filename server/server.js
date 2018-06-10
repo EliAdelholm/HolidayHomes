@@ -58,7 +58,7 @@ app.post('/api/create-user', async(req,res) => {
   }
   if (req.body.userImg) {
     try{
-    const response = await decodeAndSaveImage(req.body.userImg)
+      const response = await decodeAndSaveImage(req.body.userImg)
     } catch(e) {
       console.log('unable to upload user image')
       return res.send('unable to upload user image')
@@ -129,6 +129,72 @@ app.get('/api/get-houses-belonging-to-user', async(req,res) => {
     return res.send(e)
   }
 });
+
+app.post('/api/update-house', async(req,res) => {
+  const iHouseId = req.body.id
+  const jHouse = {}
+  jHouse.headline = req.body.headline
+  jHouse.description = req.body.description
+  jHouse.price = req.body.price
+  jHouse.address = req.body.address
+  jHouse.space = req.body.space
+  jHouse.is_house = req.body.isHouse
+  jHouse.wifi = req.body.hasWifi
+  jHouse.tv = req.body.hasTv
+  jHouse.dryer = req.body.hasDryer
+  jHouse.familyfriendly = req.body.isFamilyFriendly
+
+  let thumbnailName
+  if (req.body.houseThumbnail) {
+    thumbnailName = await decodeAndSaveImage(req.body.houseThumbnail, true).catch((e) => {
+      console.log(`error saving thumbnail ${e}`)
+      return res.send(`error saving thumbnail ${e}`)
+    })
+    jHouse.thumbnail_image = `thumbnail-${thumbnailName}`
+  }
+
+
+  const imagesToDelete = req.body.imagesToDelete
+  console.log(imagesToDelete)
+  const imagesToUpload = req.body.imagesToUpload
+  let imagesToInsertInDb = thumbnailName ? [[iHouseId, thumbnailName]] : []
+  if(imagesToUpload) {
+    let imageName = ''
+    let requests = imagesToUpload.reduce((promiseChain, item) => {
+      return promiseChain.then(() => new Promise((resolve) => {
+        decodeAndSaveImage(item).then((filename) => {
+          imagesToInsertInDb.push([iHouseId, filename])
+          resolve()
+        }).catch((e) => {
+          console.log(e)
+          reject()
+        })
+      }));
+    }, Promise.resolve());
+    // If there's additional images to save, we need to wait for the decoding to get the names before we can save
+    requests.then( async () => {
+        try {
+          const response = await db.updateHouse(iHouseId, jHouse, imagesToDelete, imagesToInsertInDb)
+          const newHouse = await db.getHouse(iHouseId)
+          return res.json(newHouse)
+        } catch (e) {
+          console.log(`error updating house ${e}`)
+          return res.send(`error updating house ${e}`)
+        }
+    }
+      ).catch((e) => { console.log (e) })
+  }
+  else {
+    try {
+      const response = await db.updateHouse(iHouseId, jHouse, imagesToDelete, imagesToInsertInDb)
+      const newHouse = await db.getHouse(iHouseId)
+      return res.json(newHouse)
+    } catch (e) {
+      console.log(`error updating house ${e}`)
+      return res.send(`error updating house ${e}`)
+    }
+  }
+})
 
 app.post('/api/update-user' , async(req,res) => {
   let jUser = {
