@@ -124,7 +124,7 @@ app.get('/api/get-houses-belonging-to-user', async(req,res) => {
     ajHouses.forEach((house) =>{
       house.additional_images = house.additional_images.split(',')
     })
-    return res.send(jHouse)
+    return res.send(ajHouses)
   } catch (e) {
     return res.send(e)
   }
