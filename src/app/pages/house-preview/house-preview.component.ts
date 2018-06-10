@@ -27,12 +27,18 @@ export class HousePreviewComponent implements OnInit {
       this.house = houses && houses.find(x => x.id == this.houseId);
       console.log('this.house', this.house);
       if (this.house !== undefined) {
-        this.thumbNail = this.house.thumbnail_image;
-        console.log('this.thumbNail', this.thumbNail);
-        this.houseImgs = this.house.images.split(',');
-        console.log('this.houseImgs', this.houseImgs);
-      }
+          this.thumbNail = this.house.thumbnail_image;
+          console.log('this.thumbNail', this.thumbNail);
+          console.log('this.house.images', this.house.images);
+          if (this.house.images instanceof String || typeof this.house.images === 'string') {
+            this.houseImgs = this.house.images.split(',');
+          } else {
+            this.houseImgs = this.house.images;
+          }
+          console.log('this.houseImgs', this.houseImgs);
+        }
     });
+
   }
 
 }

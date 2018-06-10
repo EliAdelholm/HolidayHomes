@@ -31,6 +31,8 @@ export class LoginService {
     console.log('logout',);
     localStorage.removeItem('login');
     this.isLoggedIn = false;
+    // Reload app to get fresh redux state
+    location.reload();
   }
 
   getUserId() {

@@ -6,7 +6,7 @@ const sharp = require('sharp')
 const fs = require('fs-extra')
 const path = require('path')
 const mime = require('mime-types')
-const bodyParser =  require('body-parser')
+const bodyParser = require('body-parser')
 const decodeAndSaveImage = require('./controllers/decodeBase64')
 
 // Use BodyParser
@@ -17,22 +17,22 @@ const dbClass = require('./controllers/database.js')
 const db = new dbClass
 
 // Angular DIST output folder
-app.use(express.static(path.join(__dirname, '../dist')));
+app.use(express.static(path.join(__dirname, '../dist')))
 
 /** sql connection ************/
 const sqlConnection = require('./serverConnection')
-global.con = mysql.createConnection(sqlConnection);
+global.con = mysql.createConnection(sqlConnection)
 
 global.con.connect(function (err) {
-  if (err) throw err;
-  console.log("Connected to mysql!");
-});
+  if (err) throw err
+  console.log('Connected to mysql!')
+})
 
 /** Server side routing  ************/
 
 /** API  ************/
 
-app.get('/api/test-image' , async (req,res) => {
+app.get('/api/test-image', async (req, res) => {
   const base64image = req.body.image
   try {
     const imageName = await decodeAndSaveImage(base64image, true)
@@ -50,16 +50,16 @@ app.get('/api/get-user', async (req, res) => {
 })
 
 /** Create user **/
-app.post('/api/create-user', async(req,res) => {
+app.post('/api/create-user', async (req, res) => {
   const jUser = {
     name: req.body.userName,
     password: req.body.userPassword,
     email: req.body.userEmail
   }
   if (req.body.userImg) {
-    try{
-    const response = await decodeAndSaveImage(req.body.userImg)
-    } catch(e) {
+    try {
+      const response = await decodeAndSaveImage(req.body.userImg)
+    } catch (e) {
       console.log('unable to upload user image')
       return res.send('unable to upload user image')
     }
@@ -72,17 +72,17 @@ app.post('/api/create-user', async(req,res) => {
   }
 })
 
-app.get('/api/delete-user' , async (req,res) => {
+app.get('/api/delete-user', async (req, res) => {
   const iUserId = req.query.id
   try {
     const response = await db.deleteUser(iUserId)
-    return res.send('User deleted')
+    return res.json({status: 'User deleted'})
   } catch (e) {
-    return res.send(`error deleting user ${e}`)
+    return res.json({status: 'Error deleting user'})
   }
 })
 
-app.get('/api/delete-house' , async(req,res) => {
+app.get('/api/delete-house', async (req, res) => {
   const iHouseId = req.query.id
   try {
     const response = await db.deleteHouse(iHouseId)
@@ -91,7 +91,6 @@ app.get('/api/delete-house' , async(req,res) => {
     return res.send(`error deleting house ${e}`)
   }
 })
-
 
 /** Login **/
 app.post('/api/login', async (req, res) => {
@@ -109,7 +108,7 @@ app.post('/api/login', async (req, res) => {
 app.get('/api/get-house', async (req, res) => {
   const iHouseId = req.query.id
   try {
-    const jHouse = await db.getHouse(iHouseId);
+    const jHouse = await db.getHouse(iHouseId)
     return res.send(jHouse)
   } catch (e) {
     return res.send(e)
@@ -117,20 +116,17 @@ app.get('/api/get-house', async (req, res) => {
 })
 
 /** Get houses belonging to user **/
-app.get('/api/get-houses-belonging-to-user', async(req,res) => {
+app.get('/api/get-houses-belonging-to-user', async (req, res) => {
   const iHouse = req.query.id
   try {
-    const ajHouses = await db.getHousesBelongingToUser(iHouse);
-    ajHouses.forEach((house) => {
-      house.additional_images = house.additional_images.split(",")
-    })
-    return res.send(ajHouses)
+    const jHouse = await db.getHousesBelongingToUser(iHouse)
+    return res.send(jHouse)
   } catch (e) {
     return res.send(e)
   }
-});
+})
 
-app.post('/api/update-user' , async(req,res) => {
+app.post('/api/update-user', async (req, res) => {
   const image = req.body.image
   const imageName = await decodeAndSaveImage(image).catch((e) => {
     console.log(`exception in decodeBase64 ${e}`)
@@ -148,14 +144,13 @@ app.post('/api/update-user' , async(req,res) => {
   } catch (e) {
     return res.send(e)
   }
-});
+})
 
 /** Get houses **/
 app.get('/api/get-houses', async (req, res) => {
   const iNumberOfHouses = parseInt(req.query.number)
   try {
     const ajHouses = await db.getHouses(iNumberOfHouses)
-    ajHouses[0].images = ajHouses[0].images.split(",")
     return res.send(ajHouses)
   } catch (e) {
     return res.send(e)
@@ -163,7 +158,7 @@ app.get('/api/get-houses', async (req, res) => {
 })
 
 /** Create house **/
-app.post('/api/create-house' , async (req,res) => {
+app.post('/api/create-house', async (req, res) => {
   const thumbnail = req.body.houseThumbnail
   const thumbnailName = await decodeAndSaveImage(thumbnail, true).catch((e) => {
     console.log(`Exception in decodeBase64 ${e}`)
@@ -181,10 +176,10 @@ app.post('/api/create-house' , async (req,res) => {
         console.log(e)
         reject()
       })
-    }));
-  }, Promise.resolve());
+    }))
+  }, Promise.resolve())
 
-  requests.then(() => { console.log('images uploaded') }).catch((e) => { console.log (e) })
+  requests.then(() => { console.log('images uploaded') }).catch((e) => { console.log(e) })
 
   const jHouse = {
     users_id: req.body.userId,
@@ -202,39 +197,41 @@ app.post('/api/create-house' , async (req,res) => {
   }
 
   try {
+    console.log('xxxxxx');
     const createdHouse = await db.createHouse(jHouse, aImageNames)
+    console.log('jHouse, aImageNames', jHouse, aImageNames)
     let newImages = []
     // remove the ids from the createdHouse before returning it
-    for (let i=0; i < createdHouse.images.length; i++) {
+    for (let i = 0; i < createdHouse.images.length; i++) {
       newImages.push(createdHouse.images[i][1])
     }
     createdHouse.is_house = JSON.parse(createdHouse.is_house)
     createdHouse.images = newImages
     return res.json(createdHouse)
   } catch (e) {
-    console.log('error saving house '+e)
+    console.log('error saving house ' + e)
     return res.status(500)
   }
 })
 
-app.get('/api/get-bookings', async (req,res) => {
+app.get('/api/get-bookings', async (req, res) => {
   const iHouseId = req.query.id
   try {
     const response = await db.getBookings(iHouseId)
     // Define the function that will let us get dates between two dates
-    const getDatesBetweenDates = function(startDate, endDate) {
+    const getDatesBetweenDates = function (startDate, endDate) {
       const aBookedDates = []
       let currentDate = startDate
       const addDays = function (days) {
-        let date = new Date(this.valueOf());
-        date.setDate(date.getDate() + days);
-        return date;
-      };
-      while (currentDate <= endDate) {
-        aBookedDates.push(currentDate);
-        currentDate = addDays.call(currentDate, 1);
+        let date = new Date(this.valueOf())
+        date.setDate(date.getDate() + days)
+        return date
       }
-      return aBookedDates;
+      while (currentDate <= endDate) {
+        aBookedDates.push(currentDate)
+        currentDate = addDays.call(currentDate, 1)
+      }
+      return aBookedDates
     }
 
     const addLeadingZero = (iNumber) => {
@@ -251,7 +248,7 @@ app.get('/api/get-bookings', async (req,res) => {
       const aDatesBetween = getDatesBetweenDates(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()),
         new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate())) // +1 so it adds the end day as well
       const asDatesBetween = aDatesBetween.map((date) => {
-        return `${date.getFullYear()}-${addLeadingZero(date.getMonth()+1)}-${addLeadingZero(date.getDate())}`
+        return `${date.getFullYear()}-${addLeadingZero(date.getMonth() + 1)}-${addLeadingZero(date.getDate())}`
       })
       aTotalBookedDates = aTotalBookedDates.concat(asDatesBetween)
     })
@@ -274,17 +271,17 @@ app.post('/api/create-booking', async (req, res) => {
 
   try {
     const response = await db.createBooking(jBooking)
-    return res.json({ status: 'OK'})
-  } catch(e) {
+    return res.json({status: 'OK'})
+  } catch (e) {
     console.log(`unable to save booking ${e}`)
-    return res.json({ status: 'Unable to save booking'})
+    return res.json({status: 'Unable to save booking'})
   }
 })
 
 // Send all other requests to the Angular app
 app.get('*', (req, res) => {
-  return res.sendFile(path.join(__dirname, '../dist/index.html'));
-});
+  return res.sendFile(path.join(__dirname, '../dist/index.html'))
+})
 
 /** Connection  ************/
 app.listen(4000, (err) => {

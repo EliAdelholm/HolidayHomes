@@ -117,7 +117,7 @@ export class AppActions {
     });
   }
 
-  deleteUser(userId: object) {
+  deleteUser(userId: number) {
     this.ngRedux.dispatch({
       type: AppActions.DELETE_USER,
       payload: userId

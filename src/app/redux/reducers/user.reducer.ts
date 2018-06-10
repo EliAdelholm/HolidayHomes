@@ -5,19 +5,15 @@ export function userReducer(state = null, action: any) {
   switch (action.type) {
 
     case AppActions.RECEIVED_USER:
-      console.log('user reducer');
       return tassign(state, {account: action.payload});
 
     case AppActions.LOGGED_IN_USER:
-      console.log('user reducer');
       return tassign(state, {status: 'OK', account: action.payload});
 
     case AppActions.FAILED_TO_GET_USER:
-      console.log(action.payload);
       return tassign(state, {status: action.payload});
 
     case AppActions.CREATE_USER:
-      console.log(action.payload);
       return tassign(state, {account: action.payload});
 
     case AppActions.CREATED_USER:
@@ -40,10 +36,10 @@ export function userReducer(state = null, action: any) {
       return state;
 
     case AppActions.DELETED_USER:
-      return state;
+      return tassign(state, {status: action.payload.status});
 
     case AppActions.FAILED_TO_DELETE_USER:
-      return state;
+      return tassign(state, {status: 'ERROR'});
 
     case AppActions.GET_USER_HOUSES:
       return tassign(state, {status: null});

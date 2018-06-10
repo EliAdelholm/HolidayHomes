@@ -149,7 +149,7 @@ class Database {
 
   deleteUser(iUserId) {
     return new Promise((resolve,reject) => {
-      global.con.query('DELETE * FROM users WHERE id = ?', [iUserId], (error, jResult) => {
+      global.con.query('DELETE FROM users WHERE id = ?', [iUserId], (error, jResult) => {
         if (error) reject(error)
         resolve(jResult)
       })
