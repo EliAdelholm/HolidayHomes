@@ -18,6 +18,7 @@ export class NewHouseFormComponent implements OnInit, OnDestroy {
   createHouseFrm: FormGroup;
   subscription: Subscription;
   status;
+  uploadedHouseImages = false;
 
   constructor(private fb: FormBuilder, private router: Router, private houseActions: AppActions, private cd: ChangeDetectorRef,
               private loginService: LoginService, private ngRedux: NgRedux<IAppState>) {
@@ -39,8 +40,14 @@ export class NewHouseFormComponent implements OnInit, OnDestroy {
 
     this.createHouseFrm = this.fb.group({
       userId: [this.loginService.getUserId()],
-      headline: ['', Validators.required],
-      description: ['', Validators.required],
+      headline: ['', Validators.compose([
+        Validators.required,
+        Validators.maxLength(100)
+      ])],
+      description: ['', Validators.compose([
+        Validators.required,
+        Validators.maxLength(500)
+      ])],
       price: ['', Validators.required],
       address: ['', Validators.required],
       space: ['', Validators.required],
@@ -57,7 +64,7 @@ export class NewHouseFormComponent implements OnInit, OnDestroy {
 
   onSubmit(createHouseFrm) {
     console.log('this.createHouseFrm ', this.createHouseFrm.value);
-    if (createHouseFrm.valid) {
+    if (createHouseFrm.valid && this.uploadedHouseImages) {
       createHouseFrm.value.wifi ? createHouseFrm.value.wifi = 1 : createHouseFrm.value.wifi = 0;
       createHouseFrm.value.tv ? createHouseFrm.value.tv = 1 : createHouseFrm.value.tv = 0;
       createHouseFrm.value.dryer ? createHouseFrm.value.dryer = 1 : createHouseFrm.value.dryer = 0;
@@ -117,6 +124,7 @@ export class NewHouseFormComponent implements OnInit, OnDestroy {
       this.createHouseFrm.patchValue({
         houseImages: fileArray
       });
+      this.uploadedHouseImages = true;
     }
   }
 
