@@ -20,9 +20,9 @@ export function houseReducer(state = [], action: any) {
       return state;
 
     case AppActions.UPDATED_HOUSE:
-      const updateHouseIndex = state.findIndex(house => house.id == action.payload.id);
-      const updatedHouseArray = Object.assign(state[updateHouseIndex], action.payload);
-      return tassign(updatedHouseArray);
+      const filteredHouseArray = state.filter(house => house.id != action.payload.id);
+      const updatedHouseArray = [...filteredHouseArray, action.payload];
+      return Object.assign(updatedHouseArray);
 
     case AppActions.FAILED_TO_UPDATE_HOUSE:
       return state;
