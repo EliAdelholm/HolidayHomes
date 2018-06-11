@@ -105,7 +105,7 @@ app.post('/api/login', async (req, res) => {
   }
 })
 
-/** Get details about one house house **/
+/** Get details about one house **/
 app.get('/api/get-house', async (req, res) => {
   const iHouseId = req.query.id
   try {
@@ -169,6 +169,7 @@ app.post('/api/update-house', async(req,res) => {
         })
       }));
     }, Promise.resolve());
+
     // If there's additional images to save, we need to wait for the decoding to get the names before we can save
     requests.then( async () => {
         try {

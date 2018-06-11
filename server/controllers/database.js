@@ -41,8 +41,9 @@ class Database {
   getHouse (iHouseId) {
     return new Promise((resolve, reject) => {
       global.con.query('SELECT *, GROUP_CONCAT(houses_images.image) AS images\n' +
-        'FROM houses\n' +
-        'JOIN houses_images ON houses.id = houses_images.houses_id',
+      'FROM houses\n' +
+      'JOIN houses_images ON houses.id = houses_images.houses_id' +
+      'WHERE id = ?',
         [iHouseId], (error, ajResult) => {
           if (error) return reject(error)
           if (!ajResult[0]) {
