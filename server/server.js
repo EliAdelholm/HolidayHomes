@@ -153,9 +153,7 @@ app.post('/api/update-house', async(req,res) => {
     jHouse.thumbnail_image = `thumbnail-${thumbnailName}`
   }
 
-
   const imagesToDelete = req.body.imagesToDelete
-  console.log(imagesToDelete)
   const imagesToUpload = req.body.imagesToUpload
   let imagesToInsertInDb = thumbnailName ? [[iHouseId, thumbnailName]] : []
   if(imagesToUpload) {
@@ -254,37 +252,40 @@ app.post('/api/create-house' , async (req,res) => {
     }));
   }, Promise.resolve());
 
-  requests.then(() => { console.log('images uploaded') }).catch((e) => { console.log (e) })
-
-  const jHouse = {
-    users_id: req.body.userId,
-    thumbnail_image: `thumbnail-${thumbnailName}`,
-    headline: req.body.headline,
-    description: req.body.description,
-    price: req.body.price,
-    address: req.body.address,
-    space: req.body.space,
-    is_house: req.body.isHouse,
-    wifi: req.body.wifi,
-    familyfriendly: req.body.familyfriendly,
-    tv: req.body.tv,
-    dryer: req.body.dryer
-  }
-
-  try {
-    const createdHouse = await db.createHouse(jHouse, aImageNames)
-    let newImages = []
-    // remove the ids from the createdHouse before returning it
-    for (let i=0; i < createdHouse.images.length; i++) {
-      newImages.push(createdHouse.images[i][1])
+  requests.then( async () => {
+    console.log('images uploaded')
+    const jHouse = {
+      users_id: req.body.userId,
+      thumbnail_image: `thumbnail-${thumbnailName}`,
+      headline: req.body.headline,
+      description: req.body.description,
+      price: req.body.price,
+      address: req.body.address,
+      space: req.body.space,
+      is_house: req.body.isHouse,
+      wifi: req.body.wifi,
+      familyfriendly: req.body.familyfriendly,
+      tv: req.body.tv,
+      dryer: req.body.dryer
     }
-    createdHouse.is_house = JSON.parse(createdHouse.is_house)
-    createdHouse.images = newImages
-    return res.json(createdHouse)
-  } catch (e) {
-    console.log('error saving house '+e)
-    return res.status(500)
-  }
+
+    try {
+      const createdHouse = await db.createHouse(jHouse, aImageNames)
+      let newImages = []
+      // remove the ids from the createdHouse before returning it
+      for (let i=0; i < createdHouse.images.length; i++) {
+        newImages.push(createdHouse.images[i][1])
+      }
+      createdHouse.is_house = JSON.parse(createdHouse.is_house)
+      createdHouse.images = newImages
+      return res.json(createdHouse)
+    } catch (e) {
+      console.log('error saving house '+e)
+      return res.status(500)
+    }
+  }).catch((e) => { console.log (e) })
+
+
 })
 
 app.get('/api/get-bookings', async (req,res) => {
