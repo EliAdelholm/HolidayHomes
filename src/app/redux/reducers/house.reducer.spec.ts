@@ -1,4 +1,4 @@
-import {userReducer} from './user.reducer';
+import {houseReducer} from './house.reducer';
 import {AppActions} from '../app.actions';
 import {House} from '../../entities/house';
 
@@ -26,8 +26,8 @@ describe('house reducer', () => {
     const afterState = [];
     afterState.push(house);
 
-    const newState = userReducer(state, {
-      type: AppActions.CREATE_HOUSE, payload: house
+    const newState = houseReducer(state, {
+      type: AppActions.CREATED_HOUSE, payload: house
     });
 
     expect(newState).toEqual(afterState);
