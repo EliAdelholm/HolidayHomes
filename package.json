@@ -9,7 +9,7 @@
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e --delete-output-path=false --port=4000"
   },
   "private": true,
   "dependencies": {
