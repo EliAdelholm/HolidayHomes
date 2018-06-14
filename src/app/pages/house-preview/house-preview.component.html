@@ -1,4 +1,4 @@
-<div *ngIf="house">
+<div *ngIf="house" id="house">
   <ngb-carousel>
     <ng-template ngbSlide *ngFor="let item of houseImgs">
       <div class="image-slider" [style.background]="'url(../../../assets/img/' + item + ')'"></div>
@@ -6,7 +6,7 @@
   </ngb-carousel>
   <div class="jumbotron jumbotron-fluid">
     <div class="container-fluid">
-      <button type="button" class="btn btn-primary btn-lg float-right" style="margin-top: 5px;"
+      <button id="btn-book" type="button" class="btn btn-primary btn-lg float-right" style="margin-top: 5px;"
               routerLink="/booking/{{ house.id}}"
               *ngIf="loginService.isLoggedIn">Book
       </button>

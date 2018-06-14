@@ -11,7 +11,7 @@ export class House {
   public dryer: number;
   public familyfriendly: number;
   public thumbnail_image ?: String;
-  public images ?: any;
+  public images ?: any[];
 
 
 }
